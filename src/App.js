@@ -1,14 +1,13 @@
+import Sidebar from "./components/sidebar";
 
 function App() {
-  return(
-
-  <div className=' w-full h-screen flex items-center justify-center text-6xl'>
-    teste
-  </div>
-
-  )
-  
-  
+  return (
+    <div className="flex flex-col lg:flex-row">
+      <Sidebar></Sidebar>
+      
+     
+    </div>
+  );
 }
 
 export default App;
