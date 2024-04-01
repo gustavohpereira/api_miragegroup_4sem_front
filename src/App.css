@@ -187,6 +187,9 @@ img, video {
 }
 .loginPage .container .formDiv .headerDiv {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 1.5rem 0;
 }
 .loginPage .container .formDiv .headerDiv img {

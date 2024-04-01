@@ -22,7 +22,7 @@ const Login = () => {
                     <p>Sistemas Integrados de Alto Teor Tecnológico</p>
                 </div>
 
-                <div className="footerDiv flex">
+                <div className="footerDiv flex ">
                     <span className="text">Não tem uma conta? </span>
                     <Link to={'/register'}>
                     <button className="btn">Inscreva-se</button>
@@ -61,7 +61,7 @@ const Login = () => {
                     </button>
 
                     <span className="forgotPassword">
-                        Esqueceu o caraio da senha? <a href="">Click Aqui</a>
+                        Esqueceu da senha? <a href="">Click Aqui</a>
 
                     </span>
 
