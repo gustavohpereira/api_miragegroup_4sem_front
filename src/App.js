@@ -1,7 +1,9 @@
 import './App.css'
 import Dashboard from './components/DashBoard/Dashboard'
+import HeaderComponent from './components/HeaderComponent'
 import Login from './components/Login/Login'
 import Register from './components/Register/Register'
+import { AddUserComponent } from './components/addUser/addUserComponent'
 import Sidebar from './components/sidebar'
 import {
   createBrowserRouter,
@@ -19,7 +21,11 @@ const router = createBrowserRouter([
   },
   {
     path: '/dashboard',
-    element: <div className='flex w-full'><Sidebar></Sidebar><Dashboard/></div>
+    element: <div className='flex_start w-full'><Sidebar></Sidebar><div className='w-full'><HeaderComponent/><Dashboard/></div></div>
+  },
+  {
+    path: '/addUser',
+    element: <div className='flex_start w-full'><Sidebar></Sidebar><div className='w-full'><AddUserComponent/></div></div>
   }
 ])
 
@@ -27,7 +33,7 @@ function App() {
   
 
   return (
-  <div className='flex w-full'>
+  <div>
     <RouterProvider router = {router}/>
   </div>
   )

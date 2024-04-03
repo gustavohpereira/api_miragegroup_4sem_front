@@ -29,6 +29,16 @@
   align-items: center;
 }
 
+.standardFlex{
+  display: flex;
+}
+
+
+.flex_start{
+  display: flex;
+  align-items: start;
+}
+
 .grid {
   display: grid;
   align-items: center;
