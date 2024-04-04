@@ -2,8 +2,10 @@ import './App.css'
 import Dashboard from './components/DashBoard/Dashboard'
 import HeaderComponent from './components/HeaderComponent'
 import Login from './components/Login/Login'
+import PageWrapper from './components/PageWrapper/pageWrapper'
 import Register from './components/Register/Register'
 import { AddUserComponent } from './components/addUser/addUserComponent'
+import NewRoom from './components/newroom'
 import Sidebar from './components/sidebar'
 import {
   createBrowserRouter,
@@ -21,11 +23,15 @@ const router = createBrowserRouter([
   },
   {
     path: '/dashboard',
-    element: <div className='flex_start w-full'><Sidebar></Sidebar><div className='w-full'><HeaderComponent/><Dashboard/></div></div>
+    element: <PageWrapper><Dashboard></Dashboard></PageWrapper>
   },
   {
     path: '/addUser',
-    element: <div className='flex_start w-full'><Sidebar></Sidebar><div className='w-full'><AddUserComponent/></div></div>
+    element: <PageWrapper><AddUserComponent></AddUserComponent></PageWrapper>
+  },
+  {
+    path: '/newRoom',
+    element: <PageWrapper><NewRoom></NewRoom></PageWrapper>
   }
 ])
 
