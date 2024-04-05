@@ -4,6 +4,7 @@ import HeaderComponent from './components/HeaderComponent'
 import Login from './components/Login/Login'
 import PageWrapper from './components/PageWrapper/pageWrapper'
 import Register from './components/Register/Register'
+import RoomList from './components/RoomList/RoomList'
 import { AddUserComponent } from './components/addUser/addUserComponent'
 import NewRoom from './components/newroom'
 import Sidebar from './components/sidebar'
@@ -30,8 +31,8 @@ const router = createBrowserRouter([
     element: <PageWrapper><AddUserComponent></AddUserComponent></PageWrapper>
   },
   {
-    path: '/newRoom',
-    element: <PageWrapper><NewRoom></NewRoom></PageWrapper>
+    path: '/Admin',
+    element: <PageWrapper><AddUserComponent></AddUserComponent><RoomList></RoomList></PageWrapper>
   }
 ])
 
