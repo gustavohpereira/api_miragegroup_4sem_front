@@ -8,7 +8,7 @@ import logo from '../../LoginAssets/Logo API.png';
 import { FaUserShield } from "react-icons/fa";
 import { BsFillShieldLockFill } from "react-icons/bs";
 import { AiOutlineSwapRight } from "react-icons/ai";
-import axios from 'axios';
+import loginHandler from "../../handlers/LoginHandler";
 
 const Login = () => {
     
@@ -21,13 +21,7 @@ const Login = () => {
             password: password
         }
 
-        try{
-            axios.post('http://localhost:8080/user/login', data).then(() => {
-                
-            })
-        }catch (error){
-            alert(error)
-        }
+        await loginHandler(data)
     }
 
     return (
