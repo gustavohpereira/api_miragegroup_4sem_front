@@ -9,8 +9,11 @@ import { FaUserShield } from "react-icons/fa";
 import { BsFillShieldLockFill } from "react-icons/bs";
 import { AiOutlineSwapRight } from "react-icons/ai";
 import loginHandler from "../../handlers/LoginHandler";
+import { useAuth } from "../../contexts/AuthContext";
 
 const Login = () => {
+
+    const { setToken_ } = useAuth()
     
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -21,7 +24,8 @@ const Login = () => {
             password: password
         }
 
-        loginHandler(data)
+        const response = await loginHandler(data)
+        setToken_(response.token)
     }
 
     return (

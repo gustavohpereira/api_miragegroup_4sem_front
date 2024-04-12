@@ -12,6 +12,7 @@ import {
   createBrowserRouter,
   RouterProvider
 } from 'react-router-dom'
+import AuthProvider from './contexts/AuthContext'
 
 const router = createBrowserRouter([
   {
@@ -38,11 +39,10 @@ const router = createBrowserRouter([
 
 function App() {
   
-
   return (
-  <div>
-    <RouterProvider router = {router}/>
-  </div>
+    <AuthProvider>
+      <RouterProvider router = {router}/>
+    </AuthProvider>
   )
 }
 
