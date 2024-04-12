@@ -21,7 +21,7 @@ const Login = () => {
             password: password
         }
 
-        await loginHandler(data)
+        loginHandler(data)
     }
 
     return (
