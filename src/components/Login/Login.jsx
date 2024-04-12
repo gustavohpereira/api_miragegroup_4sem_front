@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import './Login.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import video from '../../LoginAssets/video.mp4'; 
 import logo from '../../LoginAssets/Logo API.png'; 
@@ -8,24 +8,31 @@ import logo from '../../LoginAssets/Logo API.png';
 import { FaUserShield } from "react-icons/fa";
 import { BsFillShieldLockFill } from "react-icons/bs";
 import { AiOutlineSwapRight } from "react-icons/ai";
-import loginHandler from "../../handlers/LoginHandler";
+import axios from "axios"
 import { useAuth } from "../../contexts/AuthContext";
 
 const Login = () => {
 
-    const { setToken_ } = useAuth()
-    
+    const { setToken } = useAuth()
+    const navigate = useNavigate()
+
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    
+
     const handleLogin = async () => {
         const data = {
             email: email,
             password: password
         }
-
-        const response = await loginHandler(data)
-        setToken_(response.token)
+        
+        try{
+            axios.post('http://localhost:8080/user/login', data, { withCredentials: true }).then((response) => {
+                setToken(response.data.token)
+                navigate("/dashboard", { replace: true })
+            })
+        }catch(error){
+            console.error(error)
+        }
     }
 
     return (

@@ -1,37 +1,46 @@
 import axios from "axios";
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState, Navigate } from "react";
 
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  // State to hold the authentication token
   const [token, setToken_] = useState(localStorage.getItem("token"));
+  const [user, setUser] = useState('')
     
-  // Function to set the authentication token
   const setToken = (newToken) => {
+    console.log(newToken)
     setToken_(newToken);
   };
 
   useEffect(() => {
     if (token) {
-      axios.defaults.headers.common["Authorization"] = "Bearer " + token;
-      localStorage.setItem('token',token);
+      axios.get("http://localhost:8080/user/getprofile", {
+        headers: {
+            "Authorization": "Bearer " + token
+        }
+      }).then((response) => {
+        if(response){
+            setUser(response.data)
+            localStorage.setItem('token',token);
+        }else{
+            localStorage.removeItem('token')
+        }
+      })
     } else {
-      delete axios.defaults.headers.common["Authorization"];
       localStorage.removeItem('token')
     }
-  }, [token]);
+  }, [token, setUser]);
 
-  // Memoized value of the authentication context
   const contextValue = useMemo(
     () => ({
       token,
       setToken,
+      user,
+      setUser
     }),
-    [token]
+    [token, user]
   );
 
-  // Provide the authentication context to the children components
   return (
     <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   );
