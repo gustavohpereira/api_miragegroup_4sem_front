@@ -9,8 +9,8 @@ export default function RoomList() {
   useEffect(() => {
     async function fetchSalas() {
       try {
-        const responseSalasFisicas = await axios.get("http://localhost:5000/physicalRoom/get");
-        const responseSalasVirtuais = await axios.get("http://localhost:5000/virtualRoom/get");
+        const responseSalasFisicas = await axios.get("http://localhost:8080/physicalRoom/get");
+        const responseSalasVirtuais = await axios.get("http://localhost:8080/virtualRoom/get");
 
         const responseSalasFisicasData = responseSalasFisicas.data.map((sala) => {
           return { ...sala, type: "Física" };
@@ -50,8 +50,6 @@ export default function RoomList() {
           <option value="Física">Física</option>
           <option value="Virtual">Virtual</option>
         </select>
-        <button className="bg-[#F6A700] p-3 rounded-md border border-slate-400 w-1/13">Data</button>
-        <button className="bg-[#F6A700] p-3 rounded-md border border-slate-400 w-2/12">Estado de locação</button>
       </div>
       <div className="flex flex-col gap-4 my-8 ">
         {filteredSalas.map((sala) => {

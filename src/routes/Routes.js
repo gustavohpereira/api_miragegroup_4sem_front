@@ -6,8 +6,6 @@ import PageWrapper from '../components/PageWrapper/pageWrapper'
 import Register from '../components/Register/Register'
 import RoomList from '../components/RoomList/RoomList'
 import { AddUserComponent } from '../components/addUser/addUserComponent'
-import NewRoom from '../components/newroom'
-import Sidebar from '../components/sidebar'
 import {
   createBrowserRouter,
   Navigate,
@@ -15,6 +13,8 @@ import {
   RouterProvider
 } from 'react-router-dom'
 import { ProtectedRoute } from './ProtectedRoute'
+import NewMeeting from '../components/newMeeting'
+import ListMeetings from '../components/listMeetings.js/listMeetings'
 
 const Routes = () => {
     const { token } = useAuth()
@@ -46,6 +46,14 @@ const Routes = () => {
                 {
                     path: '/addUser',
                     element: <PageWrapper><AddUserComponent></AddUserComponent></PageWrapper>
+                },
+                {
+                    path: '/newRoom',
+                    element: <PageWrapper><RoomList/></PageWrapper>
+                },
+                {
+                    path: '/newMeeting',
+                    element: <PageWrapper><NewMeeting/><ListMeetings/></PageWrapper>
                 },
                 {
                     path: '/Admin',

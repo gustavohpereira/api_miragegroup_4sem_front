@@ -11,6 +11,11 @@ export default function Sidebar() {
       icon: "new_meeting_logo.svg",
       link: "/newRoom",
     },
+    {
+      name: "New Meeting",
+      icon: "new_meeting_logo.svg",
+      link: "/newMeeting",
+    },
 
     {
       name: "Calendar",
@@ -43,6 +48,7 @@ export default function Sidebar() {
         {links.map((link) => {
           return (
             <a
+            key={link.name}
               href={link.link}
               className="w-full flex justify-center lg:justify-start items-center lg:py-4 hover:bg-[#F6A700] text-[#FED353] lg:text-black lg:bg-[#FED353] hover:text-white rounded-lg "
             >   
