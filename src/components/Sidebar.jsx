@@ -9,18 +9,18 @@ export default function Sidebar() {
     },
 
     {
-      name: "New Room",
-      icon: "new_meeting_logo.svg",
+      name: "Salas",
+      icon: "room.svg",
       link: "/newRoom",
     },
     {
-      name: "New Meeting",
-      icon: "new_meeting_logo.svg",
+      name: "Reuniões",
+      icon: "meeting.svg",
       link: "/newMeeting",
     },
     {
-      name: "New User",
-      icon: "new_user.svg",
+      name: "Usuários",
+      icon: "user.svg",
       link: "/addUser",
     },
     {
