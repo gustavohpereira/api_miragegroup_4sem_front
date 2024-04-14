@@ -42,7 +42,7 @@ export default function RoomList() {
       <PageTitle>Salas</PageTitle>
       <div className="gap-4 flex my-8 ">
         <select
-          className="bg-[#F6A700] p-3 rounded-md border border-slate-400 w-1/12"
+          className="bg-[#FED353] hover:bg-[#F6A700] p-3 rounded-md border border-slate-400 w-1/12"
           value={tipoReuniao}
           onChange={handleTipoReuniaoChange}
         >
@@ -66,10 +66,10 @@ export default function RoomList() {
                 </div>
               </div>
               <div className="flex gap-8">
-                <button className="bg-[#F6A700] p-4 rounded-md border border-slate-400">
+                <button className="bg-[#FED353] hover:bg-[#F6A700] p-3 rounded-md border border-slate-400 ">
                   <p>Entrar na sala</p>
                 </button>
-                <button className="bg-[#F6A700] p-4 rounded-md border border-slate-400">
+                <button className="bg-[#FED353] hover:bg-[#F6A700] p-3 rounded-md border border-slate-400 ">
                   <p>Excluir</p>
                 </button>
               </div>

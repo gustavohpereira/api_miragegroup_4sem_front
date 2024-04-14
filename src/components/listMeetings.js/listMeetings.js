@@ -7,18 +7,7 @@ export default function ListMeetings() {
   const [meetings, setMeetings] = useState([]);
   const [tipoReuniao, setTipoReuniao] = useState("Todos");
 
-  const handleDelete = async (id) => {
-    try {
-      console.log("id", id);
-      const data = { id: id };
-      await axios.delete(`http://localhost:8080/meeting/delete`, {
-        data: data,
-      });
-      setMeetings(meetings.filter((m) => m.id !== id));
-    } catch (error) {
-      console.error("Erro ao deletar reunião:", error);
-    }
-  };
+  
 
   useEffect(() => {
     async function fetchMeetings() {
@@ -46,7 +35,7 @@ export default function ListMeetings() {
       <PageTitle>Reuniões</PageTitle>
       <div className="gap-4 flex my-8 ">
         <select
-          className="bg-[#F6A700] p-3 rounded-md border border-slate-400 w-1/12"
+          className="bg-[#FED353] hover:bg-[#F6A700] p-3 rounded-md border border-slate-400 w-1/12"
           value={tipoReuniao}
           onChange={handleTipoReuniaoChange}
         >

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import PageTitle from "./pageTitle/PageTitle";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function NewMeeting() {
   const [meetingData, setMeetingData] = useState({
@@ -86,6 +87,17 @@ export default function NewMeeting() {
       })
       .then((response) => {
         console.log("response", response.data);
+        toast.success("Reunião criada com sucesso", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+        window.location.reload();
         // Lógica adicional após a criação da reunião, se necessário
       })
       .catch((error) => {
@@ -189,6 +201,7 @@ export default function NewMeeting() {
 
       {/* New Meeting Form */}
       <div>
+        
         <form
           className="p-4 mt-4 standardFlex  w-full flex-col gap-8  "
           onSubmit={(e) => handleSubmit(e)}
@@ -343,11 +356,23 @@ export default function NewMeeting() {
           <div className="mt-8 w-full lg:w-1/2 flex lg:justify-end justify-center ">
             <button
               type="submit"
-              className="bg-[#F6A700] p-4 rounded-md w-4/12 border border-slate-400"
+              className="bg-[#FED353] hover:bg-[#F6A700] p-3 rounded-md border border-slate-400 w-4/12"
             >
               criar
             </button>
           </div>
+          <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+        />
         </form>
       </div>
     </div>

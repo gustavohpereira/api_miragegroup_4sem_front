@@ -21,10 +21,15 @@ export default function Sidebar() {
       icon: "new_user.svg",
       link: "/addUser",
     },
+    {
+      name: "Configurações",
+      icon: "configurações.svg",
+      link: "",
+    },
   ];
 
   return (
-    <div className="h-16 w-full  lg:h-screen lg:w-[15%] sticky top-0 bg-sidebar-bg lg:w-sidebar-width border-r border-sidebar-border bg-[#393C3D] flex lg:flex-col justify-start items-center lg:py-6">
+    <div className="h-16 w-full  lg:h-screen lg:w-[15%] sticky top-0 bg-sidebar-bg lg:w-sidebar-width border-r border-sidebar-border bg-[#262932] flex lg:flex-col justify-start items-center lg:py-6">
       <div className=" w-full lg:flex justify-center items-center py-6 hidden">
         <img src="orca_logo.svg" alt="" className="h-20 w-20 bg-[#FED353] rounded-full"></img>
       </div>
@@ -48,14 +53,14 @@ export default function Sidebar() {
         })}
       </div>
 
-      <div className="flex gap-4">
+      {/* <div className="flex gap-4">
         <button className="bg-[#FED353] hover:bg-[#F6A700] lg:w-12 w-8 p-2  rounded-full">
           <img src="/configurações.svg" className=""></img>
         </button>
         <button className="bg-[#FED353] hover:bg-[#F6A700] lg:w-12 p-2 w-8 rounded-full">
           <img src="/home_logo.svg" className=""></img>
         </button>
-      </div>
+      </div> */}
     </div>
   );
 }
