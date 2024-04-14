@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 export default function Sidebar() {
   const links = [
     {
@@ -34,15 +36,13 @@ export default function Sidebar() {
         <img src="orca_logo.svg" alt="" className="h-20 w-20 bg-[#FED353] rounded-full"></img>
       </div>
 
-      
-
       <div className="flex lg:flex-col justify-start items-center px-2  my-16 w-full  lg:px-6  lg:gap-8">
         {links.map((link) => {
           return (
             <a
             key={link.name}
               href={link.link}
-              className="w-full flex justify-center lg:justify-start items-center lg:py-4 hover:bg-[#F6A700] text-[#FED353] lg:text-black lg:bg-[#FED353] hover:text-white rounded-lg "
+              className="w-full flex justify-center lg:justify-start items-center lg:py-4  transition easy-in-out hover:bg-[#F6A700] text-[#FED353] lg:text-black lg:bg-[#FED353] hover:text-white rounded-lg "
             >   
             <div className="w-1/3 lg:flex justify-center hidden ">
               <img src={link.icon} alt="" className="h-6"></img>
@@ -61,6 +61,11 @@ export default function Sidebar() {
           <img src="/home_logo.svg" className=""></img>
         </button>
       </div> */}
+      <Link to="/logout" replace={true}>
+      <button className="bg-[#FED353] transition easy-in-out hover:bg-[#D83838] lg:w-12 p-2 w-8 rounded-full">
+          <img src="/logout.svg" className=""></img>
+      </button>
+      </Link>
     </div>
   );
 }

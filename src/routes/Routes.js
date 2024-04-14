@@ -15,6 +15,7 @@ import {
 import { ProtectedRoute } from './ProtectedRoute'
 import NewMeeting from '../components/newMeeting'
 import ListMeetings from '../components/listMeetings.js/listMeetings'
+import Logout from '../components/Logout/Logout'
 
 const Routes = () => {
     const { token } = useAuth()
@@ -58,6 +59,10 @@ const Routes = () => {
                 {
                     path: '/Admin',
                     element: <PageWrapper><AddUserComponent></AddUserComponent><RoomList></RoomList></PageWrapper>
+                },
+                {
+                    path: '/logout',
+                    element: <Logout />
                 }
             ]
         }
