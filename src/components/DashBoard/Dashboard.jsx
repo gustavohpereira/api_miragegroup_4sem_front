@@ -11,7 +11,6 @@ const Dashboard = () => {
             
             
             <PageTitle>Dashboard</PageTitle>
-            <a href="/" className="bg-yellow-400 w-1/12 p-4 rounded-lg border border-black">Log Out</a>
             <TodayMeeting />
         </div>
     )
