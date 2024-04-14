@@ -356,9 +356,9 @@ export default function NewMeeting() {
           <div className="mt-8 w-full lg:w-1/2 flex lg:justify-end justify-center ">
             <button
               type="submit"
-              className="bg-[#FED353] hover:bg-[#F6A700] p-3 rounded-md border border-slate-400 w-4/12"
+              className="bg-[#FED353] transition easy-in-out hover:bg-[#F6A700] p-3 rounded-md border border-slate-400 w-4/12"
             >
-              criar
+              Criar
             </button>
           </div>
           <ToastContainer

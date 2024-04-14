@@ -35,7 +35,7 @@ export default function ListMeetings() {
       <PageTitle>Reuniões</PageTitle>
       <div className="gap-4 flex my-8 ">
         <select
-          className="bg-[#FED353] hover:bg-[#F6A700] p-3 rounded-md border border-slate-400 w-1/12"
+          className="bg-[#FED353] transition easy-in-out hover:bg-[#F6A700] p-3 rounded-md border border-slate-400 w-1/12"
           value={tipoReuniao}
           onChange={handleTipoReuniaoChange}
         >

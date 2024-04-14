@@ -52,8 +52,6 @@ export function AddUserComponent() {
             access_level: Number.parseInt(access)
         }
 
-        console.log(data);
-
         try{
             await axios.post("http://localhost:8080/user/create", data).then((response) => {
                 toast.success('Usuário cadastrado')
@@ -116,7 +114,7 @@ export function AddUserComponent() {
                     </div>
                 </div>
                 <div className="w-full standardFlex justify-center  lg:w-2/3 ">
-                    <button type="submit" className="rounded-lg bg-[#FED353] lg:w-[20%] w-1/2 mt-8 text-2xl h-12 hover:bg-[#F6A700]">Cadastrar</button>
+                    <button type="submit" className="rounded-lg bg-[#FED353] lg:w-[20%] w-1/2 mt-8 text-2xl h-12 transition easy-in-out hover:bg-[#F6A700]">Cadastrar</button>
                 </div>
                 <ToastContainer 
                   position='bottom-center'
