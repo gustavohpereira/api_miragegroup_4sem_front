@@ -1,11 +1,10 @@
 import { useAuth } from '../contexts/AuthContext'
 import Dashboard from '../components/DashBoard/Dashboard'
-import HeaderComponent from '../components/HeaderComponent'
 import Login from '../components/Login/Login'
-import PageWrapper from '../components/PageWrapper/pageWrapper'
+import PageWrapper from '../components/PageWrapper/PageWrapper'
 import Register from '../components/Register/Register'
 import RoomList from '../components/RoomList/RoomList'
-import { AddUserComponent } from '../components/addUser/addUserComponent'
+import { AddUserComponent } from '../components/addUser/AddUserComponent'
 import {
   createBrowserRouter,
   Navigate,
@@ -13,9 +12,9 @@ import {
   RouterProvider
 } from 'react-router-dom'
 import { ProtectedRoute } from './ProtectedRoute'
-import NewMeeting from '../components/newMeeting'
-import ListMeetings from '../components/listMeetings.js/listMeetings'
 import Logout from '../components/Logout/Logout'
+import NewMeeting from '../components/NewMeeting/NewMeeting'
+import ListMeetings from '../components/NewMeeting/listMeetings/ListMeetings'
 
 const Routes = () => {
     const { token } = useAuth()

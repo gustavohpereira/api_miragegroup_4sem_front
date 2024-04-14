@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import PageTitle from "./pageTitle/PageTitle";
+import PageTitle from "../pageTitle/PageTitle";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -10,15 +10,7 @@ export default function NewMeeting() {
     virtualRoom: null,
   });
   const [selectedCategory, setSelectedCategory] = useState();
-  const [users, setUsers] = useState([
-    {
-      id: 1,
-      name: "Dev",
-      email: "dev@email.com",
-      role: 4,
-      access_level: 4,
-    },
-  ]);
+  const [users, setUsers] = useState([])
   const [salas, setSalas] = useState([]);
 
   //   PEGAR AS SALAS
@@ -57,6 +49,17 @@ export default function NewMeeting() {
     console.log("salas", salas);
     fetchSalas();
   }, []);
+
+  useEffect(() => {
+    try{
+        axios.get("http://localhost:8080/user/fetchall").then((response) => {
+            const data = response.data
+            setUsers(data)
+        })
+    }catch(error){
+        console.error(error)
+    }
+  })
 
   const handleChange = (event, dictKey, value) => {
     event.preventDefault();
@@ -324,12 +327,12 @@ export default function NewMeeting() {
 
           {/* USUARIO */}
           <div className="standardFlex flex-col items-center lg:items-start">
-            <label className="text-2xl my-1">Adicionar usuario a reunião</label>
+            <label className="text-2xl my-1">Adicionar usuários a reunião</label>
             <select
               className="w-full lg:w-1/2 p-2 border focus:border-black rounded-md bg-[#D9D9D9]"
               onChange={handleUserSelection}
             >
-              <option value="">Adicione um novo usuario Usuário</option>
+              <option value="">Adicione um novo usuario</option>
               {users.map((user) => (
                 <option key={user.email} value={user.id}>
                   {user.name}
