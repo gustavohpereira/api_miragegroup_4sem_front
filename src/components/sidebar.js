@@ -16,19 +16,6 @@ export default function Sidebar() {
       icon: "new_meeting_logo.svg",
       link: "/newMeeting",
     },
-
-    {
-      name: "Calendar",
-      icon: "calendário_bg.svg",
-      link: "/calendar",
-    },
-
-    {
-      name: "Clock",
-      icon: "clock_icon.svg",
-      link: "/clock",
-    },
-
     {
       name: "New User",
       icon: "new_user.svg",
@@ -37,7 +24,7 @@ export default function Sidebar() {
   ];
 
   return (
-    <div className="h-16 w-full  lg:h-screen lg:w-[15%] sticky top-0 bg-sidebar-bg lg:w-sidebar-width border-r border-sidebar-border bg-black flex lg:flex-col justify-start items-center lg:py-6">
+    <div className="h-16 w-full  lg:h-screen lg:w-[15%] sticky top-0 bg-sidebar-bg lg:w-sidebar-width border-r border-sidebar-border bg-[#393C3D] flex lg:flex-col justify-start items-center lg:py-6">
       <div className=" w-full lg:flex justify-center items-center py-6 hidden">
         <img src="orca_logo.svg" alt="" className="h-20 w-20 bg-[#FED353] rounded-full"></img>
       </div>
