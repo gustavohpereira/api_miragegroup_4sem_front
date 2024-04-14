@@ -1,38 +1,130 @@
+import { useState } from 'react';
 import PageTitle from "../pageTitle/PageTitle";
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import Select from 'react-select';
+import 'react-toastify/dist/ReactToastify.css';
+import './toastNotification.css'
 
 export function AddUserComponent() {
+
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [role, setRole] = useState('')
+    const [access, setAccess] = useState('')
+
+    const optionsRole = [
+        { value: 'financeira', label: 'Financeira' },
+        { value: 'comercial', label: 'Comercial' },
+        { value: 'tecnica', label: 'Técnica' }
+    ]
+
+    const optionsAccess = [
+        { value: '1', label: '1' },
+        { value: '2', label: '2' },
+        { value: '3', label: '3' }
+    ]
+
+    const customStyles = {
+        control: (provided) => ({
+          ...provided,
+          backgroundColor: "#D9D9D9",
+        }),
+    };
+
+    const handleRoleChange = (role) => {
+        setRole(role.value)
+    }
+
+    const handleAcessChange = (access) => {
+        setAccess(access.value)
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+
+        const data = {
+            name: name,
+            email: email,
+            password: password,
+            role: role,
+            access_level: Number.parseInt(access)
+        }
+
+        console.log(data);
+
+        try{
+            await axios.post("http://localhost:8080/user/create", data).then((response) => {
+                toast.success('Usuário cadastrado')
+                setName('')
+                setEmail('')
+                setPassword('')
+                setRole('')
+                setAccess('')
+            })
+        }catch(error){
+            if(error.response.status == 409){
+                toast.error('Usuário com e-mail já cadastrado')
+            }
+            console.error(error)
+        }
+    }
+
     return (
         <div className="">
-            <PageTitle>Cadastrar usuario</PageTitle>
-            <form className="standardFlex flex-col gap-8 my-10 items-center lg:full">
-                <div className="standardFlex flex-col w-2/3 gap-2 items-center">
-
-                    <label htmlFor="username" className="text-2xl ">Nome Completo</label>
-                    <input type="text" id="username" name="username" className=" rounded-lg w-full p-2 bg-[#D9D9D9]  " />
+            <PageTitle>Cadastrar usuário</PageTitle>
+            <form className="standardFlex flex-col gap-8 my-1 mt-20 items-center lg:full" onSubmit={handleSubmit}>
+                <div className="standardFlex flex-col w-2/3 text-2xl gap-2 items-center">
+                    <label htmlFor="name" className="text-2xl ">Nome Completo</label>
+                    <input type="text" id="name" name="name" value={name} placeholder="Digite o nome completo" required onChange={(e) => { setName(e.target.value) }} className=" rounded-lg w-full p-2 bg-[#D9D9D9]  " />
                 </div>
-                <div className="standardFlex flex-col w-2/3 text-2xl items-center  gap-4">
+                <div className="standardFlex flex-col w-2/3 text-2xl items-center gap-4">
                     <label htmlFor="email">E-mail</label>
-                    <input type="text" id="email" name="email" className=" rounded-lg  p-2 w-full bg-[#D9D9D9]  "/>
-
+                    <input type="email" id="email" name="email" value={email} placeholder="Digite o e-mail" required onChange={(e) => { setEmail(e.target.value) }} className=" rounded-lg  p-2 w-full bg-[#D9D9D9]  "/>
                 </div>
-                <div className="standardFlex flex-col w-2/3 text-2xl items-center  gap-4">
-                    <label htmlFor="cargo">Cargo</label>
-                    <input type="text" id="cargo" name="cargo" className=" rounded-lg w-full p-2 bg-[#D9D9D9]  "/>
-
+                <div className="standardFlex flex-col w-2/3 text-2xl items-center gap-4">
+                    <label htmlFor="password">Senha</label>
+                    <input type="password" id="password" name="password" value={password} placeholder="Digite a senha" required onChange={(e) => { setPassword(e.target.value) }} className=" rounded-lg w-full p-2 bg-[#D9D9D9]  "/>
                 </div>
-                <div className="standardFlex flex-col w-2/3 text-2xl items-center  gap-4">
-                    <label htmlFor="password">Tipo de usuario</label>
-                    <select id="tipoUsuario" name="tipoUsuario" className="border bg-[#D9D9D9] rounded-lg p-1 w-full ">
-                        <option value="admin">Administrador</option>
-                        <option value="comum">Usuário Comum</option>
-                        <option value="convidado">Convidado</option>
-                    </select>
-
+                <div className="flex w-2/3 gap-10">
+                    <div className="standardFlex flex-col w-2/3 text-2xl items-center gap-4">
+                        <label htmlFor="diretoria">Diretoria</label>
+                        <Select 
+                          options={optionsRole}
+                          styles={customStyles}
+                          isSearchable={false}
+                          id='diretoria' 
+                          name='diretoria' 
+                          className='rounded-1g p-1 w-full' 
+                          placeholder="Escolha a diretoria"
+                          onChange={handleRoleChange}
+                        />
+                    </div>
+                    <div className="standardFlex flex-col w-2/3 text-2xl items-center gap-4">
+                        <label htmlFor="permissao">Nível de Permissão</label>
+                        <Select 
+                          options={optionsAccess}
+                          styles={customStyles} 
+                          isSearchable={false}
+                          id='diretoria' 
+                          name='diretoria' 
+                          className='rounded-1g p-1 w-full' 
+                          placeholder="Escolha o nível de permissão"
+                          onChange={handleAcessChange}
+                        />
+                    </div>
                 </div>
                 <div className="w-full standardFlex justify-center  lg:w-2/3 ">
-
-                    <button type="submit" className="rounded-lg bg-[#FED353] lg:w-[20%] w-1/2  h-10  hover:bg-[#F6A700]">Submit</button>
+                    <button type="submit" className="rounded-lg bg-[#FED353] lg:w-[20%] w-1/2 mt-8 text-2xl h-12 hover:bg-[#F6A700]">Cadastrar</button>
                 </div>
+                <ToastContainer 
+                  position='bottom-center'
+                  autoClose={2000}
+                  hideProgressBar={true}
+                  closeOnClick={true}
+                  theme='dark'
+                />
             </form>
         </div>
     );

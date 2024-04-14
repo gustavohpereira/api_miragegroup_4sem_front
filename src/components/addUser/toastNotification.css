@@ -1,0 +1,12 @@
+.Toastify__toast-container {
+    width: 20%;
+    padding: 0 20px;
+    position: fixed;
+    bottom: 0;
+    z-index: 9999;
+  }
+  
+  .Toastify__toast-container--bottom-center {
+    left: 50%;
+    transform: translateX(-16%) translateY(-50%);
+  }
