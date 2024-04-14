@@ -65,14 +65,7 @@ export default function RoomList() {
                   <p>{sala.type}</p>
                 </div>
               </div>
-              <div className="flex gap-8">
-                <button className="bg-[#FED353] hover:bg-[#F6A700] p-3 rounded-md border border-slate-400 ">
-                  <p>Entrar na sala</p>
-                </button>
-                <button className="bg-[#FED353] hover:bg-[#F6A700] p-3 rounded-md border border-slate-400 ">
-                  <p>Excluir</p>
-                </button>
-              </div>
+
             </div>
           );
         })}
