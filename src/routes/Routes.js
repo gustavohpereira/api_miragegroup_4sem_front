@@ -11,13 +11,13 @@ import {
   Outlet,
   RouterProvider
 } from 'react-router-dom'
-import { ProtectedRoute } from './ProtectedRoute'
+import { AdminRoute, AuthenticatedRoute } from './ProtectedRoutes'
 import Logout from '../components/Logout/Logout'
 import NewMeeting from '../components/NewMeeting/NewMeeting'
 import ListMeetings from '../components/NewMeeting/listMeetings/ListMeetings'
 
 const Routes = () => {
-    const { token } = useAuth()
+    const { token, user } = useAuth()
 
     const routesForNotAuthenticatedOnly = [
         {
@@ -29,7 +29,7 @@ const Routes = () => {
     const routesForAuthenticatedOnly = [
         {
             path: '/',
-            element: <ProtectedRoute />,
+            element: <AuthenticatedRoute />,
             children: [
                 {
                     path: '/',
@@ -42,10 +42,6 @@ const Routes = () => {
                 {
                     path: '/register',
                     element: <div><Register/></div>
-                },
-                {
-                    path: '/addUser',
-                    element: <PageWrapper><AddUserComponent></AddUserComponent></PageWrapper>
                 },
                 {
                     path: '/newRoom',
@@ -67,9 +63,23 @@ const Routes = () => {
         }
     ]
 
+    const routesForAdminOnly = [
+        {
+            path: '/',
+            element: <AdminRoute />,
+            children: [
+                {
+                    path: '/addUser',
+                    element: <PageWrapper><AddUserComponent></AddUserComponent></PageWrapper>
+                }
+            ]
+        }
+    ]
+
     const router = createBrowserRouter([
         ...(!token ? routesForNotAuthenticatedOnly : []),
-        ...routesForAuthenticatedOnly
+        ...routesForAdminOnly,
+        ...routesForAuthenticatedOnly,
     ])
 
     return <RouterProvider router={router} />

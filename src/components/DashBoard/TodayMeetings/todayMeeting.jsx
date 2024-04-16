@@ -43,7 +43,11 @@ export default function TodayMeeting () {
             <h1 className="text-4xl mb-10">Reuniões de hoje</h1>
 
             <div className="flex flex-col gap-4">
-                {todayMeetings.map((m) => (
+                {todayMeetings.filter((m) =>
+                        m.participants.some(
+                            (participant) => participant.id === user.user.id
+                        )
+                    ).map((m) => (
                     <MeetingCard key={m.id} m={m} showDelete={false} />
                 ))}
             </div>
@@ -68,8 +72,6 @@ export default function TodayMeeting () {
                         )
                     ).filter(
                         (m) => {
-                            console.log(m.meetingType)
-                            console.log(tipoReuniao)
                             if (tipoReuniao === "Todos") {
                                 return true
                             } else if (m.meetingType == tipoReuniao) {

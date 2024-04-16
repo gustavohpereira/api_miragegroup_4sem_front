@@ -1,6 +1,10 @@
 import { Link } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext'
 
 export default function Sidebar() {
+
+  const { user } = useAuth()
+
   const links = [
     {
       name: "Home",
@@ -23,11 +27,6 @@ export default function Sidebar() {
       icon: "user.svg",
       link: "/addUser",
     },
-    {
-      name: "Configurações",
-      icon: "configurações.svg",
-      link: "",
-    },
   ];
 
   return (
@@ -37,20 +36,39 @@ export default function Sidebar() {
       </div>
 
       <div className="flex lg:flex-col justify-start items-center px-2  my-16 w-full  lg:px-6  lg:gap-8">
-        {links.map((link) => {
-          return (
-            <a
-            key={link.name}
-              href={link.link}
-              className="w-full flex justify-center lg:justify-start items-center lg:py-4  transition easy-in-out hover:bg-[#F6A700] text-[#FED353] lg:text-black lg:bg-[#FED353] hover:text-white rounded-lg "
-            >   
-            <div className="w-1/3 lg:flex justify-center hidden ">
-              <img src={link.icon} alt="" className="h-6"></img>
-            </div>
-              <p className="text-xs lg:text-sm">{link.name}</p>
-            </a>
-          );
-        })}
+      {links.map((link) => {
+  if (link.name === 'Usuários' && user.role === 'admin') {
+    return (
+      <Link
+        key={link.name}
+        to={link.link}
+        className="w-full flex justify-center lg:justify-start items-center lg:py-4  transition easy-in-out hover:bg-[#F6A700] text-[#FED353] lg:text-black lg:bg-[#FED353] hover:text-white rounded-lg "
+      >
+        <div className="w-1/3 lg:flex justify-center hidden ">
+          <img src={link.icon} alt="" className="h-6"></img>
+        </div>
+        <p className="text-xs lg:text-sm">{link.name}</p>
+      </Link>
+    );
+  }
+
+  if (link.name !== 'Usuários') {
+    return (
+      <Link
+        key={link.name}
+        to={link.link}
+        className="w-full flex justify-center lg:justify-start items-center lg:py-4  transition easy-in-out hover:bg-[#F6A700] text-[#FED353] lg:text-black lg:bg-[#FED353] hover:text-white rounded-lg "
+      >
+        <div className="w-1/3 lg:flex justify-center hidden ">
+          <img src={link.icon} alt="" className="h-6"></img>
+        </div>
+        <p className="text-xs lg:text-sm">{link.name}</p>
+      </Link>
+    );
+  }
+
+  return null; // Hide the "Usuários" link for non-admin users
+})}
       </div>
 
       {/* <div className="flex gap-4">

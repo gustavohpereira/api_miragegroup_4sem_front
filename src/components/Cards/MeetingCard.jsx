@@ -40,10 +40,10 @@ export default function MeetingCard({ m, showDelete }) {
 
   if (m.meetingType == 1) {
     meetingType = "Fisica";
-    location = "local: " + m.physicalRoom.location;
+    location = "Local: " + m.physicalRoom.location;
   } else if (m.meetingType == 2) {
     meetingType = "Hibrida";
-    location = "local: " + m.physicalRoom.location;
+    location = "Local: " + m.physicalRoom.location;
   } else {
     meetingType = "Virtual";
   }
