@@ -8,13 +8,13 @@ import { AddUserComponent } from '../components/addUser/AddUserComponent'
 import {
   createBrowserRouter,
   Navigate,
-  Outlet,
   RouterProvider
 } from 'react-router-dom'
 import { AdminRoute, AuthenticatedRoute } from './ProtectedRoutes'
 import Logout from '../components/Logout/Logout'
 import NewMeeting from '../components/NewMeeting/NewMeeting'
 import ListMeetings from '../components/NewMeeting/listMeetings/ListMeetings'
+import UserList from '../components/UsersComponents/UserList/userList'
 
 const Routes = () => {
     const { token, user } = useAuth()
@@ -70,7 +70,7 @@ const Routes = () => {
             children: [
                 {
                     path: '/addUser',
-                    element: <PageWrapper><AddUserComponent></AddUserComponent></PageWrapper>
+                    element: <PageWrapper><AddUserComponent></AddUserComponent><UserList></UserList></PageWrapper>
                 }
             ]
         }
