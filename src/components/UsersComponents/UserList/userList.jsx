@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom'
+import { AiFillEdit } from "react-icons/ai";
 
 export default function UserList() {
     const [data, setData] = useState([])
@@ -14,7 +15,7 @@ export default function UserList() {
     const renderTable = () => {
         return data.map((user, index) => {
             const color = index % 2 === 0 ? 'bg-slate-500 text-black' : 'bg-amber-200'
-
+            console.log(user)
             return (
                 <tr key={user.id} className={`${color} text-white`}>
                     <td className='px-4 py-2'>{user.id}</td>
@@ -22,6 +23,9 @@ export default function UserList() {
                     <td className='px-4 py-2'>{user.email}</td>
                     <td className='px-4 py-2'>{user.role}</td>
                     <td className='px-4 py-2'>{user.access_level}</td>
+                    <a className='w-full h-11 flex justify-center hover:bg-[#F6A700] hover:cursor-pointer' href={`/editUser/${user.id}`}>
+                        <AiFillEdit  className='w-full h-6'/>
+                    </a>
                 </tr>
             )
         })
@@ -29,7 +33,7 @@ export default function UserList() {
 
     const navigate = useNavigate()
     const registerUser = () => {
-        navigate("/users/register")
+        navigate("/addUser")
     }
 
     return (
@@ -47,7 +51,8 @@ export default function UserList() {
                             <th className='px-4 py-2'>Nome</th>
                             <th className='px-4 py-2'>Email</th>
                             <th className='px-4 py-2'>Diretoria</th>
-                            <th className='px-4 py-2'>Acesso</th>
+                            <th className='px-4 py-2'>Nível de acesso</th>
+                            <th className='px-4 py-2'>Editar</th>
                         </tr>
                     </thead>
                     <tbody>{renderTable()}</tbody>
