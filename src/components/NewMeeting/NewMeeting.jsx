@@ -49,7 +49,6 @@ export default function NewMeeting() {
         console.error("Erro ao buscar salas:", error);
       }
     }
-    console.log("salas", salas);
     fetchSalas();
   }, []);
 
@@ -76,8 +75,6 @@ export default function NewMeeting() {
     event.preventDefault();
 
     // Montando o objeto de dados para enviar na requisição
-
-    console.log("mmetingData", meetingData);
     const requestData = {
       protocol: meetingData.protocol, // Substitua por como você está definindo o protocolo
       datetime: meetingData.datetime, // Substitua por como você está definindo a data e hora
@@ -85,14 +82,13 @@ export default function NewMeeting() {
       physicalRoom: meetingData.physicalRoom,
       virtualRoom: meetingData.virtualRoom,
       participants: meetingData.selectedUsers, // Obtendo os IDs dos participantes selecionados
+      meetingTheme: pautas
     };
-    console.log("data", requestData);
     axios
       .post("http://localhost:8080/meeting/create", requestData, {
         withCredentials: true,
       })
       .then((response) => {
-        console.log("response", response.data);
         toast.success("Reunião criada com sucesso", {
           position: "top-center",
           autoClose: 5000,
@@ -114,14 +110,12 @@ export default function NewMeeting() {
 
   const handleRoomSelection = (id) => {
     if (id == "replacePhysicalRoom") {
-      console.log("replacePhysicalRoom");
       setMeetingData({
         ...meetingData,
         physicalRoom: null,
       });
       return;
     } else if (id == "replaceVirtualRoom") {
-      console.log("replaceVirtualRoom");
       setMeetingData({
         ...meetingData,
         virtualRoom: null,
@@ -130,23 +124,19 @@ export default function NewMeeting() {
     }
 
     const selectedRoom = salas.find((sala) => sala.id == id);
-    console.log("selectedRoom", selectedRoom);
     if (selectedRoom) {
       if (selectedRoom.type == "Fisica") {
-        console.log("Room selected:", selectedRoom);
         setMeetingData({
           ...meetingData,
           physicalRoom: selectedRoom,
         });
       } else {
-        console.log("Virtual Room selected:", selectedRoom);
         setMeetingData({
           ...meetingData,
           virtualRoom: selectedRoom,
         });
       }
     } else {
-      console.log("Room not found");
     }
   };
 
@@ -164,10 +154,7 @@ export default function NewMeeting() {
         selectedUsers: newSelectedUsers,
       });
 
-      console.log(meetingData.selectedUsers);
     } else {
-      console.log(meetingData.selectedUsers);
-      console.log("User already selected");
     }
   };
 
