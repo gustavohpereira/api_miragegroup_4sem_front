@@ -15,7 +15,6 @@ export default function UserList() {
     const renderTable = () => {
         return data.map((user, index) => {
             const color = index % 2 === 0 ? 'bg-slate-500 text-black' : 'bg-amber-200'
-            console.log(user)
             return (
                 <tr key={user.id} className={`${color} text-white`}>
                     <td className='px-4 py-2'>{user.id}</td>

@@ -24,12 +24,10 @@ export default function ListMeetings () {
     const handleTipoReuniaoChange = (event) => {
         setTipoReuniao(event.target.value);
     };
-    console.log(tipoReuniao);
     const filteredMeetings =
         tipoReuniao === "Todos"
             ? meetings
             : meetings.filter((m) => m.meetingType == tipoReuniao);
-    console.log(filteredMeetings);
     return (
         <div>
             <PageTitle>Reuniões</PageTitle>

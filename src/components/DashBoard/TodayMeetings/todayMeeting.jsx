@@ -17,7 +17,6 @@ export default function TodayMeeting () {
         async function fetchMeetings () {
             try {
                 const response = await axios.get("http://localhost:8080/meeting/get");
-                console.log("fetchMeetings", response.data);
 
                 const todayMeetings = response.data.filter((meeting) => {
                     const meetingDate = new Date(meeting.datetime);

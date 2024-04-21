@@ -12,7 +12,6 @@ export default function MeetingCard({ m, showDelete }) {
         "Tem certeza que deseja excluir esta reunião?"
       );
       if (confirm) {
-        console.log("id", id);
         const data = { id: id };
         await axios.delete(`http://localhost:8080/meeting/delete`, {
           data: data,

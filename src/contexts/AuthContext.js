@@ -8,7 +8,6 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState('')
     
   const setToken = (newToken) => {
-    console.log(newToken)
     setToken_(newToken);
   };
 
