@@ -8,31 +8,31 @@ export default function Sidebar() {
   const links = [
     {
       name: "Home",
-      icon: "home_logo.svg",
+      icon: "/home_logo.svg",
       link: "/dashboard",
     },
 
     {
       name: "Salas",
-      icon: "room.svg",
+      icon: "/room.svg",
       link: "/newRoom",
     },
     {
       name: "Reuniões",
-      icon: "meeting.svg",
+      icon: "/meeting.svg",
       link: "/newMeeting",
     },
     {
       name: "Usuários",
-      icon: "user.svg",
-      link: "/addUser",
+      icon: "/user.svg",
+      link: "/users",
     },
   ];
 
   return (
     <div className="h-16 w-full  lg:h-screen lg:w-[15%] sticky top-0 bg-sidebar-bg lg:w-sidebar-width border-r border-sidebar-border bg-[#262932] flex lg:flex-col justify-start items-center lg:py-6">
       <div className=" w-full lg:flex justify-center items-center py-6 hidden">
-        <img src="orca_logo.svg" alt="" className="h-20 w-20 bg-[#FED353] rounded-full"></img>
+        <img src="/orca_logo.svg" alt="" className="h-20 w-20 bg-[#FED353] rounded-full"></img>
       </div>
 
       <div className="flex lg:flex-col justify-start items-center px-2  my-16 w-full  lg:px-6  lg:gap-8">
