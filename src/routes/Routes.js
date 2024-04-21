@@ -4,17 +4,19 @@ import Login from '../components/Login/Login'
 import PageWrapper from '../components/PageWrapper/PageWrapper'
 import Register from '../components/Register/Register'
 import RoomList from '../components/RoomList/RoomList'
-import { AddUserComponent } from '../components/addUser/AddUserComponent'
+import { AddUserComponent } from '../components/UsersComponents/addUser/AddUserComponent'
 import {
   createBrowserRouter,
   Navigate,
-  Outlet,
   RouterProvider
 } from 'react-router-dom'
 import { AdminRoute, AuthenticatedRoute } from './ProtectedRoutes'
 import Logout from '../components/Logout/Logout'
 import NewMeeting from '../components/NewMeeting/NewMeeting'
 import ListMeetings from '../components/NewMeeting/listMeetings/ListMeetings'
+import UserList from '../components/UsersComponents/UserList/userList'
+import EditUser from '../components/UsersComponents/editUser/editUser'
+
 
 const Routes = () => {
     const { token, user } = useAuth()
@@ -58,6 +60,10 @@ const Routes = () => {
                 {
                     path: '/logout',
                     element: <Logout />
+                },
+                {
+                    path: '/EditUser/:userId',
+                    element: <PageWrapper><EditUser/></PageWrapper>
                 }
             ]
         }
@@ -69,11 +75,18 @@ const Routes = () => {
             element: <AdminRoute />,
             children: [
                 {
+                    path: '/users',
+                    element: <PageWrapper><UserList/></PageWrapper>
+                },
+                {
                     path: '/addUser',
-                    element: <PageWrapper><AddUserComponent></AddUserComponent></PageWrapper>
-                }
+                    element: <PageWrapper><AddUserComponent/></PageWrapper>
+                },
+
             ]
-        }
+        },
+        
+
     ]
 
     const router = createBrowserRouter([
