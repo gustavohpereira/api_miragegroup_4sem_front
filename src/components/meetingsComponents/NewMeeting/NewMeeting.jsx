@@ -75,18 +75,33 @@ export default function NewMeeting() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
+    let endTime = new Date()
+    let [minutes, seconds] = meetingData.insertTime.split(":")
+
+    endTime.setMinutes(parseInt(minutes))
+    endTime.setSeconds(parseInt(seconds))
+
+    let beginningTime = new Date(meetingData.datetime)
+
+    endTime.setHours(parseInt(minutes) + beginningTime.getHours())
+    endTime.setMinutes(parseInt(seconds) + beginningTime.getMinutes())
+    endTime.setSeconds("00")
+
+    meetingData.insertTime = endTime
+
     // Montando o objeto de dados para enviar na requisição
     const requestData = {
       protocol: meetingData.protocol, // Substitua por como você está definindo o protocolo
       description: meetingData.description,
-      datetime: meetingData.datetime, // Substitua por como você está definindo a data e hora
+      beginning_time: meetingData.datetime, // Substitua por como você está definindo a data e hora
+      end_time: meetingData.insertTime,
       meetingType: selectedCategory, // Substitua por como você está definindo o tipo de reunião
       physicalRoom: meetingData.physicalRoom,
       virtualRoom: meetingData.virtualRoom,
       participants: meetingData.selectedUsers, // Obtendo os IDs dos participantes selecionados
       meetingTheme: pautas,
-      insertTime: meetingData.insertTime
     };
+
     axios
       .post("http://localhost:8080/meeting/create", requestData, {
         withCredentials: true,
@@ -102,7 +117,7 @@ export default function NewMeeting() {
           progress: undefined,
           theme: "dark",
         });
-        window.location.reload();
+        
         // Lógica adicional após a criação da reunião, se necessário
       })
       .catch((error) => {
@@ -413,13 +428,13 @@ export default function NewMeeting() {
           <div className="">
             <div className="standardFlex flex-col items-center lg:items-start w-2/5 min-h-40">
               <label htmlFor="insertTime" className="text-2xl my-4 ">
-                Adicione um tempo pré-definido 
+                Duração da reunião
               </label>
               <input
                 type="time"
                 id="insertTime"
                 className="w-full lg:w-full h-12 p-1 border focus:border-black rounded-md bg-[#D9D9D9]"
-                onChange={(e) => handleChange(e, "inserTime", e.target.value)}
+                onChange={(e) => handleChange(e, "insertTime", e.target.value)}
               ></input>
             </div>
           <div className="w-full flex lg:justify-end mt-8">
