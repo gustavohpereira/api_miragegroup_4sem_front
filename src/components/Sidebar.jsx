@@ -20,7 +20,7 @@ export default function Sidebar() {
     {
       name: "Reuniões",
       icon: "/meeting.svg",
-      link: "/newMeeting",
+      link: "/meetings",
     },
     {
       name: "Usuários",

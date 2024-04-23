@@ -1,10 +1,12 @@
 import axios from "axios";
 import { format } from "date-fns";
 import { useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 
-export default function MeetingCard({ m, showDelete }) {
+export default function MeetingCard({ m, showDelete,showUpdate }) {
   const [isDeleted, setIsDeleted] = useState(false);
+  const navigate = useNavigate()
 
   const handleDelete = async (id) => {
     try {
@@ -32,6 +34,10 @@ export default function MeetingCard({ m, showDelete }) {
       console.error("Erro ao deletar reunião:", error);
     }
   };
+
+  function handleUpdate(){
+    navigate("/updateMeeting/" + m.id);
+  }
 
   var location = "";
 
@@ -81,7 +87,15 @@ export default function MeetingCard({ m, showDelete }) {
           {/* <button className="bg-[#FED353] hover:bg-[#F6A700] p-4 rounded-md border border-slate-400">
             <p>Entrar na Reunião</p>
           </button> */}
-
+                    {showUpdate == true && (
+            
+            <button
+                className="bg-[#FED353] hover:bg-[#F6A700] p-4 rounded-md border border-slate-400"
+                onClick={() => handleUpdate()}
+              >
+                <p>Atualizar Reunião</p>
+              </button>
+            )}
           {showDelete == true && (
             <button
               className="bg-red-400 hover:bg-red-500 p-4 rounded-md border border-slate-400"
@@ -90,6 +104,8 @@ export default function MeetingCard({ m, showDelete }) {
               <p>Excluir Reunião</p>
             </button>
           )}
+
+          
         </div>
       </div>
     );

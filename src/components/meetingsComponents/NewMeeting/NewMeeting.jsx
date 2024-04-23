@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import PageTitle from "../pageTitle/PageTitle";
+import PageTitle from "../../pageTitle/PageTitle";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import { AiOutlinePlus } from "react-icons/ai";
@@ -77,6 +77,7 @@ export default function NewMeeting() {
     // Montando o objeto de dados para enviar na requisição
     const requestData = {
       protocol: meetingData.protocol, // Substitua por como você está definindo o protocolo
+      description: meetingData.description,
       datetime: meetingData.datetime, // Substitua por como você está definindo a data e hora
       meetingType: selectedCategory, // Substitua por como você está definindo o tipo de reunião
       physicalRoom: meetingData.physicalRoom,
@@ -377,6 +378,7 @@ export default function NewMeeting() {
         onChange={(e) => setSinglePauta(e.target.value)}
       />
       <button
+        type="button"
         onClick={() => setPautas([...pautas, singlePauta])}
         className="bg-[#FED353] transition easy-in-out hover:bg-[#F6A700] p-3 rounded-full border border-slate-400"
       >

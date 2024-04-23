@@ -12,10 +12,11 @@ import {
 } from 'react-router-dom'
 import { AdminRoute, AuthenticatedRoute } from './ProtectedRoutes'
 import Logout from '../components/Logout/Logout'
-import NewMeeting from '../components/NewMeeting/NewMeeting'
-import ListMeetings from '../components/NewMeeting/listMeetings/ListMeetings'
+import NewMeeting from '../components/meetingsComponents/NewMeeting/NewMeeting'
+import ListMeetings from '../components/meetingsComponents/listMeetings/ListMeetings'
 import UserList from '../components/UsersComponents/UserList/userList'
 import EditUser from '../components/UsersComponents/editUser/editUser'
+import UpdateMeeting from '../components/meetingsComponents/updateMeeting/updateMeeting'
 
 
 const Routes = () => {
@@ -50,8 +51,8 @@ const Routes = () => {
                     element: <PageWrapper><RoomList/></PageWrapper>
                 },
                 {
-                    path: '/newMeeting',
-                    element: <PageWrapper><NewMeeting/><ListMeetings/></PageWrapper>
+                    path: '/meetings',
+                    element: <PageWrapper><ListMeetings/></PageWrapper>
                 },
                 {
                     path: '/Admin',
@@ -64,7 +65,15 @@ const Routes = () => {
                 {
                     path: '/EditUser/:userId',
                     element: <PageWrapper><EditUser/></PageWrapper>
-                }
+                },
+                {
+                    path: 'createMeeting',
+                    element: <PageWrapper><NewMeeting/></PageWrapper>
+                },
+                {
+                    path: 'updateMeeting/:meetingId',
+                    element: <PageWrapper><UpdateMeeting></UpdateMeeting></PageWrapper>
+                },
             ]
         }
     ]
