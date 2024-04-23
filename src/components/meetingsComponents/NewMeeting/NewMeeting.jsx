@@ -13,6 +13,7 @@ export default function NewMeeting() {
   const [selectedCategory, setSelectedCategory] = useState();
   const [users, setUsers] = useState([])
   const [salas, setSalas] = useState([]);
+  const [time, setTime] = useState([])
   const [singlePauta, setSinglePauta] = useState(``);
   const [pautas, setPautas] = useState([]);
 
@@ -83,7 +84,8 @@ export default function NewMeeting() {
       physicalRoom: meetingData.physicalRoom,
       virtualRoom: meetingData.virtualRoom,
       participants: meetingData.selectedUsers, // Obtendo os IDs dos participantes selecionados
-      meetingTheme: pautas
+      meetingTheme: pautas,
+      insertTime: meetingData.insertTime
     };
     axios
       .post("http://localhost:8080/meeting/create", requestData, {
@@ -369,37 +371,43 @@ export default function NewMeeting() {
   </div>
   {/* PAUTAS DA REUNIÃO */}
   <div className="standardFlex flex-col items-center lg:items-start w-2/5 min-h-40">
-    <label className="text-2xl my-4">Adicionar pautas a reunião</label>
-    <div className="w-full flex gap-4">
-      <input
-        type="text"
-        id="pautas"
-        className="w-full lg:w-full h-12 p-1 border focus:border-black rounded-md bg-[#D9D9D9]"
-        onChange={(e) => setSinglePauta(e.target.value)}
-      />
-      <button
-        type="button"
-        onClick={() => setPautas([...pautas, singlePauta])}
-        className="bg-[#FED353] transition easy-in-out hover:bg-[#F6A700] p-3 rounded-full border border-slate-400"
-      >
-        <AiOutlinePlus />
-      </button>
-    </div>
-
-    <div className="flex gap-4 w-full">
-      {pautas.length > 0
-        ? pautas.map((pauta, index) => (
-          <div
-            key={index}
-            className="flex border p-2 gap-4 justify-between rounded-lg my-2"
-          >
-            <p>{pauta}</p>
-            <button onClick={() => handlePautaDelete(index)}>X</button>
-          </div>
-        ))
-        : null}
-    </div>
+  <label className="text-2xl my-4">Adicionar pautas a reunião</label>
+  <div className="w-full flex gap-4">
+    <input
+      type="text"
+      id="pautas"
+      value={singlePauta}
+      className="w-full lg:w-full h-12 p-1 border focus:border-black rounded-md bg-[#D9D9D9]"
+      onChange={(e) => setSinglePauta(e.target.value)}
+    />
+    <button
+      type="button"
+      onClick={() => {
+        if (singlePauta.trim() !== "") {
+          setPautas([...pautas, singlePauta]);
+          setSinglePauta(""); // Limpa o campo de entrada
+        }
+      }}
+      className="bg-[#FED353] transition easy-in-out hover:bg-[#F6A700] p-3 rounded-full border border-slate-400"
+    >
+      <AiOutlinePlus />
+    </button>
   </div>
+
+  <div className="flex gap-4 w-full">
+    {pautas.length > 0
+      ? pautas.map((pauta, index) => (
+        <div
+          key={index}
+          className="flex border p-2 gap-4 justify-between rounded-lg my-2"
+        >
+          <p>{pauta}</p>
+          <button onClick={() => handlePautaDelete(index)}>X</button>
+        </div>
+      ))
+      : null}
+  </div>
+</div>
 </div>
 
           <div className="">
@@ -411,7 +419,7 @@ export default function NewMeeting() {
                 type="time"
                 id="insertTime"
                 className="w-full lg:w-full h-12 p-1 border focus:border-black rounded-md bg-[#D9D9D9]"
-                onChange={(e) => handleChange(e, "protocol", e.target.value)}
+                onChange={(e) => handleChange(e, "inserTime", e.target.value)}
               ></input>
             </div>
           <div className="w-full flex lg:justify-end mt-8">
