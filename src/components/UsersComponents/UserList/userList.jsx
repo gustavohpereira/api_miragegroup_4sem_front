@@ -39,7 +39,7 @@ export default function UserList() {
         <div className="container mx-auto">
             <div className="flex justify-between items-center mb-8">
                 <h1 className="font-bold text-4xl">Usuários</h1>
-                <button className='py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600' onClick={registerUser}>Criar novo usuário</button>
+                <button className='py-2 px-4 bg-gray-700 text-white rounded hover:bg-gray-900' onClick={registerUser}>Criar novo usuário</button>
             </div>
 
             <div className="overflow-x-auto">

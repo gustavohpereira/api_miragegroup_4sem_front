@@ -217,7 +217,7 @@ export default function NewMeeting() {
               <input
                 type="text"
                 id="meetingName"
-                className="w-full lg:w-full  p-1 border focus:border-black rounded-md bg-[#D9D9D9]"
+                className="w-full lg:w-full h-12 p-1 border focus:border-black rounded-md bg-[#D9D9D9]"
                 onChange={(e) => handleChange(e, "protocol", e.target.value)}
               ></input>
             </div>
@@ -265,7 +265,7 @@ export default function NewMeeting() {
               <input
                 type="datetime-local"
                 id="Data"
-                className="w-full lg:w-full  p-1 border focus:border-black rounded-md bg-[#D9D9D9]"
+                className="w-full lg:w-full h-12 p-1 border focus:border-black rounded-md bg-[#D9D9D9]"
                 onChange={(e) => handleChange(e, "datetime", e.target.value)}
               ></input>
             </div>
@@ -278,7 +278,7 @@ export default function NewMeeting() {
               <input
                 type="text"
                 id="description"
-                className="w-full lg:w-full  p-1 border focus:border-black rounded-md bg-[#D9D9D9]"
+                className="w-full lg:w-full h-12 p-1 border focus:border-black rounded-md bg-[#D9D9D9]"
                 onChange={(e) => handleChange(e, "description", e.target.value)}
               ></input>
             </div>
@@ -293,7 +293,7 @@ export default function NewMeeting() {
               <div className="standardFlex flex-col items-center lg:items-start w-2/5">
                 <label className="text-2xl my-4">Sala Fisica</label>
                 <select
-                  className="w-full lg:w-full  p-1 border focus:border-black rounded-md bg-[#D9D9D9]"
+                  className="w-full lg:w-full h-12 p-1 border focus:border-black rounded-md bg-[#D9D9D9]"
                   onChange={(e) => handleRoomSelection(e.target.value)}
                 >
                   <option value="replacePhysicalRoom">Sala fisica</option>
@@ -315,7 +315,7 @@ export default function NewMeeting() {
               <div className="standardFlex flex-col items-center lg:items-start w-2/5">
                 <label className="text-2xl my-4">Sala Virtual</label>
                 <select
-                  className="w-full lg:w-full  p-1 border focus:border-black rounded-md bg-[#D9D9D9]"
+                  className="w-full lg:w-full h-12 p-1 border focus:border-black rounded-md bg-[#D9D9D9]"
                   onChange={(e) => handleRoomSelection(e.target.value)}
                 >
                   <option value="replaceVirtualRoom">Sala Virtual</option>
@@ -343,7 +343,7 @@ export default function NewMeeting() {
   <div className="standardFlex flex-col items-center lg:items-start w-2/5 min-h-40">
     <label className="text-2xl my-4">Adicionar usuários a reunião</label>
     <select
-      className="w-full lg:w-full p-1 border focus:border-black rounded-md bg-[#D9D9D9]"
+      className="w-full lg:w-full h-12 p-1 border focus:border-black rounded-md bg-[#D9D9D9]"
       onChange={handleUserSelection}
     >
       <option value="">Adicione um novo usuario</option>
@@ -374,7 +374,7 @@ export default function NewMeeting() {
       <input
         type="text"
         id="pautas"
-        className="w-full lg:w-full p-1 border focus:border-black rounded-md bg-[#D9D9D9]"
+        className="w-full lg:w-full h-12 p-1 border focus:border-black rounded-md bg-[#D9D9D9]"
         onChange={(e) => setSinglePauta(e.target.value)}
       />
       <button
@@ -402,14 +402,26 @@ export default function NewMeeting() {
   </div>
 </div>
 
-
-          <div className="mt-8 w-full flex lg:justify-end  ">
+          <div className="">
+            <div className="standardFlex flex-col items-center lg:items-start w-2/5 min-h-40">
+              <label htmlFor="insertTime" className="text-2xl my-4 ">
+                Adicione um tempo pré-definido 
+              </label>
+              <input
+                type="time"
+                id="insertTime"
+                className="w-full lg:w-full h-12 p-1 border focus:border-black rounded-md bg-[#D9D9D9]"
+                onChange={(e) => handleChange(e, "protocol", e.target.value)}
+              ></input>
+            </div>
+          <div className="w-full flex lg:justify-end mt-8">
             <button
               type="submit"
               className="bg-[#FED353] transition easy-in-out hover:bg-[#F6A700] p-3 rounded-md border border-slate-400 w-2/12"
             >
               Criar
             </button>
+          </div>
           </div>
 
 
