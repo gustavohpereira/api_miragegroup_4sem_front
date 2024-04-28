@@ -80,7 +80,7 @@ export default function Sidebar() {
         </button>
       </div> */}
       <Link to="/logout" replace={true}>
-      <button className="bg-[#FED353] transition easy-in-out hover:bg-[#D83838] lg:w-12 p-2 w-8 rounded-full">
+      <button className="bg-[#FED353] transition easy-in-out hover:bg-[#D83838] lg:w-12 p-2 w-8 rounded-full fixed bottom-12">
           <img src="/logout.svg" className=""></img>
       </button>
       </Link>
