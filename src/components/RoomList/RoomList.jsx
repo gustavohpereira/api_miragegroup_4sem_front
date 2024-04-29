@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
 import PageTitle from "../pageTitle/PageTitle";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 
 export default function RoomList() {
   const [salas, setSalas] = useState([]);
   const [tipoReuniao, setTipoReuniao] = useState("Todos");
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     async function fetchSalas() {
@@ -35,12 +39,16 @@ export default function RoomList() {
     setTipoReuniao(event.target.value);
   };
 
+  const createRoom = () => {
+    navigate("/createRoom");
+  };
+
   const filteredSalas = tipoReuniao === "Todos" ? salas : salas.filter((sala) => sala.type === tipoReuniao);
 
   return (
     <div>
       <PageTitle>Salas</PageTitle>
-      <div className="gap-4 flex my-8 ">
+      <div className="gap-4 flex my-8 justify-between	">
         <select
           className="bg-[#FED353] hover:bg-[#F6A700] p-3 rounded-md border border-slate-400 w-1/12"
           value={tipoReuniao}
@@ -50,6 +58,12 @@ export default function RoomList() {
           <option value="Física">Física</option>
           <option value="Virtual">Virtual</option>
         </select>
+        <button
+          className="bg-[#FED353] transition easy-in-out hover:bg-[#F6A700] py-3 px-0.5 rounded-md border border-slate-400 w-2/12"
+          onClick={createRoom}
+        >
+          Criar nova Sala
+        </button>
       </div>
       <div className="flex flex-col gap-4 my-8 ">
         {filteredSalas.map((sala) => {
@@ -65,7 +79,6 @@ export default function RoomList() {
                   <p>{sala.type}</p>
                 </div>
               </div>
-
             </div>
           );
         })}

@@ -4,6 +4,7 @@ import Login from '../components/Login/Login'
 import PageWrapper from '../components/PageWrapper/PageWrapper'
 import Register from '../components/Register/Register'
 import RoomList from '../components/RoomList/RoomList'
+import CreateRoom from '../components/RoomList/create/CreateRoom'
 import { AddUserComponent } from '../components/UsersComponents/addUser/AddUserComponent'
 import {
   createBrowserRouter,
@@ -49,6 +50,10 @@ const Routes = () => {
                 {
                     path: '/newRoom',
                     element: <PageWrapper><RoomList/></PageWrapper>
+                },
+                {
+                    path: '/createRoom',
+                    element: <PageWrapper><CreateRoom/></PageWrapper>
                 },
                 {
                     path: '/meetings',
