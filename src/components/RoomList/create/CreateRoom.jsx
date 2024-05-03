@@ -5,6 +5,8 @@ import { ToastContainer, toast } from "react-toastify";
 import { AiOutlinePlus } from "react-icons/ai";
 
 export default function NewRoom() {
+
+  const [roomTypes, setRoomTypes] = useState([]);
   const [roomData, setRoomData] = useState({
     name: "",
     description: "",
@@ -22,16 +24,30 @@ export default function NewRoom() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    const data = {
-      name: roomData.name,
-      accessLevel : roomData.accessLevel,
-      location : roomData.description,
-      occupancy : roomData.capacity,
-      description : roomData.description
+    let endpoint = "http://localhost:8080/physicalRoom/create"
+    if (roomTypes === `Virtual`) { 
+      endpoint = "http://localhost:8080/virtualRoom/create"
     }
+    
+    let data = {
+      name: roomData.name,
+      login:`admin`,
+      password:`admin`,
+      accessLevel: roomData.accessLevel
+    }
+    if (roomTypes === `Fisica`) { 
+      data = {
+        name: roomData.name,
+        accessLevel: roomData.accessLevel,
+        location: roomData.description,
+        occupancy: roomData.capacity,
+        description: roomData.description
+      }
+    }
+
+    console.log(data)
     try {
-      const response = await axios.post("http://localhost:8080/physicalRoom/create", data, {
+      const response = await axios.post(endpoint, data, {
         withCredentials: true,
       });
 
@@ -51,7 +67,7 @@ export default function NewRoom() {
         console.log(response.status)
         console.log("Erro ao criar sala");
       }
-      
+
 
       // Lógica adicional após a criação da sala, se necessário
     } catch (error) {
@@ -134,6 +150,36 @@ export default function NewRoom() {
                 min={0}
                 onChange={(e) => handleChange(e, "capacity")}
               />
+            </div>
+
+
+          </div>
+
+          {/* Linha 3: Criação da categoria */}
+          <div className="w-full flex justify-between items-center gap-32">
+
+            <div className="flex flex-col items-start gap-8">
+              <label className="text-2xl my-4">Categoria da Sala</label>
+              <div className="flex gap-8">
+                <button
+                  type="button"
+                  className={`border border-slate-400 ${roomTypes === `Fisica` ? "bg-[#F6A700] " : ""
+                    } p-4 rounded-md`}
+                  onClick={(e) => setRoomTypes(`Fisica`)}
+                >
+                  Fisica
+                </button>
+                <button
+                  type="button"
+                  className={`border border-slate-400 ${roomTypes === `Virtual` ? "bg-[#F6A700] " : ""
+                    } p-4 rounded-md`}
+                  onClick={(e) => setRoomTypes(`Virtual`)}
+                >
+                  Virtual
+                </button>
+              </div>
+
+
             </div>
           </div>
 

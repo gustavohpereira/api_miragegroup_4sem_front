@@ -6,17 +6,27 @@ import { toast, ToastContainer } from "react-toastify";
 
 export default function RoomCard({ sala, showDelete }) {
     const [isDeleted, setIsDeleted] = useState(false);
+    console.log(sala.id)
 
-    const handleDelete = async (id) => {
+    const handleDelete = async (id,type) => {
+        let endpoint = "http://localhost:8080/physicalRoom/delete"
+
+        if (type === "Virtual") {
+            endpoint = "http://localhost:8080/virtualRoom/delete"
+        }
+
+
         try {
           const confirm = window.confirm(
             "Tem certeza que deseja excluir esta Sala?"
           );
           if (confirm) {
             const data = { id: id };
-            await axios.delete(`http://localhost:8080/physicalRoom/delete`, {
+            const response = await axios.delete(endpoint, {
               data: data,
             });
+            console.log(type);
+            if (response.status === 200) {
             setIsDeleted(true);
             toast.success("Sala deletada com sucesso", {
               position: "top-center",
@@ -28,7 +38,7 @@ export default function RoomCard({ sala, showDelete }) {
               progress: undefined,
               theme: "dark",
             });
-          }
+          }}
         } catch (error) {
           console.error("Erro ao deletar Sala:", error);
         }
@@ -63,7 +73,7 @@ export default function RoomCard({ sala, showDelete }) {
           {showDelete == true && (
             <button
               className="bg-red-400 hover:bg-red-500 p-4 rounded-md border border-slate-400"
-              onClick={() => handleDelete(sala.id)}
+              onClick={() => handleDelete(sala.id,sala.type)}
             >
               <p>Excluir Reunião</p>
             </button>
