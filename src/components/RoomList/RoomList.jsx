@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import PageTitle from "../pageTitle/PageTitle";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import RoomCard from "../Cards/roomCard";
 
 
 export default function RoomList() {
@@ -68,18 +69,7 @@ export default function RoomList() {
       <div className="flex flex-col gap-4 my-8 ">
         {filteredSalas.map((sala) => {
           return (
-            <div className="standardFlex border border-black rounded-lg items-center p-2 px-6 justify-between w-full" key={sala.nome}>
-              <div className="flex gap-4">
-                <div className="">
-                  <h1 className="text-3xl">{sala.location}</h1>
-                  <p className="text-2xl font-light">Capacidade máxima: {sala.occupancy}</p>
-                </div>
-                <div className="flex gap-8">
-                  <p>{sala.dataMarcada}</p>
-                  <p>{sala.type}</p>
-                </div>
-              </div>
-            </div>
+            <RoomCard sala={sala} showDelete={true} key={sala.id}></RoomCard>
           );
         })}
       </div>
