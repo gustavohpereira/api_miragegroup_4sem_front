@@ -23,20 +23,35 @@ export default function NewRoom() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    const data = {
+      name: roomData.name,
+      accessLevel : roomData.accessLevel,
+      location : roomData.description,
+      occupancy : roomData.capacity,
+      description : roomData.description
+    }
     try {
-      const response = await axios.post("http://localhost:8080/room/create", roomData, {
+      const response = await axios.post("http://localhost:8080/physicalRoom/create", data, {
         withCredentials: true,
       });
-      toast.success("Sala criada com sucesso", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
+
+      if (response.status === 200) {
+        console.log("Sala criada com sucesso");
+        toast.success("Sala criada com sucesso", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      } else {
+        console.log(response.status)
+        console.log("Erro ao criar sala");
+      }
+      
 
       // Lógica adicional após a criação da sala, se necessário
     } catch (error) {
