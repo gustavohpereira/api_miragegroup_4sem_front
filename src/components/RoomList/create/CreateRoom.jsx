@@ -51,7 +51,7 @@ export default function NewRoom() {
         withCredentials: true,
       });
 
-      if (response.status === 200) {
+      if (response.status === 201) {
         console.log("Sala criada com sucesso");
         toast.success("Sala criada com sucesso", {
           position: "top-center",

@@ -75,7 +75,7 @@ export default function RoomCard({ sala, showDelete }) {
               className="bg-red-400 hover:bg-red-500 p-4 rounded-md border border-slate-400"
               onClick={() => handleDelete(sala.id,sala.type)}
             >
-              <p>Excluir Reunião</p>
+              <p>Excluir Sala</p>
             </button>
           )}
 

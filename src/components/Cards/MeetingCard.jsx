@@ -44,7 +44,7 @@ export default function MeetingCard({ m, showDelete,showUpdate }) {
   var meetingType = "";
 
   if (m.meetingType == 1) {
-    meetingType = "Fisica";
+    meetingType = "Presencial";
     location = "Local: " + m.physicalRoom.location;
   } else if (m.meetingType == 2) {
     meetingType = "Hibrida";
@@ -76,10 +76,12 @@ export default function MeetingCard({ m, showDelete,showUpdate }) {
             </p>
             <p className="text-lg font-light">{location}</p>
           </div>
-
-          <div className="flex gap-8">
+          <div className="flex flex-col   min-w-96 max-w-min-w-96">
             <p className="text-lg font-light">
-              {format(new Date(m.datetime), "dd/MM/yyyy HH:mm")}
+              {format(new Date(m.beginning_time), "dd/MM/YYY")}
+            </p>
+            <p className="text-lg font-light">
+              {format(new Date(m.beginning_time), "HH:mm")} - {format(new Date(m.end_time), "HH:mm")}
             </p>
           </div>
         </div>
