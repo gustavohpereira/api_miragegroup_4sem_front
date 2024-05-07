@@ -167,7 +167,7 @@ export default function NewRoom() {
                     } p-4 rounded-md`}
                   onClick={(e) => setRoomTypes(`Fisica`)}
                 >
-                  Fisica
+                  Presencial
                 </button>
                 <button
                   type="button"

@@ -17,6 +17,8 @@ export default function NewMeeting() {
   const [singlePauta, setSinglePauta] = useState(``);
   const [pautas, setPautas] = useState([]);
 
+  
+
   //   PEGAR AS SALAS
   useEffect(() => {
     async function fetchSalas() {
@@ -30,7 +32,7 @@ export default function NewMeeting() {
 
         const responseSalasFisicasData = responseSalasFisicas.data.map(
           (sala) => {
-            return { ...sala, type: "Fisica" };
+            return { ...sala, type: "Física" };
           }
         );
 
@@ -44,8 +46,9 @@ export default function NewMeeting() {
           ...responseSalasFisicasData,
           ...responseSalasVirtuaisData,
         ];
-
+        console.log(response)
         setSalas(response);
+        
       } catch (error) {
         console.error("Erro ao buscar salas:", error);
       }
@@ -308,17 +311,17 @@ export default function NewMeeting() {
 
             {selectedCategory == 1 || selectedCategory == 2 ? (
               <div className="standardFlex flex-col items-center lg:items-start w-2/5">
-                <label className="text-2xl my-4">Sala Fisica</label>
+                <label className="text-2xl my-4">Sala Presencial</label>
                 <select
                   className="w-full lg:w-full h-12 p-1 border focus:border-black rounded-md bg-[#D9D9D9]"
                   onChange={(e) => handleRoomSelection(e.target.value)}
                 >
-                  <option value="replacePhysicalRoom">Sala fisica</option>
+                  <option value="replacePhysicalRoom">Sala Presencial</option>
                   {salas
-                    .filter((sala) => sala.type === "Fisica")
+                    .filter((sala) => sala.type === "Física")
                     .map((sala) => (
-                      <option key={sala} value={sala.id}>
-                        {sala.location}
+                      <option key={sala} value={sala.name}>
+                        {sala.name}
                       </option>
                     ))}
                 </select>
@@ -340,7 +343,7 @@ export default function NewMeeting() {
                     .filter((sala) => sala.type === "Virtual")
                     .map((sala) => (
                       <option key={sala} value={sala.id}>
-                        {sala.id}
+                        {sala.name}
                       </option>
                     ))}
                 </select>

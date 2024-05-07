@@ -6,7 +6,7 @@ import { toast, ToastContainer } from "react-toastify";
 
 export default function RoomCard({ sala, showDelete }) {
     const [isDeleted, setIsDeleted] = useState(false);
-    console.log(sala.id)
+    console.log(sala)
 
     const handleDelete = async (id,type) => {
         let endpoint = "http://localhost:8080/physicalRoom/delete"
@@ -49,12 +49,13 @@ export default function RoomCard({ sala, showDelete }) {
         <div className="standardFlex border border-black rounded-lg items-center p-2 px-6 justify-between w-full" key={sala.nome}>
             <div className="flex gap-4">
                 <div className="">
-                    <h1 className="text-3xl">{sala.location}</h1>
+                  {sala.type == "Virtual"?<h1 className="text-3xl">{sala.name}</h1>:<h1 className="text-3xl">{sala.name}</h1>}
+                    
                     <p className="text-2xl font-light">Capacidade máxima: {sala.occupancy}</p>
                 </div>
                 <div className="flex gap-8">
                     <p>{sala.dataMarcada}</p>
-                    <p>{sala.type}</p>
+                    <p>{sala.type == "Física"?"Presencial":sala.type}</p>
                 </div>
             </div>
             <div className="flex gap-8">

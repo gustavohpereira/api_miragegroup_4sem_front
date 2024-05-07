@@ -44,11 +44,16 @@ export default function MeetingCard({ m, showDelete,showUpdate }) {
   var meetingType = "";
 
   if (m.meetingType == 1) {
-    meetingType = "Presencial";
+    meetingType = "Física";
     location = "Local: " + m.physicalRoom.location;
   } else if (m.meetingType == 2) {
     meetingType = "Hibrida";
-    location = "Local: " + m.physicalRoom.location;
+    if (m.physicalRoom != null){
+        // location = "virtual somente"
+    }else{
+
+      // location = "Local: " + m.physicalRoom.location;
+    }
   } else {
     meetingType = "Virtual";
   }
@@ -56,6 +61,7 @@ export default function MeetingCard({ m, showDelete,showUpdate }) {
   if (isDeleted) {
     return null;
   } else {
+    console.log(m)
     return (
       <div
         className="standardFlex border border-black rounded-lg items-center p-2 px-6 justify-between w-full"
@@ -74,7 +80,7 @@ export default function MeetingCard({ m, showDelete,showUpdate }) {
                 ? m.physicalRoom.occupancy
                 : "livre"}
             </p>
-            <p className="text-lg font-light">{location}</p>
+            <p className="text-lg font-light">{meetingType == "Virtual"? null: location}</p>
           </div>
           <div className="flex flex-col   min-w-96 max-w-min-w-96">
             <p className="text-lg font-light">
