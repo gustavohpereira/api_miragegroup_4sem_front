@@ -1,7 +1,21 @@
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext'
+import { useNavigate } from 'react-router-dom';
 
 export default function Sidebar() {
+  const nav = useNavigate()
+  function handleLogoutSidebar() {
+    
+    const confirm = window.confirm("Tem certeza que deseja sair?");
+    if (confirm == true) {
+      nav("/logout")
+    }
+    else{
+      return
+    }
+
+  }
+
 
   const { user } = useAuth()
 
@@ -30,7 +44,7 @@ export default function Sidebar() {
   ];
 
   return (
-    <div className="h-16 w-full  lg:h-screen lg:w-[15%] sticky top-0 bg-sidebar-bg lg:w-sidebar-width border-r border-sidebar-border bg-[#262932] flex lg:flex-col justify-start items-center lg:py-6">
+    <div className="h-16 w-full  lg:h-screen lg:min-w-[15rem] lg:max-w-[15rem] sticky top-0 bg-sidebar-bg lg:w-sidebar-width border-r border-sidebar-border bg-[#262932] flex lg:flex-col justify-start items-center lg:py-6">
       <div className=" w-full lg:flex justify-center items-center py-6 hidden">
         <img src="/orca_logo.svg" alt="" className="h-20 w-20 bg-[#FED353] rounded-full"></img>
       </div>
@@ -79,11 +93,10 @@ export default function Sidebar() {
           <img src="/home_logo.svg" className=""></img>
         </button>
       </div> */}
-      <Link to="/logout" replace={true}>
-      <button className="bg-[#FED353] transition easy-in-out hover:bg-[#D83838] lg:w-12 p-2 w-8 rounded-full fixed bottom-12">
-          <img src="/logout.svg" className=""></img>
-      </button>
-      </Link>
+        <button type='button' className="bg-[#FED353] transition easy-in-out hover:bg-[#D83838] lg:w-12 p-2 w-8 rounded-full" onClick={handleLogoutSidebar}>
+            <img src="/logout.svg" className=""></img>
+        </button>
+
     </div>
   );
 }

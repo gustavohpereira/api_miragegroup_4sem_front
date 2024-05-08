@@ -58,16 +58,16 @@ export default function MeetingCard({ m, showDelete,showUpdate }) {
   } else {
     return (
       <div
-        className="standardFlex border border-black rounded-lg items-center p-2 px-6 justify-between w-full"
+        className="standardFlex border border-black rounded-lg items-center p-2 px-6  w-4/6 justify-between gap-4"
         key={m.nome}
       >
         
-        <div className="flex justify-start gap-4">
-          <div className=" min-w-96 max-w-96">
+        <div className="flex justify-start gap-4 ">
+          <div className=" ">
             <h1 className="text-2xl ">{m.protocol}</h1>
             <p className="text-lg font-light">Tipo de reunião: {meetingType}</p>
           </div>
-          <div className="flex flex-col   min-w-96 max-w-min-w-96">
+          <div className="flex flex-col   ">
             <p className="text-lg font-light">
               Capacidade máxima:{" "}
               {m.meetingType == 1 || m.meetingType == 2
@@ -76,7 +76,7 @@ export default function MeetingCard({ m, showDelete,showUpdate }) {
             </p>
             <p className="text-lg font-light">{location}</p>
           </div>
-          <div className="flex flex-col   min-w-96 max-w-min-w-96">
+          <div className="flex flex-col   ">
             <p className="text-lg font-light">
               {format(new Date(m.beginning_time), "dd/MM/YYY")}
             </p>
@@ -85,14 +85,14 @@ export default function MeetingCard({ m, showDelete,showUpdate }) {
             </p>
           </div>
         </div>
-        <div className="flex gap-8">
+        <div className="flex gap-8 w-1/3">
           {/* <button className="bg-[#FED353] hover:bg-[#F6A700] p-4 rounded-md border border-slate-400">
             <p>Entrar na Reunião</p>
           </button> */}
                     {showUpdate == true && (
             
             <button
-                className="bg-[#FED353] hover:bg-[#F6A700] p-4 rounded-md border border-slate-400"
+                className="bg-[#FED353] hover:bg-[#F6A700] p-3 rounded-md border border-slate-400"
                 onClick={() => handleUpdate()}
               >
                 <p>Atualizar Reunião</p>
@@ -100,7 +100,7 @@ export default function MeetingCard({ m, showDelete,showUpdate }) {
             )}
           {showDelete == true && (
             <button
-              className="bg-red-400 hover:bg-red-500 p-4 rounded-md border border-slate-400"
+              className="bg-red-400 hover:bg-red-500 p-3 rounded-md border border-slate-400"
               onClick={() => handleDelete(m.id)}
             >
               <p>Excluir Reunião</p>

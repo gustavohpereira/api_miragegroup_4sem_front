@@ -53,7 +53,7 @@ export default function ListMeetings() {
           Criar nova Reunião
         </button>
       </div>
-      <div className="flex flex-col gap-4 my-8 ">
+      <div className="standardFlex flex-col gap-4 my-8 items-start ">
         {filteredMeetings.map((m) => {
           return <MeetingCard m={m} showDelete={true} showUpdate={true} />;
         })}
