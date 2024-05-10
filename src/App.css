@@ -203,8 +203,9 @@ img, video {
   padding: 1.5rem 0;
 }
 .loginPage .container .formDiv .headerDiv img {
-  width: 60px;
+  width: 100px;
   padding-bottom: 0.5rem;
+  margin-right: 1rem;
 }
 .loginPage .container .formDiv .headerDiv h3 {
   font-size: 25px;
@@ -238,7 +239,7 @@ img, video {
 }
 .loginPage .container .formDiv .form .btn {
   padding: 0.8rem;
-  background: var(--primaryColor);
+  background: #FED353;
   border-radius: 10px;
   color: var(--whiteColor);
   align-items: center;

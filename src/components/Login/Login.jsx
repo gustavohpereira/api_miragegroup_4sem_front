@@ -47,12 +47,7 @@ const Login = () => {
                     <p>Sistemas Integrados de Alto Teor Tecnológico</p>
                 </div>
 
-                <div className="footerDiv flex ">
-                    <span className="text">Não tem uma conta? </span>
-                    <Link to={'/register'}>
-                    <button className="btn">Inscreva-se</button>
-                    </Link>
-                 </div>
+            
             </div>
 
             <div className="formDiv flex">
@@ -62,7 +57,7 @@ const Login = () => {
                 </div>
 
                 <form action="" className="form grid">
-                    <span className="showMessage">Aqui vai o status do Login</span>
+                
 
                     <div className="inputDiv">
                         <label htmlFor="username">Email</label>
@@ -85,10 +80,7 @@ const Login = () => {
                         <AiOutlineSwapRight className='icon' />
                     </button>
 
-                    <span className="forgotPassword">
-                        Esqueceu da senha? <a href="">Click Aqui</a>
-
-                    </span>
+                
 
                 </form>
 
