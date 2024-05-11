@@ -3,12 +3,15 @@ import PageTitle from "../../pageTitle/PageTitle";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import { AiOutlinePlus } from "react-icons/ai";
+import { formatISO } from "date-fns";
 
 export default function NewMeeting() {
+  const accessToken = localStorage.getItem("accessToken");
   const [meetingData, setMeetingData] = useState({
     selectedUsers: [],
     physicalRoom: null,
     virtualRoom: null,
+    accessToken: accessToken,
   });
   const [selectedCategory, setSelectedCategory] = useState();
   const [users, setUsers] = useState([])
@@ -72,8 +75,17 @@ export default function NewMeeting() {
     });
   };
 
+  const convertTimeToMinutes = (timeString) => {
+    const [hoursString, minutesString] = timeString.split(":");
+    const hours = parseInt(hoursString, 10);
+    const minutes = parseInt(minutesString, 10);
+    return hours * 60 + minutes;
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    const durationInMinutes = convertTimeToMinutes(meetingData.insertTime);
 
     let endTime = new Date()
     let [minutes, seconds] = meetingData.insertTime.split(":")
@@ -91,10 +103,13 @@ export default function NewMeeting() {
 
     // Montando o objeto de dados para enviar na requisição
     const requestData = {
-      protocol: meetingData.protocol, // Substitua por como você está definindo o protocolo
+      topic: meetingData.protocol, // Substitua por como você está definindo o protocolo
       description: meetingData.description,
       beginning_time: meetingData.datetime, // Substitua por como você está definindo a data e hora
       end_time: meetingData.insertTime,
+      duration: durationInMinutes,
+      startDate: formatISO(meetingData.datetime),
+      accessToken: meetingData.accessToken,
       meetingType: selectedCategory, // Substitua por como você está definindo o tipo de reunião
       physicalRoom: meetingData.physicalRoom,
       virtualRoom: meetingData.virtualRoom,
@@ -102,6 +117,29 @@ export default function NewMeeting() {
       meetingTheme: pautas,
     };
 
+    // Enviar a requisição para o backend
+    axios
+      .post("http://localhost:8080/meeting/create-meeting", requestData, {
+        withCredentials: true,
+      })
+      .then((response) => {
+        toast.success("Reunião criada com sucesso", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+
+        // Lógica adicional após a criação da reunião, se necessário
+      })
+      .catch((error) => {
+        console.error(error);
+        // Tratamento de erro, se necessário
+      });
     axios
       .post("http://localhost:8080/meeting/create", requestData, {
         withCredentials: true,
