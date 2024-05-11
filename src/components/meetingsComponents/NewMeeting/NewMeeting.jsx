@@ -117,7 +117,7 @@ export default function NewMeeting() {
           progress: undefined,
           theme: "dark",
         });
-        
+
         // Lógica adicional após a criação da reunião, se necessário
       })
       .catch((error) => {
@@ -354,76 +354,76 @@ export default function NewMeeting() {
 
 
 
-{/* QUARTA LINHA */}
-<div className="w-full flex justify-between items-center gap-12 min-h-40">
-  {/* USUARIO */}
-  <div className="standardFlex flex-col items-center lg:items-start w-2/5 min-h-40">
-    <label className="text-2xl my-4">Adicionar usuários a reunião</label>
-    <select
-      className="w-full lg:w-full h-12 p-1 border focus:border-black rounded-md bg-[#D9D9D9]"
-      onChange={handleUserSelection}
-    >
-      <option value="">Adicione um novo usuario</option>
-      {users.map((user) => (
-        <option key={user.email} value={user.id}>
-          {user.name}
-        </option>
-      ))}
-    </select>
-    <div className="flex gap-4 w-full">
-      {meetingData.selectedUsers.length > 0
-        ? meetingData.selectedUsers.map((user) => (
-          <div
-            key={user.id}
-            className="flex border p-2 gap-4 justify-between rounded-lg my-2"
-          >
-            <p>{user.name}</p>
-            <button onClick={() => handleRemoveUser(user.id)}>X</button>
-          </div>
-        ))
-        : null}
-    </div>
-  </div>
-  {/* PAUTAS DA REUNIÃO */}
-  <div className="standardFlex flex-col items-center lg:items-start w-2/5 min-h-40">
-  <label className="text-2xl my-4">Adicionar pautas a reunião</label>
-  <div className="w-full flex gap-4">
-    <input
-      type="text"
-      id="pautas"
-      value={singlePauta}
-      className="w-full lg:w-full h-12 p-1 border focus:border-black rounded-md bg-[#D9D9D9]"
-      onChange={(e) => setSinglePauta(e.target.value)}
-    />
-    <button
-      type="button"
-      onClick={() => {
-        if (singlePauta.trim() !== "") {
-          setPautas([...pautas, singlePauta]);
-          setSinglePauta(""); // Limpa o campo de entrada
-        }
-      }}
-      className="bg-[#FED353] transition easy-in-out hover:bg-[#F6A700] p-3 rounded-full border border-slate-400"
-    >
-      <AiOutlinePlus />
-    </button>
-  </div>
+          {/* QUARTA LINHA */}
+          <div className="w-full flex justify-between items-center gap-12 min-h-40">
+            {/* USUARIO */}
+            <div className="standardFlex flex-col items-center lg:items-start w-2/5 min-h-40">
+              <label className="text-2xl my-4">Adicionar usuários a reunião</label>
+              <select
+                className="w-full lg:w-full h-12 p-1 border focus:border-black rounded-md bg-[#D9D9D9]"
+                onChange={handleUserSelection}
+              >
+                <option value="">Adicione um novo usuario</option>
+                {users.map((user) => (
+                  <option key={user.email} value={user.id}>
+                    {user.name}
+                  </option>
+                ))}
+              </select>
+              <div className="flex gap-4 w-full">
+                {meetingData.selectedUsers.length > 0
+                  ? meetingData.selectedUsers.map((user) => (
+                    <div
+                      key={user.id}
+                      className="flex border p-2 gap-4 justify-between rounded-lg my-2"
+                    >
+                      <p>{user.name}</p>
+                      <button onClick={() => handleRemoveUser(user.id)}>X</button>
+                    </div>
+                  ))
+                  : null}
+              </div>
+            </div>
+            {/* PAUTAS DA REUNIÃO */}
+            <div className="standardFlex flex-col items-center lg:items-start w-2/5 min-h-40">
+              <label className="text-2xl my-4">Adicionar pautas a reunião</label>
+              <div className="w-full flex gap-4">
+                <input
+                  type="text"
+                  id="pautas"
+                  value={singlePauta}
+                  className="w-full lg:w-full h-12 p-1 border focus:border-black rounded-md bg-[#D9D9D9]"
+                  onChange={(e) => setSinglePauta(e.target.value)}
+                />
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (singlePauta.trim() !== "") {
+                      setPautas([...pautas, singlePauta]);
+                      setSinglePauta(""); // Limpa o campo de entrada
+                    }
+                  }}
+                  className="bg-[#FED353] transition easy-in-out hover:bg-[#F6A700] p-3 rounded-full border border-slate-400"
+                >
+                  <AiOutlinePlus />
+                </button>
+              </div>
 
-  <div className="flex gap-4 w-full">
-    {pautas.length > 0
-      ? pautas.map((pauta, index) => (
-        <div
-          key={index}
-          className="flex border p-2 gap-4 justify-between rounded-lg my-2"
-        >
-          <p>{pauta}</p>
-          <button onClick={() => handlePautaDelete(index)}>X</button>
-        </div>
-      ))
-      : null}
-  </div>
-</div>
-</div>
+              <div className="flex gap-4 w-full">
+                {pautas.length > 0
+                  ? pautas.map((pauta, index) => (
+                    <div
+                      key={index}
+                      className="flex border p-2 gap-4 justify-between rounded-lg my-2"
+                    >
+                      <p>{pauta}</p>
+                      <button onClick={() => handlePautaDelete(index)}>X</button>
+                    </div>
+                  ))
+                  : null}
+              </div>
+            </div>
+          </div>
 
           <div className="">
             <div className="standardFlex flex-col items-center lg:items-start w-2/5 min-h-40">
@@ -437,14 +437,14 @@ export default function NewMeeting() {
                 onChange={(e) => handleChange(e, "insertTime", e.target.value)}
               ></input>
             </div>
-          <div className="w-full flex lg:justify-end mt-8">
-            <button
-              type="submit"
-              className="bg-[#FED353] transition easy-in-out hover:bg-[#F6A700] p-3 rounded-md border border-slate-400 w-2/12"
-            >
-              Criar
-            </button>
-          </div>
+            <div className="w-full flex lg:justify-end mt-8">
+              <button
+                type="submit"
+                className="bg-[#FED353] transition easy-in-out hover:bg-[#F6A700] p-3 rounded-md border border-slate-400 w-2/12"
+              >
+                Criar
+              </button>
+            </div>
           </div>
 
 
