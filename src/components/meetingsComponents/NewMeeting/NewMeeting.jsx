@@ -122,42 +122,29 @@ export default function NewMeeting() {
       .post("http://localhost:8080/meeting/create-meeting", requestData, {
         withCredentials: true,
       }).then((response) => {
-        console.log("join ", response.data.join_url)
-        console.log("start ",response.data.start_url)
-        console.log("passcode ",response.data.pstn_password)
         requestData.join_url = response.data.join_url
-        requestData.start_url = response.data.start_url
-        requestData.passcode = response.data.pstn_password
 
-        console.log(requestData)
-
-      })
-      .catch((error) => {
-        console.error(error);
-        // Tratamento de erro, se necessário
-      });
-    axios
-      .post("http://localhost:8080/meeting/create", requestData, {
+        axios.post("http://localhost:8080/meeting/create", requestData, {
         withCredentials: true,
-      })
-      .then((response) => {
-        toast.success("Reunião criada com sucesso", {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        });
-
-        // Lógica adicional após a criação da reunião, se necessário
+        })
+        .then((response) => {
+          toast.success("Reunião criada com sucesso", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
+        })
       })
       .catch((error) => {
         console.error(error);
         // Tratamento de erro, se necessário
       });
+    
   };
 
   const handleRoomSelection = (id) => {
