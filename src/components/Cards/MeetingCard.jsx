@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 
-export default function MeetingCard({ m, showDelete,showUpdate }) {
+export default function MeetingCard({ m, showDelete, showUpdate }) {
   const [isDeleted, setIsDeleted] = useState(false);
   const navigate = useNavigate()
 
@@ -35,7 +35,7 @@ export default function MeetingCard({ m, showDelete,showUpdate }) {
     }
   };
 
-  function handleUpdate(){
+  function handleUpdate() {
     navigate("/updateMeeting/" + m.id);
   }
 
@@ -61,10 +61,10 @@ export default function MeetingCard({ m, showDelete,showUpdate }) {
         className="standardFlex border border-black rounded-lg items-center p-2 px-6 justify-between w-full"
         key={m.nome}
       >
-        
+
         <div className="flex justify-start gap-4">
           <div className=" min-w-96 max-w-96">
-            <h1 className="text-2xl ">{m.protocol}</h1>
+            <h1 className="text-2xl ">{m.topic}</h1>
             <p className="text-lg font-light">Tipo de reunião: {meetingType}</p>
           </div>
           <div className="flex flex-col   min-w-96 max-w-min-w-96">
@@ -89,15 +89,15 @@ export default function MeetingCard({ m, showDelete,showUpdate }) {
           {/* <button className="bg-[#FED353] hover:bg-[#F6A700] p-4 rounded-md border border-slate-400">
             <p>Entrar na Reunião</p>
           </button> */}
-                    {showUpdate == true && (
-            
+          {showUpdate == true && (
+
             <button
-                className="bg-[#FED353] hover:bg-[#F6A700] p-4 rounded-md border border-slate-400"
-                onClick={() => handleUpdate()}
-              >
-                <p>Atualizar Reunião</p>
-              </button>
-            )}
+              className="bg-[#FED353] hover:bg-[#F6A700] p-4 rounded-md border border-slate-400"
+              onClick={() => handleUpdate()}
+            >
+              <p>Atualizar Reunião</p>
+            </button>
+          )}
           {showDelete == true && (
             <button
               className="bg-red-400 hover:bg-red-500 p-4 rounded-md border border-slate-400"
@@ -107,7 +107,7 @@ export default function MeetingCard({ m, showDelete,showUpdate }) {
             </button>
           )}
 
-          
+
         </div>
       </div>
     );

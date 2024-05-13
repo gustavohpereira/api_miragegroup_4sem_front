@@ -122,20 +122,6 @@ export default function NewMeeting() {
       .post("http://localhost:8080/meeting/create-meeting", requestData, {
         withCredentials: true,
       })
-      .then((response) => {
-        toast.success("Reunião criada com sucesso", {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        });
-
-        // Lógica adicional após a criação da reunião, se necessário
-      })
       .catch((error) => {
         console.error(error);
         // Tratamento de erro, se necessário
