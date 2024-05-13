@@ -102,7 +102,7 @@ export default function NewMeeting() {
     meetingData.insertTime = endTime
 
     // Montando o objeto de dados para enviar na requisição
-    const requestData = {
+    let requestData = {
       topic: meetingData.protocol, // Substitua por como você está definindo o protocolo
       description: meetingData.description,
       beginning_time: meetingData.datetime, // Substitua por como você está definindo a data e hora
@@ -121,6 +121,16 @@ export default function NewMeeting() {
     axios
       .post("http://localhost:8080/meeting/create-meeting", requestData, {
         withCredentials: true,
+      }).then((response) => {
+        console.log("join ", response.data.join_url)
+        console.log("start ",response.data.start_url)
+        console.log("passcode ",response.data.pstn_password)
+        requestData.join_url = response.data.join_url
+        requestData.start_url = response.data.start_url
+        requestData.passcode = response.data.pstn_password
+
+        console.log(requestData)
+
       })
       .catch((error) => {
         console.error(error);
