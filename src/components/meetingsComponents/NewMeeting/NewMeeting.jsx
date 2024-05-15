@@ -14,11 +14,11 @@ export default function NewMeeting() {
     accessToken: accessToken,
   });
   const [selectedCategory, setSelectedCategory] = useState();
-  const [users, setUsers] = useState([])
+  const [users, setUsers] = useState([]);
   const [salas, setSalas] = useState([]);
-  const [time, setTime] = useState([])
   const [singlePauta, setSinglePauta] = useState(``);
   const [pautas, setPautas] = useState([]);
+  const [creatingMeeting, setCreatingMeeting] = useState(false);
 
   //   PEGAR AS SALAS
   useEffect(() => {
@@ -59,13 +59,13 @@ export default function NewMeeting() {
   useEffect(() => {
     try {
       axios.get("http://localhost:8080/user/fetchall").then((response) => {
-        const data = response.data
-        setUsers(data)
-      })
+        const data = response.data;
+        setUsers(data);
+      });
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  })
+  });
 
   const handleChange = (event, dictKey, value) => {
     event.preventDefault();
@@ -84,22 +84,25 @@ export default function NewMeeting() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    setCreatingMeeting(true);
+    let endTime = new Date();
+    let [minutes, seconds] = meetingData.insertTime.split(":");
 
     const durationInMinutes = convertTimeToMinutes(meetingData.insertTime);
 
     let endTime = new Date()
     let [minutes, seconds] = meetingData.insertTime.split(":")
 
-    endTime.setMinutes(parseInt(minutes))
-    endTime.setSeconds(parseInt(seconds))
+    endTime.setMinutes(parseInt(minutes));
+    endTime.setSeconds(parseInt(seconds));
 
-    let beginningTime = new Date(meetingData.datetime)
+    let beginningTime = new Date(meetingData.datetime);
 
-    endTime.setHours(parseInt(minutes) + beginningTime.getHours())
-    endTime.setMinutes(parseInt(seconds) + beginningTime.getMinutes())
-    endTime.setSeconds("00")
+    endTime.setHours(parseInt(minutes) + beginningTime.getHours());
+    endTime.setMinutes(parseInt(seconds) + beginningTime.getMinutes());
+    endTime.setSeconds("00");
 
-    meetingData.insertTime = endTime
+    meetingData.insertTime = endTime;
 
     // Montando o objeto de dados para enviar na requisição
     let requestData = {
@@ -138,6 +141,7 @@ export default function NewMeeting() {
             progress: undefined,
             theme: "dark",
           });
+          setCreatingMeeting(false);
         })
       })
       .catch((error) => {
@@ -192,7 +196,6 @@ export default function NewMeeting() {
         ...meetingData,
         selectedUsers: newSelectedUsers,
       });
-
     } else {
     }
   };
@@ -208,21 +211,19 @@ export default function NewMeeting() {
     });
   }
 
-
   function handlePautaDelete(index) {
     const newPautas = [...pautas];
     newPautas.splice(index, 1);
     setPautas(newPautas);
   }
 
-
   function handleCategoryChange(category) {
     if (category == 1) {
-      handleRoomSelection("replaceVirtualRoom")
+      handleRoomSelection("replaceVirtualRoom");
     } else if (category == 3) {
-      handleRoomSelection("replacePhysicalRoom")
+      handleRoomSelection("replacePhysicalRoom");
     }
-    setSelectedCategory(category)
+    setSelectedCategory(category);
   }
 
   return (
@@ -240,7 +241,6 @@ export default function NewMeeting() {
 
       {/* New Meeting Form */}
       <div className="w-full flex justify-center">
-
         <form
           className="p-4  mt-4 standardFlex  w-5/6 flex-col gap-8  "
           onSubmit={(e) => handleSubmit(e)}
@@ -266,24 +266,27 @@ export default function NewMeeting() {
               <div className="flex gap-8">
                 <button
                   type="button"
-                  className={`border border-slate-400 ${selectedCategory === 1 ? "bg-[#F6A700] " : ""
-                    } p-4 rounded-md`}
+                  className={`border border-slate-400 ${
+                    selectedCategory === 1 ? "bg-[#F6A700] " : ""
+                  } p-4 rounded-md`}
                   onClick={(e) => handleCategoryChange(1)}
                 >
                   Presencial
                 </button>
                 <button
                   type="button"
-                  className={`border border-slate-400 ${selectedCategory === 2 ? "bg-[#F6A700] " : ""
-                    } p-4 rounded-md`}
+                  className={`border border-slate-400 ${
+                    selectedCategory === 2 ? "bg-[#F6A700] " : ""
+                  } p-4 rounded-md`}
                   onClick={(e) => handleCategoryChange(2)}
                 >
                   Hibrido
                 </button>
                 <button
                   type="button"
-                  className={`border border-slate-400 ${selectedCategory === 3 ? "bg-[#F6A700] " : ""
-                    } p-4 rounded-md`}
+                  className={`border border-slate-400 ${
+                    selectedCategory === 3 ? "bg-[#F6A700] " : ""
+                  } p-4 rounded-md`}
                   onClick={(e) => handleCategoryChange(3)}
                 >
                   Virtual
@@ -291,7 +294,6 @@ export default function NewMeeting() {
               </div>
             </div>
           </div>
-
 
           {/* {SEGUNDA LINHA} */}
           <div className="w-full flex justify-between items-center gap-32">
@@ -320,13 +322,14 @@ export default function NewMeeting() {
                 onChange={(e) => handleChange(e, "description", e.target.value)}
               ></input>
             </div>
-
           </div>
 
-
           {/* {TERCEIRA LINHA} */}
-          <div className={`w-full flex ${selectedCategory == 2 ? "justify-between" : "justify-start"} items-center gap-32`}>
-
+          <div
+            className={`w-full flex ${
+              selectedCategory == 2 ? "justify-between" : "justify-start"
+            } items-center gap-32`}
+          >
             {selectedCategory == 1 || selectedCategory == 2 ? (
               <div className="standardFlex flex-col items-center lg:items-start w-2/5">
                 <label className="text-2xl my-4">Sala Fisica</label>
@@ -344,9 +347,7 @@ export default function NewMeeting() {
                     ))}
                 </select>
               </div>
-            ) : (
-              null
-            )}
+            ) : null}
 
             {/* SALA VIRTUAL */}
             {selectedCategory == 3 || selectedCategory == 2 ? (
@@ -367,13 +368,70 @@ export default function NewMeeting() {
                 </select>
               </div>
             ) : null}
-
-
           </div>
 
           {/* SALA FISICA */}
 
-
+          {/* QUARTA LINHA */}
+          <div className="w-full flex justify-between items-center gap-12 min-h-40">
+            {/* USUARIO */}
+            <div className="standardFlex flex-col items-center lg:items-start w-2/5 min-h-40">
+              <label className="text-2xl my-4">
+                Adicionar usuários a reunião
+              </label>
+              <select
+                className="w-full lg:w-full h-12 p-1 border focus:border-black rounded-md bg-[#D9D9D9]"
+                onChange={handleUserSelection}
+              >
+                <option value="">Adicione um novo usuario</option>
+                {users.map((user) => (
+                  <option key={user.email} value={user.id}>
+                    {user.name}
+                  </option>
+                ))}
+              </select>
+              <div className="flex gap-4 w-full">
+                {meetingData.selectedUsers.length > 0
+                  ? meetingData.selectedUsers.map((user) => (
+                      <div
+                        key={user.id}
+                        className="flex border p-2 gap-4 justify-between rounded-lg my-2"
+                      >
+                        <p>{user.name}</p>
+                        <button onClick={() => handleRemoveUser(user.id)}>
+                          X
+                        </button>
+                      </div>
+                    ))
+                  : null}
+              </div>
+            </div>
+            {/* PAUTAS DA REUNIÃO */}
+            <div className="standardFlex flex-col items-center lg:items-start w-2/5 min-h-40">
+              <label className="text-2xl my-4">
+                Adicionar pautas a reunião
+              </label>
+              <div className="w-full flex gap-4">
+                <input
+                  type="text"
+                  id="pautas"
+                  value={singlePauta}
+                  className="w-full lg:w-full h-12 p-1 border focus:border-black rounded-md bg-[#D9D9D9]"
+                  onChange={(e) => setSinglePauta(e.target.value)}
+                />
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (singlePauta.trim() !== "") {
+                      setPautas([...pautas, singlePauta]);
+                      setSinglePauta(""); // Limpa o campo de entrada
+                    }
+                  }}
+                  className="bg-[#FED353] transition easy-in-out hover:bg-[#F6A700] p-3 rounded-full border border-slate-400"
+                >
+                  <AiOutlinePlus />
+                </button>
+              </div>
 
           {/* QUARTA LINHA */}
           <div className="w-full flex justify-between items-center gap-12 min-h-40">
@@ -433,14 +491,16 @@ export default function NewMeeting() {
               <div className="flex gap-4 w-full">
                 {pautas.length > 0
                   ? pautas.map((pauta, index) => (
-                    <div
-                      key={index}
-                      className="flex border p-2 gap-4 justify-between rounded-lg my-2"
-                    >
-                      <p>{pauta}</p>
-                      <button onClick={() => handlePautaDelete(index)}>X</button>
-                    </div>
-                  ))
+                      <div
+                        key={index}
+                        className="flex border p-2 gap-4 justify-between rounded-lg my-2"
+                      >
+                        <p>{pauta}</p>
+                        <button onClick={() => handlePautaDelete(index)}>
+                          X
+                        </button>
+                      </div>
+                    ))
                   : null}
               </div>
             </div>
@@ -459,17 +519,36 @@ export default function NewMeeting() {
               ></input>
             </div>
             <div className="w-full flex lg:justify-end mt-8">
-              <button
-                type="submit"
-                className="bg-[#FED353] transition easy-in-out hover:bg-[#F6A700] p-3 rounded-md border border-slate-400 w-2/12"
-              >
-                Criar
-              </button>
+              {creatingMeeting == false ? (
+                <button
+                  type="submit"
+                  className="bg-[#FED353] transition easy-in-out hover:bg-[#F6A700] p-3 rounded-md border border-slate-400 w-2/12"
+                >
+                  Criar
+                </button>
+              ) : (
+                <div role="status  " className="p-3 rounded-md border bg-[#FED353]   border-slate-400 w-2/12 flex justify-center">
+                  <svg
+                    aria-hidden="true"
+                    class="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-black"
+                    viewBox="0 0 100 101"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                      fill="currentColor"
+                    />
+                    <path
+                      d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                      fill="currentFill"
+                    />
+                  </svg>
+                  <span class="sr-only">Loading...</span>
+                </div>
+              )}
             </div>
           </div>
-
-
-
 
           <ToastContainer
             position="top-center"

@@ -41,14 +41,14 @@ export default function TodayMeeting () {
         <div>
             <h1 className="text-4xl mb-10">Reuniões de hoje</h1>
 
-            <div className="flex flex-col gap-4">
-                {todayMeetings.filter((m) =>
+            <div className="standardFlex flex-col gap-4 justify-start">
+                {todayMeetings.length > 0? todayMeetings.filter((m) =>
                         m.participants.some(
                             (participant) => participant.id === user.user.id
                         )
                     ).map((m) => (
                     <MeetingCard key={m.id} m={m} showDelete={false} />
-                ))}
+                )):<h1 className="text-xl">Sem Reuniões de hoje</h1>}
             </div>
             <h1 className="text-4xl my-10">Suas Reuniões</h1>
             <div className="gap-4 flex my-8 ">
@@ -63,7 +63,7 @@ export default function TodayMeeting () {
                     <option value={3}>Virtual</option>
                 </select>
             </div>
-            <div className="flex flex-col gap-4">
+            <div className="standardFlex flex-col gap-4 justify-start">
                 {meetings
                     .filter((m) =>
                         m.participants.some(
