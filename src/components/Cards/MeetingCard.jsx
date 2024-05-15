@@ -5,6 +5,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 
 export default function MeetingCard({ m, showDelete,showUpdate }) {
+  console.log(m)
   const [isDeleted, setIsDeleted] = useState(false);
   const navigate = useNavigate()
 
@@ -78,7 +79,7 @@ export default function MeetingCard({ m, showDelete,showUpdate }) {
           </div>
           <div className="flex flex-col   ">
             <p className="text-lg font-light">
-              {format(new Date(m.beginning_time), "dd/MM/YYY")}
+              {format(new Date(m.beginning_time), "dd/MM/yyy")}
             </p>
             <p className="text-lg font-light">
               {format(new Date(m.beginning_time), "HH:mm")} - {format(new Date(m.end_time), "HH:mm")}
