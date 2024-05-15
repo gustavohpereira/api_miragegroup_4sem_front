@@ -3,12 +3,15 @@ import PageTitle from "../../pageTitle/PageTitle";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import { AiOutlinePlus } from "react-icons/ai";
+import { formatISO } from "date-fns";
 
 export default function NewMeeting() {
+  const accessToken = localStorage.getItem("accessToken");
   const [meetingData, setMeetingData] = useState({
     selectedUsers: [],
     physicalRoom: null,
     virtualRoom: null,
+    accessToken: accessToken,
   });
   const [selectedCategory, setSelectedCategory] = useState();
   const [users, setUsers] = useState([]);
@@ -72,11 +75,23 @@ export default function NewMeeting() {
     });
   };
 
+  const convertTimeToMinutes = (timeString) => {
+    const [hoursString, minutesString] = timeString.split(":");
+    const hours = parseInt(hoursString, 10);
+    const minutes = parseInt(minutesString, 10);
+    return hours * 60 + minutes;
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     setCreatingMeeting(true);
     let endTime = new Date();
     let [minutes, seconds] = meetingData.insertTime.split(":");
+
+    const durationInMinutes = convertTimeToMinutes(meetingData.insertTime);
+
+    let endTime = new Date()
+    let [minutes, seconds] = meetingData.insertTime.split(":")
 
     endTime.setMinutes(parseInt(minutes));
     endTime.setSeconds(parseInt(seconds));
@@ -90,11 +105,14 @@ export default function NewMeeting() {
     meetingData.insertTime = endTime;
 
     // Montando o objeto de dados para enviar na requisição
-    const requestData = {
-      protocol: meetingData.protocol, // Substitua por como você está definindo o protocolo
+    let requestData = {
+      topic: meetingData.protocol, // Substitua por como você está definindo o protocolo
       description: meetingData.description,
       beginning_time: meetingData.datetime, // Substitua por como você está definindo a data e hora
       end_time: meetingData.insertTime,
+      duration: durationInMinutes,
+      startDate: formatISO(meetingData.datetime),
+      accessToken: meetingData.accessToken,
       meetingType: selectedCategory, // Substitua por como você está definindo o tipo de reunião
       physicalRoom: meetingData.physicalRoom,
       virtualRoom: meetingData.virtualRoom,
@@ -102,30 +120,35 @@ export default function NewMeeting() {
       meetingTheme: pautas,
     };
 
+    // Enviar a requisição para o backend
     axios
-      .post("http://localhost:8080/meeting/create", requestData, {
+      .post("http://localhost:8080/meeting/create-meeting", requestData, {
         withCredentials: true,
-      })
-      .then((response) => {
-        toast.success("Reunião criada com sucesso", {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        });
+      }).then((response) => {
+        requestData.join_url = response.data.join_url
 
-        setCreatingMeeting(false);
-
-        // Lógica adicional após a criação da reunião, se necessário
+        axios.post("http://localhost:8080/meeting/create", requestData, {
+        withCredentials: true,
+        })
+        .then((response) => {
+          toast.success("Reunião criada com sucesso", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
+          setCreatingMeeting(false);
+        })
       })
       .catch((error) => {
         console.error(error);
         // Tratamento de erro, se necessário
       });
+    
   };
 
   const handleRoomSelection = (id) => {
@@ -388,6 +411,61 @@ export default function NewMeeting() {
               <label className="text-2xl my-4">
                 Adicionar pautas a reunião
               </label>
+              <div className="w-full flex gap-4">
+                <input
+                  type="text"
+                  id="pautas"
+                  value={singlePauta}
+                  className="w-full lg:w-full h-12 p-1 border focus:border-black rounded-md bg-[#D9D9D9]"
+                  onChange={(e) => setSinglePauta(e.target.value)}
+                />
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (singlePauta.trim() !== "") {
+                      setPautas([...pautas, singlePauta]);
+                      setSinglePauta(""); // Limpa o campo de entrada
+                    }
+                  }}
+                  className="bg-[#FED353] transition easy-in-out hover:bg-[#F6A700] p-3 rounded-full border border-slate-400"
+                >
+                  <AiOutlinePlus />
+                </button>
+              </div>
+
+          {/* QUARTA LINHA */}
+          <div className="w-full flex justify-between items-center gap-12 min-h-40">
+            {/* USUARIO */}
+            <div className="standardFlex flex-col items-center lg:items-start w-2/5 min-h-40">
+              <label className="text-2xl my-4">Adicionar usuários a reunião</label>
+              <select
+                className="w-full lg:w-full h-12 p-1 border focus:border-black rounded-md bg-[#D9D9D9]"
+                onChange={handleUserSelection}
+              >
+                <option value="">Adicione um novo usuario</option>
+                {users.map((user) => (
+                  <option key={user.email} value={user.id}>
+                    {user.name}
+                  </option>
+                ))}
+              </select>
+              <div className="flex gap-4 w-full">
+                {meetingData.selectedUsers.length > 0
+                  ? meetingData.selectedUsers.map((user) => (
+                    <div
+                      key={user.id}
+                      className="flex border p-2 gap-4 justify-between rounded-lg my-2"
+                    >
+                      <p>{user.name}</p>
+                      <button onClick={() => handleRemoveUser(user.id)}>X</button>
+                    </div>
+                  ))
+                  : null}
+              </div>
+            </div>
+            {/* PAUTAS DA REUNIÃO */}
+            <div className="standardFlex flex-col items-center lg:items-start w-2/5 min-h-40">
+              <label className="text-2xl my-4">Adicionar pautas a reunião</label>
               <div className="w-full flex gap-4">
                 <input
                   type="text"
