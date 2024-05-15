@@ -85,14 +85,13 @@ export default function NewMeeting() {
   const handleSubmit = (event) => {
     event.preventDefault();
     setCreatingMeeting(true);
-    let endTime = new Date();
-    let [minutes, seconds] = meetingData.insertTime.split(":");
 
-    const durationInMinutes = convertTimeToMinutes(meetingData.insertTime);
-
+    
     let endTime = new Date()
     let [minutes, seconds] = meetingData.insertTime.split(":")
+    const durationInMinutes = convertTimeToMinutes(meetingData.insertTime);
 
+    
     endTime.setMinutes(parseInt(minutes));
     endTime.setSeconds(parseInt(seconds));
 
@@ -227,29 +226,20 @@ export default function NewMeeting() {
   }
 
   return (
-    <div className="w-full ">
-      {/* <div className=" w-full standardFlex justify-end p-4 gap-6">
-        <div className=" p-3 rounded-full border border-black h-16 w-16 bg-[#D9D9D9]">
-          <img src="new_meeting_logo.svg" alt=""></img>
-        </div>
-        <div className=" p-3 rounded-full border border-black h-16 w-16 bg-[#D9D9D9]">
-          <img src="new_meeting_logo.svg" alt=""></img>
-        </div>
-      </div> */}
-
+    <div className="w-full">
       <PageTitle>Nova Reunião</PageTitle>
-
+  
       {/* New Meeting Form */}
       <div className="w-full flex justify-center">
         <form
-          className="p-4  mt-4 standardFlex  w-5/6 flex-col gap-8  "
+          className="p-4 mt-4 standardFlex w-5/6 flex-col gap-8"
           onSubmit={(e) => handleSubmit(e)}
         >
           {/* {PRIMEIRA LINHA} */}
           <div className="w-full flex justify-between items-center gap-32">
             {/* TITULO DA REUNIÃO */}
             <div className="standardFlex flex-col w-2/5 lg:items-start">
-              <label htmlFor="meetingName" className="text-2xl my-4 ">
+              <label htmlFor="meetingName" className="text-2xl my-4">
                 Título da Reunião
               </label>
               <input
@@ -257,9 +247,9 @@ export default function NewMeeting() {
                 id="meetingName"
                 className="w-full lg:w-full h-12 p-1 border focus:border-black rounded-md bg-[#D9D9D9]"
                 onChange={(e) => handleChange(e, "protocol", e.target.value)}
-              ></input>
+              />
             </div>
-
+  
             {/* CATEGORIA DA REUNIÃO */}
             <div className="standardFlex flex-col items-center lg:items-start w-2/5">
               <label className="text-2xl my-4">Categoria da reunião</label>
@@ -294,11 +284,11 @@ export default function NewMeeting() {
               </div>
             </div>
           </div>
-
+  
           {/* {SEGUNDA LINHA} */}
           <div className="w-full flex justify-between items-center gap-32">
             {/* DATA DA REUNIÃO */}
-            <div className="standardFlex flex-col items-center lg:items-start w-2/5 ">
+            <div className="standardFlex flex-col items-center lg:items-start w-2/5">
               <label htmlFor="Data" className="text-2xl my-4">
                 Data
               </label>
@@ -307,9 +297,9 @@ export default function NewMeeting() {
                 id="Data"
                 className="w-full lg:w-full h-12 p-1 border focus:border-black rounded-md bg-[#D9D9D9]"
                 onChange={(e) => handleChange(e, "datetime", e.target.value)}
-              ></input>
+              />
             </div>
-
+  
             {/* DESCRICAO DA REUNIÃO */}
             <div className="standardFlex flex-col items-center lg:items-start w-2/5">
               <label htmlFor="description" className="text-2xl my-4">
@@ -320,10 +310,10 @@ export default function NewMeeting() {
                 id="description"
                 className="w-full lg:w-full h-12 p-1 border focus:border-black rounded-md bg-[#D9D9D9]"
                 onChange={(e) => handleChange(e, "description", e.target.value)}
-              ></input>
+              />
             </div>
           </div>
-
+  
           {/* {TERCEIRA LINHA} */}
           <div
             className={`w-full flex ${
@@ -348,7 +338,7 @@ export default function NewMeeting() {
                 </select>
               </div>
             ) : null}
-
+  
             {/* SALA VIRTUAL */}
             {selectedCategory == 3 || selectedCategory == 2 ? (
               <div className="standardFlex flex-col items-center lg:items-start w-2/5">
@@ -369,10 +359,8 @@ export default function NewMeeting() {
               </div>
             ) : null}
           </div>
-
-          {/* SALA FISICA */}
-
-          {/* QUARTA LINHA */}
+  
+          {/* {QUARTA LINHA} */}
           <div className="w-full flex justify-between items-center gap-12 min-h-40">
             {/* USUARIO */}
             <div className="standardFlex flex-col items-center lg:items-start w-2/5 min-h-40">
@@ -406,63 +394,7 @@ export default function NewMeeting() {
                   : null}
               </div>
             </div>
-            {/* PAUTAS DA REUNIÃO */}
-            <div className="standardFlex flex-col items-center lg:items-start w-2/5 min-h-40">
-              <label className="text-2xl my-4">
-                Adicionar pautas a reunião
-              </label>
-              <div className="w-full flex gap-4">
-                <input
-                  type="text"
-                  id="pautas"
-                  value={singlePauta}
-                  className="w-full lg:w-full h-12 p-1 border focus:border-black rounded-md bg-[#D9D9D9]"
-                  onChange={(e) => setSinglePauta(e.target.value)}
-                />
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (singlePauta.trim() !== "") {
-                      setPautas([...pautas, singlePauta]);
-                      setSinglePauta(""); // Limpa o campo de entrada
-                    }
-                  }}
-                  className="bg-[#FED353] transition easy-in-out hover:bg-[#F6A700] p-3 rounded-full border border-slate-400"
-                >
-                  <AiOutlinePlus />
-                </button>
-              </div>
-
-          {/* QUARTA LINHA */}
-          <div className="w-full flex justify-between items-center gap-12 min-h-40">
-            {/* USUARIO */}
-            <div className="standardFlex flex-col items-center lg:items-start w-2/5 min-h-40">
-              <label className="text-2xl my-4">Adicionar usuários a reunião</label>
-              <select
-                className="w-full lg:w-full h-12 p-1 border focus:border-black rounded-md bg-[#D9D9D9]"
-                onChange={handleUserSelection}
-              >
-                <option value="">Adicione um novo usuario</option>
-                {users.map((user) => (
-                  <option key={user.email} value={user.id}>
-                    {user.name}
-                  </option>
-                ))}
-              </select>
-              <div className="flex gap-4 w-full">
-                {meetingData.selectedUsers.length > 0
-                  ? meetingData.selectedUsers.map((user) => (
-                    <div
-                      key={user.id}
-                      className="flex border p-2 gap-4 justify-between rounded-lg my-2"
-                    >
-                      <p>{user.name}</p>
-                      <button onClick={() => handleRemoveUser(user.id)}>X</button>
-                    </div>
-                  ))
-                  : null}
-              </div>
-            </div>
+  
             {/* PAUTAS DA REUNIÃO */}
             <div className="standardFlex flex-col items-center lg:items-start w-2/5 min-h-40">
               <label className="text-2xl my-4">Adicionar pautas a reunião</label>
@@ -487,7 +419,7 @@ export default function NewMeeting() {
                   <AiOutlinePlus />
                 </button>
               </div>
-
+  
               <div className="flex gap-4 w-full">
                 {pautas.length > 0
                   ? pautas.map((pauta, index) => (
@@ -505,10 +437,12 @@ export default function NewMeeting() {
               </div>
             </div>
           </div>
+  
 
+  
           <div className="">
             <div className="standardFlex flex-col items-center lg:items-start w-2/5 min-h-40">
-              <label htmlFor="insertTime" className="text-2xl my-4 ">
+              <label htmlFor="insertTime" className="text-2xl my-4">
                 Duração da reunião
               </label>
               <input
@@ -516,7 +450,7 @@ export default function NewMeeting() {
                 id="insertTime"
                 className="w-full lg:w-full h-12 p-1 border focus:border-black rounded-md bg-[#D9D9D9]"
                 onChange={(e) => handleChange(e, "insertTime", e.target.value)}
-              ></input>
+              />
             </div>
             <div className="w-full flex lg:justify-end mt-8">
               {creatingMeeting == false ? (
@@ -527,10 +461,13 @@ export default function NewMeeting() {
                   Criar
                 </button>
               ) : (
-                <div role="status  " className="p-3 rounded-md border bg-[#FED353]   border-slate-400 w-2/12 flex justify-center">
+                <div
+                  role="status"
+                  className="p-3 rounded-md border bg-[#FED353] border-slate-400 w-2/12 flex justify-center"
+                >
                   <svg
                     aria-hidden="true"
-                    class="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-black"
+                    className="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-black"
                     viewBox="0 0 100 101"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -544,12 +481,12 @@ export default function NewMeeting() {
                       fill="currentFill"
                     />
                   </svg>
-                  <span class="sr-only">Loading...</span>
+                  <span className="sr-only">Loading...</span>
                 </div>
               )}
             </div>
           </div>
-
+  
           <ToastContainer
             position="top-center"
             autoClose={5000}
@@ -565,5 +502,5 @@ export default function NewMeeting() {
         </form>
       </div>
     </div>
-  );
+  )
 }

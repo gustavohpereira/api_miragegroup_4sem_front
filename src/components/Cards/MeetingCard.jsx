@@ -97,12 +97,6 @@ export default function MeetingCard({ m, showDelete, showUpdate }) {
               <p>Atualizar Reunião</p>
             </button>
           )}
-                className="bg-[#FED353] hover:bg-[#F6A700] p-3 rounded-md border border-slate-400"
-                onClick={() => handleUpdate()}
-              >
-                <p>Atualizar Reunião</p>
-              </button>
-            )}
           {showDelete == true && (
             <button
               className="bg-red-400 hover:bg-red-500 p-3 rounded-md border border-slate-400"
