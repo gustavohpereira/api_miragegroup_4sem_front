@@ -14,7 +14,7 @@ export async function getMeetingsByUser(userId){
     console.log("id",userId)
     try{
         const response = await axios.get(`http://localhost:8080/meeting/fetch/${userId}`);
-
+        console.log("response",response.data)
         return response.data
     }catch(error){
         console.error("Erro ao buscar salas:", error);

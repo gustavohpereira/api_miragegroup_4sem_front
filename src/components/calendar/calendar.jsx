@@ -1,22 +1,29 @@
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from '@fullcalendar/daygrid';
-import { useEffect, useState } from "react";
-import { getAllMeetings } from "../../functions/meetingEndpoints";
+import timeGridPlugin from '@fullcalendar/timegrid';
+import dayGridWeek from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import ptBrLocale from '@fullcalendar/core/locales/pt-br';
 import CustomEventContent from "./customEventContent";
+import { useEffect, useState } from "react";
 
+export default function Calendar({ meetingData }) {
+  const [viewHeight, setViewHeight] = useState(window.innerHeight - 150);
 
+  useEffect(() => {
+    const handleResize = () => {
+      setViewHeight(window.innerHeight - 150);
+    };
 
-
-
-export default function Calendar({meetingData}) {
-  
-  console.log(meetingData)
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const mapMeetingToEvent = (meeting) => ({
     id: meeting.id,
-    title: meeting.protocol,
+    title: meeting.topic,
     start: new Date(meeting.beginning_time),
     end: new Date(meeting.end_time),
     description: meeting.description,
@@ -24,17 +31,28 @@ export default function Calendar({meetingData}) {
   });
 
   let events = [];
-  if (meetingData.length != 0) {
+  if (meetingData.length !== 0) {
     events = meetingData.map(mapMeetingToEvent);
   }
 
   return (
-    <div className="w-5/6">
+    <div className="w-[60%]">
       <FullCalendar
-        plugins={[dayGridPlugin, interactionPlugin]}
+        plugins={[dayGridPlugin, interactionPlugin,dayGridWeek,timeGridPlugin]}
         initialView="dayGridMonth"
         events={events}
-        locale={ptBrLocale} 
+        locale={ptBrLocale}
+        eventContent={CustomEventContent}
+        height={viewHeight}
+        eventBorderColor="#fff"
+        headerToolbar={{
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,dayGridWeek,dayGridDay',
+        }}
+        nowIndicator={true}
+        
+        
       />
     </div>
   );

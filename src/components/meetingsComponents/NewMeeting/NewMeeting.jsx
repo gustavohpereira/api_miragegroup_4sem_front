@@ -88,17 +88,15 @@ export default function NewMeeting() {
     endTime.setSeconds("00");
 
     meetingData.insertTime = endTime;
-
-    // Montando o objeto de dados para enviar na requisição
     const requestData = {
-      protocol: meetingData.protocol, // Substitua por como você está definindo o protocolo
+      topic: meetingData.protocol, 
       description: meetingData.description,
-      beginning_time: meetingData.datetime, // Substitua por como você está definindo a data e hora
+      beginning_time: meetingData.datetime,
       end_time: meetingData.insertTime,
-      meetingType: selectedCategory, // Substitua por como você está definindo o tipo de reunião
+      meetingType: selectedCategory, 
       physicalRoom: meetingData.physicalRoom,
       virtualRoom: meetingData.virtualRoom,
-      participants: meetingData.selectedUsers, // Obtendo os IDs dos participantes selecionados
+      participants: meetingData.selectedUsers, 
       meetingTheme: pautas,
     };
 
@@ -120,22 +118,22 @@ export default function NewMeeting() {
 
         setCreatingMeeting(false);
 
-        // Lógica adicional após a criação da reunião, se necessário
       })
       .catch((error) => {
         console.error(error);
-        // Tratamento de erro, se necessário
       });
   };
 
-  const handleRoomSelection = (id) => {
+  const handleRoomSelection = (id,type) => {
     if (id == "replacePhysicalRoom") {
+      console.log("substituindo sala fisica");
       setMeetingData({
         ...meetingData,
         physicalRoom: null,
       });
       return;
     } else if (id == "replaceVirtualRoom") {
+      console.log("substituindo sala virtual");
       setMeetingData({
         ...meetingData,
         virtualRoom: null,
@@ -143,7 +141,7 @@ export default function NewMeeting() {
       return;
     }
 
-    const selectedRoom = salas.find((sala) => sala.id == id);
+    const selectedRoom = salas.find((sala) => sala.id == id && sala.type == type);
     if (selectedRoom) {
       if (selectedRoom.type == "Fisica") {
         setMeetingData({
@@ -151,6 +149,7 @@ export default function NewMeeting() {
           physicalRoom: selectedRoom,
         });
       } else {
+        console.log(selectedRoom)
         setMeetingData({
           ...meetingData,
           virtualRoom: selectedRoom,
@@ -312,13 +311,13 @@ export default function NewMeeting() {
                 <label className="text-2xl my-4">Sala Fisica</label>
                 <select
                   className="w-full lg:w-full h-12 p-1 border focus:border-black rounded-md bg-[#D9D9D9]"
-                  onChange={(e) => handleRoomSelection(e.target.value)}
+                  onChange={(e) => handleRoomSelection(e.target.value,"Fisica")}
                 >
                   <option value="replacePhysicalRoom">Sala fisica</option>
                   {salas
                     .filter((sala) => sala.type === "Fisica")
                     .map((sala) => (
-                      <option key={sala} value={sala.id}>
+                      <option key={sala.id} value={sala.id}>
                         {sala.location}
                       </option>
                     ))}
@@ -332,13 +331,13 @@ export default function NewMeeting() {
                 <label className="text-2xl my-4">Sala Virtual</label>
                 <select
                   className="w-full lg:w-full h-12 p-1 border focus:border-black rounded-md bg-[#D9D9D9]"
-                  onChange={(e) => handleRoomSelection(e.target.value)}
+                  onChange={(e) => handleRoomSelection(e.target.value, "Virtual")}
                 >
                   <option value="replaceVirtualRoom">Sala Virtual</option>
                   {salas
                     .filter((sala) => sala.type === "Virtual")
                     .map((sala) => (
-                      <option key={sala} value={sala.id}>
+                      <option key={sala.id} value={sala.id}>
                         {sala.id}
                       </option>
                     ))}
@@ -452,7 +451,7 @@ export default function NewMeeting() {
                 <div role="status  " className="p-3 rounded-md border bg-[#FED353]   border-slate-400 w-2/12 flex justify-center">
                   <svg
                     aria-hidden="true"
-                    class="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-black"
+                    className="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-black"
                     viewBox="0 0 100 101"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
