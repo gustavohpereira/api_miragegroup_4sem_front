@@ -34,8 +34,8 @@ const Login = () => {
         }
     }
     return (
-        <div className="loginPage flex">
-            <div className="container flex">
+        <div className="loginPage flexAlignCenter">
+            <div className="container flexAlignCenter">
                 <div className="videoDiv">
                     <video src={video} autoPlay muted loop></video>
                     <div className="textDiv">
@@ -43,7 +43,7 @@ const Login = () => {
                         <p>Sistemas Integrados de Alto Teor Tecnológico</p>
                     </div>
                 </div>
-                <div className="formDiv flex">
+                <div className="formDiv flexAlignCenter">
                     <div className="headerDiv">
                         <img src={logo} alt="Logo Image" />
                         <h3>Bem-vindo novamente!</h3>
@@ -52,7 +52,7 @@ const Login = () => {
                     <form action="" className="form grid">
                         <div className="inputDiv">
                             <label htmlFor="username">Email</label>
-                            <div className="input flex">
+                            <div className="input flexAlignCenter">
                                 <FaUserShield className='icon' />
                                 <input type="email" id="email" onChange={(e) => setEmail(e.target.value)} placeholder="Entrar com email"></input>
                             </div>
@@ -60,12 +60,12 @@ const Login = () => {
 
                         <div className="inputDiv">
                             <label htmlFor="password">Senha</label>
-                            <div className="input flex">
+                            <div className="input flexAlignCenter">
                                 <BsFillShieldLockFill className='icon' />
                                 <input type="password" id="password" onChange={(e) => setPassword(e.target.value)} placeholder="Senha"></input>
                             </div>
                         </div>
-                        <button type="button" className="btn flex" onClick={handleLogin}>
+                        <button type="button" className="btn flexAlignCenter" onClick={handleLogin}>
                             <span>Login</span>
                             <AiOutlineSwapRight className='icon' />
                         </button>
