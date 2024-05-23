@@ -18,6 +18,8 @@ import ListMeetings from '../components/meetingsComponents/listMeetings/ListMeet
 import UserList from '../components/UsersComponents/UserList/userList'
 import EditUser from '../components/UsersComponents/editUser/editUser'
 import UpdateMeeting from '../components/meetingsComponents/updateMeeting/updateMeeting'
+import Calendar from '../components/calendar/calendar'
+import CalendarPage from '../components/calendar/calendarPage'
 
 
 const Routes = () => {
@@ -50,6 +52,10 @@ const Routes = () => {
                 {
                     path: '/newRoom',
                     element: <PageWrapper><RoomList/></PageWrapper>
+                },
+                {
+                    path: '/calendar',
+                    element: <PageWrapper><CalendarPage/></PageWrapper>
                 },
                 {
                     path: '/createRoom',

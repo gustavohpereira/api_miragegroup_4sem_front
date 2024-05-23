@@ -3,6 +3,7 @@ import PageTitle from "../../pageTitle/PageTitle";
 import axios from "axios";
 import MeetingCard from "../../Cards/MeetingCard";
 import { useNavigate } from "react-router-dom";
+import { getAllMeetings } from "../../../functions/meetingEndpoints";
 
 export default function ListMeetings() {
   const [meetings, setMeetings] = useState([]);
@@ -11,12 +12,8 @@ export default function ListMeetings() {
 
   useEffect(() => {
     async function fetchMeetings() {
-      try {
-        const response = await axios.get("http://localhost:8080/meeting/get");
-        setMeetings(response.data);
-      } catch (error) {
-        console.error("Erro ao buscar salas:", error);
-      }
+      const meetingsResponse = await getAllMeetings();
+      setMeetings(meetingsResponse);
     }
     fetchMeetings();
   }, []);
@@ -55,7 +52,7 @@ export default function ListMeetings() {
       </div>
       <div className="standardFlex flex-col gap-4 my-8 items-start ">
         {filteredMeetings.map((m) => {
-          return <MeetingCard m={m} showDelete={true} showUpdate={true} />;
+          return <MeetingCard m={m} key={m.id} showDelete={true} showUpdate={true} />;
         })}
       </div>
     </div>

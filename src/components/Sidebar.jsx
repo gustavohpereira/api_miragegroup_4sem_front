@@ -41,6 +41,11 @@ export default function Sidebar() {
       icon: "/user.svg",
       link: "/users",
     },
+    {
+      name: "Calendar",
+      icon: "/calendário_bg.svg",
+      link: "/calendar",
+    },
   ];
 
   return (
