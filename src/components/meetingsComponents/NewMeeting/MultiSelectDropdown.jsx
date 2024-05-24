@@ -8,10 +8,10 @@ const MultiSelectDropdown = ({ options, selectedOptions, setSelectedOptions, pla
   const handleToggle = () => setIsOpen(!isOpen);
 
   const handleSelectOption = (option) => {
-    if (selectedOptions.includes(option.id)) {
-      setSelectedOptions(selectedOptions.filter((item) => item !== option.id));
+    if (selectedOptions.some((item) => item.id == option.id)) {
+      setSelectedOptions(selectedOptions.filter((item) => item.id != option.id));
     } else {
-      setSelectedOptions([...selectedOptions, option.id]);
+      setSelectedOptions([...selectedOptions, option]);
     }
   };
 
@@ -42,7 +42,7 @@ const MultiSelectDropdown = ({ options, selectedOptions, setSelectedOptions, pla
             <label key={option.id} className="flex items-center p-2 hover:bg-gray-100 cursor-pointer">
               <input
                 type="checkbox"
-                checked={selectedOptions.includes(option.id)}
+                checked={selectedOptions.some((item) => item.id == option.id)}
                 onChange={() => handleSelectOption(option)}
                 className="mr-2"
               />

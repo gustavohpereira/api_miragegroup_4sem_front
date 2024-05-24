@@ -137,7 +137,6 @@ export default function UpdateMeeting() {
         participants: selectedUsers,
         meetingTheme: pautas,
       };
-      console.log(requestData);
       const response = await axios.patch(
         `http://localhost:8080/meeting/update/${meetingId}`,
         requestData,
@@ -177,7 +176,6 @@ export default function UpdateMeeting() {
     } else {
       if (salas && salas.length > 0) {
         const selectedRoom = salas.find((sala) => sala.id == id);
-        console.log("ID selecionado:", selectedRoom);
         if (selectedRoom) {
           if (selectedRoom.type === "Fisica") {
             setPhysicalRoom(selectedRoom);
@@ -187,7 +185,6 @@ export default function UpdateMeeting() {
           }
         }
       } else {
-        console.log("Lista de salas vazia ou não definida.");
       }
     }
   };
@@ -200,7 +197,6 @@ export default function UpdateMeeting() {
       !selectedUsers.some((user) => user.id == selectedUserId)
     ) {
       setSelectedUsers([...selectedUsers, selectedUser]);
-      console.log("Novo usuário selecionado:", selectedUser);
     }
   };
 

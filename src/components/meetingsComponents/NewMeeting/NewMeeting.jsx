@@ -21,7 +21,7 @@ export default function NewMeeting() {
   const [pautas, setPautas] = useState([]);
   const [creatingMeeting, setCreatingMeeting] = useState(false);
 
-  //   PEGAR AS SALAS
+  // PEGAR AS SALAS
   useEffect(() => {
     async function fetchSalas() {
       try {
@@ -66,7 +66,7 @@ export default function NewMeeting() {
     } catch (error) {
       console.error(error);
     }
-  });
+  }, []);
 
   const handleChange = (event, dictKey, value) => {
     event.preventDefault();
@@ -76,89 +76,100 @@ export default function NewMeeting() {
     });
   };
 
-  const convertTimeToMinutes = (timeString) => {
-    const [hoursString, minutesString] = timeString.split(":");
-    const hours = parseInt(hoursString, 10);
-    const minutes = parseInt(minutesString, 10);
-    return hours * 60 + minutes;
-  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     setCreatingMeeting(true);
 
-    
-    let endTime = new Date()
-    let [minutes, seconds] = meetingData.insertTime.split(":")
-    const durationInMinutes = convertTimeToMinutes(meetingData.insertTime);
+    const beginningTime = new Date(meetingData.datetime);
+    const [beginningHours, beginningMinutes] = meetingData.beginning_time.split(":");
+    beginningTime.setHours(parseInt(beginningHours, 10));
+    beginningTime.setMinutes(parseInt(beginningMinutes, 10));
+    beginningTime.setDate(beginningTime.getDate() + 1);
+    beginningTime.setSeconds(0);
+
+    const endTime = new Date(meetingData.datetime);
+    const [endHours, endMinutes] = meetingData.end_time.split(":");
+    endTime.setHours(parseInt(endHours, 10));
+    endTime.setMinutes(parseInt(endMinutes, 10));
+    endTime.setDate(beginningTime.getDate() + 1);
+    endTime.setSeconds(0);
+
+    if (endTime <= beginningTime) {
+      endTime.setDate(endTime.getDate() + 1); 
+    }
+
+    const durationInMinutes = (endTime - beginningTime) / 60000; // Calcula a duração em minutos
+
+    let categoryNumber = null
+    switch(selectedCategory) {
+      case "Fisica":
+        categoryNumber = 1
+        break;
+      case "Virtual":
+        categoryNumber = 3
+        break;
+      case "Hibrida": 
+        categoryNumber = 2
+      default:
+        break;
+    }
 
     
-    endTime.setMinutes(parseInt(minutes));
-    endTime.setSeconds(parseInt(seconds));
-
-    let beginningTime = new Date(meetingData.datetime);
-
-    endTime.setHours(parseInt(minutes) + beginningTime.getHours());
-    endTime.setMinutes(parseInt(seconds) + beginningTime.getMinutes());
-    endTime.setSeconds("00");
-
-    meetingData.insertTime = endTime;
-
     // Montando o objeto de dados para enviar na requisição
     let requestData = {
       topic: meetingData.protocol, // Substitua por como você está definindo o protocolo
       description: meetingData.description,
-      beginning_time: meetingData.datetime, // Substitua por como você está definindo a data e hora
-      end_time: meetingData.insertTime,
+      beginning_time: formatISO(beginningTime), // Substitua por como você está definindo a data e hora
+      end_time: formatISO(endTime),
       duration: durationInMinutes,
-      startDate: formatISO(meetingData.datetime),
+      startDate: formatISO(beginningTime),
       accessToken: meetingData.accessToken,
-      meetingType: selectedCategory, // Substitua por como você está definindo o tipo de reunião
+      meetingType: categoryNumber, // Substitua por como você está definindo o tipo de reunião
       physicalRoom: meetingData.physicalRoom,
       virtualRoom: meetingData.virtualRoom,
       participants: meetingData.selectedUsers, // Obtendo os IDs dos participantes selecionados
       meetingTheme: pautas,
     };
-
     // Enviar a requisição para o backend
     axios
       .post("http://localhost:8080/meeting/create-meeting", requestData, {
         withCredentials: true,
       }).then((response) => {
-        requestData.join_url = response.data.join_url
+        requestData.join_url = response.data.join_url;
 
         axios.post("http://localhost:8080/meeting/create", requestData, {
-        withCredentials: true,
+          withCredentials: true,
         })
-        .then((response) => {
-          toast.success("Reunião criada com sucesso", {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
+          .then((response) => {
+            toast.success("Reunião criada com sucesso", {
+              position: "top-center",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "dark",
+            });
+            setCreatingMeeting(false);
           });
-          setCreatingMeeting(false);
-        })
       })
       .catch((error) => {
         console.error(error);
         // Tratamento de erro, se necessário
+        setCreatingMeeting(false);
       });
-    
   };
 
   const handleRoomSelection = (id) => {
-    if (id == "replacePhysicalRoom") {
+    if (id === "replacePhysicalRoom") {
       setMeetingData({
         ...meetingData,
         physicalRoom: null,
       });
       return;
-    } else if (id == "replaceVirtualRoom") {
+    } else if (id === "replaceVirtualRoom") {
       setMeetingData({
         ...meetingData,
         virtualRoom: null,
@@ -182,7 +193,6 @@ export default function NewMeeting() {
     } else {
     }
   };
-  
 
   function handlePautaDelete(index) {
     const newPautas = [...pautas];
@@ -191,11 +201,17 @@ export default function NewMeeting() {
   }
 
   function handleCategoryChange(category) {
-    if (category == 1) {
-      handleRoomSelection("replaceVirtualRoom");
-    } else if (category == 3) {
-      handleRoomSelection("replacePhysicalRoom");
+    switch (category) {
+      case "Fisica":
+        handleRoomSelection("replaceVirtualRoom");
+        break;
+      case "Virtual":
+        handleRoomSelection("replacePhysicalRoom");
+        break;
+      default:
+        break;
     }
+
     setSelectedCategory(category);
   }
 
@@ -245,14 +261,14 @@ export default function NewMeeting() {
                     type="time"
                     id="Time"
                     className="w-full lg:w-full h-10 p-1 border focus:border-black rounded-md bg-[#EFEFEF]"
-                    onChange={(e) => handleChange(e, "time", e.target.value)}
+                    onChange={(e) => handleChange(e, "beginning_time", e.target.value)}
                     /> 
                     <label className="text-xl">às</label>
                     <input
                     type="time"
                     id="Time"
                     className="w-full lg:w-full h-10 p-1 border focus:border-black rounded-md bg-[#EFEFEF]"
-                    onChange={(e) => handleChange(e, "time", e.target.value)}
+                    onChange={(e) => handleChange(e, "end_time", e.target.value)}
                     />
                   </div>
                 </div>
@@ -285,27 +301,27 @@ export default function NewMeeting() {
                 <button
                   type="button"
                   className={`border border-slate-400 ${
-                    selectedCategory === 1 ? "bg-[#FED353] text-[#FFFFFF] border-none shadow-lg" : ""
+                    selectedCategory === 'Fisica' ? "bg-[#FED353] text-[#FFFFFF] border-none shadow-lg" : ""
                   } p-1 rounded-md`}
-                  onClick={(e) => handleCategoryChange(1)}
+                  onClick={(e) => handleCategoryChange("Fisica")}
                 >
                   Presencial
                 </button>
                 <button
                   type="button"
                   className={`border border-slate-400 ${
-                    selectedCategory === 2 ? "bg-[#FED353] text-[#FFFFFF] border-none shadow-lg" : ""
+                    selectedCategory === "Hibrido" ? "bg-[#FED353] text-[#FFFFFF] border-none shadow-lg" : ""
                   } p-1 rounded-md`}
-                  onClick={(e) => handleCategoryChange(2)}
+                  onClick={(e) => handleCategoryChange("Hibrido")}
                 >
                   Híbrido
                 </button>
                 <button
                   type="button"
                   className={`border border-slate-400 ${
-                    selectedCategory === 3 ? "bg-[#FED353] text-[#FFFFFF] border-none shadow-lg" : ""
+                    selectedCategory === 'Virtual' ? "bg-[#FED353] text-[#FFFFFF] border-none shadow-lg" : ""
                   } p-1 rounded-md`}
-                  onClick={(e) => handleCategoryChange(3)}
+                  onClick={(e) => handleCategoryChange("Virtual")}
                 >
                   Virtual
                 </button>
@@ -317,7 +333,12 @@ export default function NewMeeting() {
               {/* SALAS */ }
               <div className="standardFlex flex-col items-center lg:items-start lg:pr-10 self-start">
                 <label className="text-xl my-4">Sala Virtual / Presencial</label>
-                <select type="select" className="w-full lg:w-full h-10 p-1 border focus:border-black rounded-md bg-[#EFEFEF]"/>
+                <select type="select" onChange={(e) => handleRoomSelection(e.target.value)} className="w-full lg:w-full h-10 p-1 border focus:border-black rounded-md bg-[#EFEFEF]">
+                  {selectedCategory == null? <option value={null}>Selecione uma categoria</option> : null}
+                  {salas.filter((sala) => sala.type == selectedCategory).map((sala) => (
+                    <option key={sala.id} value={sala.id}>{sala.type == "Virtual" ? `Sala Virtual ${sala.id}` : sala.name}</option>
+                  ))}
+                </select>
               </div>
 
               {/* PAUTAS */ }
@@ -353,7 +374,7 @@ export default function NewMeeting() {
                     className="flex border py-1 px-2 gap-4 justify-between rounded-full"
                     >
                       <p>{pauta}</p>
-                      <button onClick={() => handlePautaDelete(index)}>
+                      <button type="button" onClick={() => handlePautaDelete(index)}>
                         X
                       </button>
                     </div>

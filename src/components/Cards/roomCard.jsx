@@ -6,7 +6,6 @@ import { toast, ToastContainer } from "react-toastify";
 
 export default function RoomCard({ sala, showDelete }) {
     const [isDeleted, setIsDeleted] = useState(false);
-    console.log(sala.id)
 
     const handleDelete = async (id,type) => {
         let endpoint = "http://localhost:8080/physicalRoom/delete"
@@ -25,7 +24,6 @@ export default function RoomCard({ sala, showDelete }) {
             const response = await axios.delete(endpoint, {
               data: data,
             });
-            console.log(type);
             if (response.status === 200) {
             setIsDeleted(true);
             toast.success("Sala deletada com sucesso", {
