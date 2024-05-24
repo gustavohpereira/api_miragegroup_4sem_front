@@ -45,14 +45,12 @@ export default function NewRoom() {
       }
     }
 
-    console.log(data)
     try {
       const response = await axios.post(endpoint, data, {
         withCredentials: true,
       });
 
       if (response.status === 201) {
-        console.log("Sala criada com sucesso");
         toast.success("Sala criada com sucesso", {
           position: "top-center",
           autoClose: 5000,

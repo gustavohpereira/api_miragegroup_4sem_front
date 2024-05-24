@@ -24,7 +24,6 @@ export default function RoomCard({ sala, showDelete }) {
             const response = await axios.delete(endpoint, {
               data: data,
             });
-            console.log(type);
             if (response.status === 200) {
             setIsDeleted(true);
             toast.success("Sala deletada com sucesso", {
