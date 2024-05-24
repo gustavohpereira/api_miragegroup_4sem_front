@@ -4,26 +4,20 @@ import Login from '../components/Login/Login'
 import PageWrapper from '../components/PageWrapper/PageWrapper'
 import Register from '../components/Register/Register'
 import RoomList from '../components/RoomList/RoomList'
-import CreateRoom from '../components/RoomList/create/CreateRoom'
-import { AddUserComponent } from '../components/UsersComponents/addUser/AddUserComponent'
+import { AddUserComponent } from '../components/addUser/AddUserComponent'
 import {
   createBrowserRouter,
   Navigate,
+  Outlet,
   RouterProvider
 } from 'react-router-dom'
-import { AdminRoute, AuthenticatedRoute } from './ProtectedRoutes'
+import { ProtectedRoute } from './ProtectedRoute'
 import Logout from '../components/Logout/Logout'
-import NewMeeting from '../components/meetingsComponents/NewMeeting/NewMeeting'
-import ListMeetings from '../components/meetingsComponents/listMeetings/ListMeetings'
-import UserList from '../components/UsersComponents/UserList/userList'
-import EditUser from '../components/UsersComponents/editUser/editUser'
-import UpdateMeeting from '../components/meetingsComponents/updateMeeting/updateMeeting'
-import Calendar from '../components/calendar/calendar'
-import CalendarPage from '../components/calendar/calendarPage'
-
+import NewMeeting from '../components/NewMeeting/NewMeeting'
+import ListMeetings from '../components/NewMeeting/listMeetings/ListMeetings'
 
 const Routes = () => {
-    const { token, user } = useAuth()
+    const { token } = useAuth()
 
     const routesForNotAuthenticatedOnly = [
         {
@@ -35,7 +29,7 @@ const Routes = () => {
     const routesForAuthenticatedOnly = [
         {
             path: '/',
-            element: <AuthenticatedRoute />,
+            element: <ProtectedRoute />,
             children: [
                 {
                     path: '/',
@@ -50,20 +44,16 @@ const Routes = () => {
                     element: <div><Register/></div>
                 },
                 {
+                    path: '/addUser',
+                    element: <PageWrapper><AddUserComponent></AddUserComponent></PageWrapper>
+                },
+                {
                     path: '/newRoom',
                     element: <PageWrapper><RoomList/></PageWrapper>
                 },
                 {
-                    path: '/calendar',
-                    element: <PageWrapper><CalendarPage/></PageWrapper>
-                },
-                {
-                    path: '/createRoom',
-                    element: <PageWrapper><CreateRoom/></PageWrapper>
-                },
-                {
-                    path: '/meetings',
-                    element: <PageWrapper><ListMeetings/></PageWrapper>
+                    path: '/newMeeting',
+                    element: <PageWrapper><NewMeeting/><ListMeetings/></PageWrapper>
                 },
                 {
                     path: '/Admin',
@@ -72,47 +62,14 @@ const Routes = () => {
                 {
                     path: '/logout',
                     element: <Logout />
-                },
-                {
-                    path: '/EditUser/:userId',
-                    element: <PageWrapper><EditUser/></PageWrapper>
-                },
-                {
-                    path: 'createMeeting',
-                    element: <PageWrapper><NewMeeting/></PageWrapper>
-                },
-                {
-                    path: 'updateMeeting/:meetingId',
-                    element: <PageWrapper><UpdateMeeting></UpdateMeeting></PageWrapper>
-                },
+                }
             ]
         }
     ]
 
-    const routesForAdminOnly = [
-        {
-            path: '/',
-            element: <AdminRoute />,
-            children: [
-                {
-                    path: '/users',
-                    element: <PageWrapper><UserList/></PageWrapper>
-                },
-                {
-                    path: '/addUser',
-                    element: <PageWrapper><AddUserComponent/></PageWrapper>
-                },
-
-            ]
-        },
-        
-
-    ]
-
     const router = createBrowserRouter([
         ...(!token ? routesForNotAuthenticatedOnly : []),
-        ...routesForAdminOnly,
-        ...routesForAuthenticatedOnly,
+        ...routesForAuthenticatedOnly
     ])
 
     return <RouterProvider router={router} />
