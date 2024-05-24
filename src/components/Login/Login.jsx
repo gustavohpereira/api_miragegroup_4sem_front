@@ -45,7 +45,7 @@ const Login = () => {
                 </div>
                 <div className="formDiv flexAlignCenter">
                     <div className="headerDiv">
-                        <img src={logo} alt="Logo Image" />
+                        <img src="/orca_logo.svg" alt="" className="h-20 w-[112px]"></img>
                         <h3>Bem-vindo novamente!</h3>
                     </div>
 
