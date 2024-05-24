@@ -96,26 +96,26 @@ export default function NewMeeting() {
     endTime.setSeconds(0);
 
     if (endTime <= beginningTime) {
-      endTime.setDate(endTime.getDate() + 1); 
+      endTime.setDate(endTime.getDate() + 1);
     }
 
     const durationInMinutes = (endTime - beginningTime) / 60000; // Calcula a duração em minutos
 
     let categoryNumber = null
-    switch(selectedCategory) {
+    switch (selectedCategory) {
       case "Fisica":
         categoryNumber = 1
         break;
       case "Virtual":
         categoryNumber = 3
         break;
-      case "Hibrida": 
+      case "Hibrida":
         categoryNumber = 2
       default:
         break;
     }
 
-    
+
     // Montando o objeto de dados para enviar na requisição
     let requestData = {
       topic: meetingData.protocol, // Substitua por como você está definindo o protocolo
@@ -128,16 +128,17 @@ export default function NewMeeting() {
       meetingType: categoryNumber, // Substitua por como você está definindo o tipo de reunião
       physicalRoom: meetingData.physicalRoom,
       virtualRoom: meetingData.virtualRoom,
-      participants: meetingData.selectedUsers, 
+      participants: meetingData.selectedUsers,
       meetingTheme: pautas,
     };
+
     // Enviar a requisição para o backend
     axios
       .post("http://localhost:8080/meeting/create-meeting", requestData, {
         withCredentials: true,
       }).then((response) => {
         requestData.join_url = response.data.join_url;
-
+        console.log(meetingData.virtualRoom);
         axios.post("http://localhost:8080/meeting/create", requestData, {
           withCredentials: true,
         })
@@ -177,21 +178,20 @@ export default function NewMeeting() {
       return;
     }
 
-    const selectedRoom = salas.find((sala) => sala.id == id && sala.type == type);
+    const selectedRoom = salas.find((sala) => sala.id == id);
     if (selectedRoom) {
-      if (selectedRoom.type == "Fisica") {
+      if (selectedRoom.type === "Fisica") {
         setMeetingData({
           ...meetingData,
           physicalRoom: selectedRoom,
         });
       } else {
-        console.log(selectedRoom)
         setMeetingData({
           ...meetingData,
           virtualRoom: selectedRoom,
         });
       }
-    } else {
+      console.log("Selected Room:", selectedRoom);
     }
   };
 
@@ -226,102 +226,99 @@ export default function NewMeeting() {
           onSubmit={(e) => handleSubmit(e)}
         >
           <div className="grid grid-cols-1 w-full justify-between items-center gap-32">
-              {/* TITULO DA REUNIÃO */}
-              <div className="standardFlex flex-col w-4/6 items-center lg:items-start">
-                <label htmlFor="meetingName" className="text-xl my-4">
-                  Título da Reunião
+            {/* TITULO DA REUNIÃO */}
+            <div className="standardFlex flex-col w-4/6 items-center lg:items-start">
+              <label htmlFor="meetingName" className="text-xl my-4">
+                Título da Reunião
+              </label>
+              <input
+                type="text"
+                id="meetingName"
+                className="w-full lg:w-full h-10 p-1 border focus:border-black rounded-md bg-[#EFEFEF]"
+                onChange={(e) => handleChange(e, "protocol", e.target.value)}
+              />
+            </div>
+
+            {/* DATA DA REUNIÃO */}
+            <div className="grid grid-cols-1 items-center lg:items-start lg:grid-cols-2 w-4/6 ">
+              <div className="standardFlex flex-col items-center lg:items-start lg:w-3/4">
+                <label htmlFor="Data" className="text-xl my-4">
+                  Data
                 </label>
                 <input
-                  type="text"
-                  id="meetingName"
-                  className="w-full lg:w-full h-10 p-1 border focus:border-black rounded-md bg-[#EFEFEF]"
-                  onChange={(e) => handleChange(e, "protocol", e.target.value)}
-                />
-              </div>
-
-              {/* DATA DA REUNIÃO */}
-              <div className="grid grid-cols-1 items-center lg:items-start lg:grid-cols-2 w-4/6 ">
-                <div className="standardFlex flex-col items-center lg:items-start lg:w-3/4">
-                  <label htmlFor="Data" className="text-xl my-4">
-                    Data
-                  </label>
-                  <input
                   type="date"
                   id="Data"
                   className="w-full lg:w-full h-10 p-1 border focus:border-black rounded-md bg-[#EFEFEF] ::placeholder-center"
                   onChange={(e) => handleChange(e, "datetime", e.target.value)}
-                  />
-                </div>
+                />
+              </div>
 
-                <div className="standardFlex flex-col items-center lg:items-start">
-                  <label htmlFor="Data" className="text-xl my-4">
-                    Horário
-                  </label>
-                  <div className="flex w-4/5 gap-6">
-                    <input
+              <div className="standardFlex flex-col items-center lg:items-start">
+                <label htmlFor="Data" className="text-xl my-4">
+                  Horário
+                </label>
+                <div className="flex w-4/5 gap-6">
+                  <input
                     type="time"
                     id="Time"
                     className="w-full lg:w-full h-10 p-1 border focus:border-black rounded-md bg-[#EFEFEF]"
                     onChange={(e) => handleChange(e, "beginning_time", e.target.value)}
-                    /> 
-                    <label className="text-xl">às</label>
-                    <input
+                  />
+                  <label className="text-xl">às</label>
+                  <input
                     type="time"
                     id="Time"
                     className="w-full lg:w-full h-10 p-1 border focus:border-black rounded-md bg-[#EFEFEF]"
                     onChange={(e) => handleChange(e, "end_time", e.target.value)}
-                    />
-                  </div>
+                  />
                 </div>
               </div>
+            </div>
 
-              {/* PARTICIPANTES */}
-              <div className="standardFlex flex-col w-4/6 items-center lg:items-start">
-                <div className="standardFlex flex-col w-5/6 items-center lg:items-start" >
-                  <label htmlFor="participants" className="text-xl my-4">
-                    Adicione um novo usuario
-                  </label>
-                  <MultiSelectDropdown
+            {/* PARTICIPANTES */}
+            <div className="standardFlex flex-col w-4/6 items-center lg:items-start">
+              <div className="standardFlex flex-col w-5/6 items-center lg:items-start" >
+                <label htmlFor="participants" className="text-xl my-4">
+                  Adicione um novo usuario
+                </label>
+                <MultiSelectDropdown
                   options={users}
                   selectedOptions={meetingData.selectedUsers}
                   setSelectedOptions={(selected) =>
                     setMeetingData({
-                    ...meetingData,
-                    selectedUsers: selected,
+                      ...meetingData,
+                      selectedUsers: selected,
                     })
                   }
                   placeholder="Adicione um novo usuario"
-                  />
-                </div>
+                />
               </div>
+            </div>
 
-              {/* CATEGORIA DA REUNIÃO */}
-              <div className="standardFlex flex-col items-center lg:items-start w-4/6">
+            {/* CATEGORIA DA REUNIÃO */}
+            <div className="standardFlex flex-col items-center lg:items-start w-4/6">
               <label className="text-xl my-4">Categoria</label>
               <div className="grid grid-cols-3 lg:w-3/5 ">
                 <button
                   type="button"
-                  className={`border border-slate-400 ${
-                    selectedCategory === 'Fisica' ? "bg-[#FED353] text-[#FFFFFF] border-none shadow-lg" : ""
-                  } p-1 rounded-md`}
+                  className={`border border-slate-400 ${selectedCategory === 'Fisica' ? "bg-[#FED353] text-[#FFFFFF] border-none shadow-lg" : ""
+                    } p-1 rounded-md`}
                   onClick={(e) => handleCategoryChange("Fisica")}
                 >
                   Presencial
                 </button>
                 <button
                   type="button"
-                  className={`border border-slate-400 ${
-                    selectedCategory === "Hibrido" ? "bg-[#FED353] text-[#FFFFFF] border-none shadow-lg" : ""
-                  } p-1 rounded-md`}
+                  className={`border border-slate-400 ${selectedCategory === "Hibrido" ? "bg-[#FED353] text-[#FFFFFF] border-none shadow-lg" : ""
+                    } p-1 rounded-md`}
                   onClick={(e) => handleCategoryChange("Hibrido")}
                 >
                   Híbrido
                 </button>
                 <button
                   type="button"
-                  className={`border border-slate-400 ${
-                    selectedCategory === 'Virtual' ? "bg-[#FED353] text-[#FFFFFF] border-none shadow-lg" : ""
-                  } p-1 rounded-md`}
+                  className={`border border-slate-400 ${selectedCategory === 'Virtual' ? "bg-[#FED353] text-[#FFFFFF] border-none shadow-lg" : ""
+                    } p-1 rounded-md`}
                   onClick={(e) => handleCategoryChange("Virtual")}
                 >
                   Virtual
@@ -329,58 +326,58 @@ export default function NewMeeting() {
               </div>
             </div>
 
-            {/* SALAS E PAUTAS */ }
+            {/* SALAS E PAUTAS */}
             <div className="grid grid-cols-1 items-center lg:items-start lg:grid-cols-2 w-4/6 ">
-              {/* SALAS */ }
+              {/* SALAS */}
               <div className="standardFlex flex-col items-center lg:items-start lg:pr-10 self-start">
                 <label className="text-xl my-4">Sala Virtual / Presencial</label>
                 <select type="select" onChange={(e) => handleRoomSelection(e.target.value)} className="w-full lg:w-full h-10 p-1 border focus:border-black rounded-md bg-[#EFEFEF]">
-                  {selectedCategory == null? <option value={null}>Selecione uma categoria</option> : null}
+                  {selectedCategory == null ? <option value={null}>Selecione uma categoria</option> : null}
                   {salas.filter((sala) => sala.type == selectedCategory).map((sala) => (
                     <option key={sala.id} value={sala.id}>{sala.type == "Virtual" ? `Sala Virtual ${sala.id}` : sala.name}</option>
                   ))}
                 </select>
               </div>
 
-              {/* PAUTAS */ }
+              {/* PAUTAS */}
               <div className="standardFlex flex-col items-center lg:items-start lg:pl-10">
                 <label className="text-xl my-4">Adicionar Pautas a Reunião</label>
                 <div className="flex w-full lg:w-full h-10 gap-1 rounded-md bg-[#EFEFEF]
                   file:mr-4 file:py-2 file:px-4
                   file:rounded-full file:border-0
                   file:text-sm">
-                  <input type="text" 
-                  id="pautas"
-                  value={singlePauta}
-                  className="w-full lg:w-full h-8 bg-[#EFEFEF] p-1 border-0"
-                  onChange={(e) => setSinglePauta(e.target.value)}/>
+                  <input type="text"
+                    id="pautas"
+                    value={singlePauta}
+                    className="w-full lg:w-full h-8 bg-[#EFEFEF] p-1 border-0"
+                    onChange={(e) => setSinglePauta(e.target.value)} />
                   <button
-                  type="button"
-                  onClick={() => {
-                    if (singlePauta.trim() !== "") {
-                      setPautas([...pautas, singlePauta]);
-                      setSinglePauta(""); // Limpa o campo de entrada
-                    }
-                  }}
-                  className="transition easy-in-out hover:bg-slate-300 p-3 "
+                    type="button"
+                    onClick={() => {
+                      if (singlePauta.trim() !== "") {
+                        setPautas([...pautas, singlePauta]);
+                        setSinglePauta(""); // Limpa o campo de entrada
+                      }
+                    }}
+                    className="transition easy-in-out hover:bg-slate-300 p-3 "
                   >
                     <AiOutlinePlus />
                   </button>
                 </div>
                 <div className="flex gap-x-4 gap-y-3 w-[105%] flex-wrap mt-4 text-sm">
                   {pautas.length > 0
-                  ? pautas.map((pauta, index) => (
-                    <div
-                    key={index}
-                    className="flex border py-1 px-2 gap-4 justify-between rounded-full"
-                    >
-                      <p>{pauta}</p>
-                      <button type="button" onClick={() => handlePautaDelete(index)}>
-                        X
-                      </button>
-                    </div>
-                  ))
-                  : null}
+                    ? pautas.map((pauta, index) => (
+                      <div
+                        key={index}
+                        className="flex border py-1 px-2 gap-4 justify-between rounded-full"
+                      >
+                        <p>{pauta}</p>
+                        <button type="button" onClick={() => handlePautaDelete(index)}>
+                          X
+                        </button>
+                      </div>
+                    ))
+                    : null}
                 </div>
               </div>
             </div>
@@ -398,7 +395,7 @@ export default function NewMeeting() {
                   onChange={(e) => handleChange(e, "description", e.target.value)}
                 />
               </div>
-              
+
               {/* BOTÃO CRIAR REUNIÃO */}
               <div className="w-full flex lg:justify-end self-end mt-8">
                 {creatingMeeting === false ? (
@@ -448,9 +445,9 @@ export default function NewMeeting() {
             pauseOnHover
             theme="dark"
           />
-            
+
         </form>
-      </div>  
+      </div>
     </div>
   )
 }
