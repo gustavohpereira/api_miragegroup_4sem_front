@@ -27,16 +27,19 @@ export default function Sidebar() {
       name: "Salas",
       icon: "/room.svg",
       link: "/newRoom",
+      subRoutes: ["/createRoom"]
     },
     {
       name: "Reuniões",
       icon: "/meeting.svg",
       link: "/meetings",
+      subRoutes: ["/createMeeting"]
     },
     {
       name: "Usuários",
       icon: "/user.svg",
       link: "/users",
+      subRoutes: ["/addUser"]
     },
   ];
 
@@ -49,7 +52,7 @@ export default function Sidebar() {
 
         <div className="flex lg:flex-col justify-start items-center px-2 my-16 w-full lg:px-6 lg:gap-8">
           {links.map((link) => {
-            const isActive = location.pathname === link.link;
+            const isActive = location.pathname === link.link || (link.subRoutes && link.subRoutes.includes(location.pathname));
 
             if (link.name === 'Usuários' && user.role === 'admin') {
               return (
@@ -57,9 +60,10 @@ export default function Sidebar() {
                   key={link.name}
                   to={link.link}
                   className={`w-full flex justify-center lg:justify-start items-center lg:py-4 transition easy-in-out ${
-                    isActive ? 'bg-[#FED353] text-white' : 'hover:bg-[#575757] text-[#FED353] lg:text-[#FEFEFE] hover:text-white'
-                  } rounded-lg `}
+                    isActive ? 'bg-[#FED353] text-white pl-3' : 'hover:bg-[#575757] text-[#FED353] lg:text-[#FEFEFE] hover:text-white'
+                  } rounded-lg relative`}
                 >
+                  {isActive && <span className="absolute left-0 top-0 bottom-0 w-1 bg-[#FED353] rounded-r-lg ml-[-22px]"></span>}
                   <div className="lg:flex items-center gap-4 px-8 hidden">
                     <div>
                       <img src={link.icon} alt="" className="h-6"></img>
@@ -76,9 +80,10 @@ export default function Sidebar() {
                   key={link.name}
                   to={link.link}
                   className={`w-full flex justify-center lg:justify-start items-center lg:py-4 transition easy-in-out ${
-                    isActive ? 'bg-[#FED353] text-white' : 'hover:bg-[#575757] text-[#FED353] lg:text-[#FEFEFE] hover:text-white'
-                  } rounded-lg `}
+                    isActive ? 'bg-[#FED353] text-white pl-3' : 'hover:bg-[#575757] text-[#FED353] lg:text-[#FEFEFE] hover:text-white'
+                  } rounded-lg relative`}
                 >
+                  {isActive && <span className="absolute left-0 top-0 bottom-0 w-1 bg-[#FED353] rounded-r-lg ml-[-22px]"></span>}
                   <div className="lg:flex items-center gap-4 px-8 hidden">
                     <div>
                       <img src={link.icon} alt="" className="h-6"></img>
@@ -89,14 +94,14 @@ export default function Sidebar() {
               );
             }
 
-            return null; // Hide the "Usuários" link for non-admin users
+            return null;
           })}
         </div>
       </div>
 
       <div className="">
         <button type="button" className="flex text-[#FEFEFE] lg:w-42 p-2 w-full gap-4 hover:bg-[#575757] rounded-lg" onClick={handleLogoutSidebar}>
-          <div>
+          <div className="w-1/6">
             <img src="/logout.svg" alt="Logout" />
           </div>
           <label className="cursor-pointer">Sair da conta</label>
