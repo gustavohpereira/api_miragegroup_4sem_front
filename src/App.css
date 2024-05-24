@@ -26,10 +26,6 @@
 
 .flex {
   display: flex;
-}
-
-.flexAlignCenter {
-  display: flex;
   align-items: center;
 }
 
@@ -207,9 +203,8 @@ img, video {
   padding: 1.5rem 0;
 }
 .loginPage .container .formDiv .headerDiv img {
-  width: 100px;
+  width: 60px;
   padding-bottom: 0.5rem;
-  margin-right: 1rem;
 }
 .loginPage .container .formDiv .headerDiv h3 {
   font-size: 25px;
@@ -243,7 +238,7 @@ img, video {
 }
 .loginPage .container .formDiv .form .btn {
   padding: 0.8rem;
-  background: #FED353;
+  background: var(--primaryColor);
   border-radius: 10px;
   color: var(--whiteColor);
   align-items: center;

@@ -1,15 +1,13 @@
 import { useState } from 'react';
-import PageTitle from '../../pageTitle/PageTitle';
+import PageTitle from "../pageTitle/PageTitle";
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import Select from 'react-select';
 import 'react-toastify/dist/ReactToastify.css';
 import './toastNotification.css'
-import { Navigate, useNavigate } from 'react-router-dom'
-
 
 export function AddUserComponent() {
-    const navigate = useNavigate()
+
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -115,10 +113,8 @@ export function AddUserComponent() {
                         />
                     </div>
                 </div>
-                <div className="w-full standardFlex justify-center  lg:w-2/3 gap-8 ">
-                <button type="button" className="rounded-lg bg-slate-300 lg:w-[20%] w-1/2 mt-8 text-2xl h-12 transition easy-in-out hover:bg-slate-400" onClick={() => navigate('/users')}>Cancelar</button>
+                <div className="w-full standardFlex justify-center  lg:w-2/3 ">
                     <button type="submit" className="rounded-lg bg-[#FED353] lg:w-[20%] w-1/2 mt-8 text-2xl h-12 transition easy-in-out hover:bg-[#F6A700]">Cadastrar</button>
-                    
                 </div>
                 <ToastContainer 
                   position='bottom-center'
