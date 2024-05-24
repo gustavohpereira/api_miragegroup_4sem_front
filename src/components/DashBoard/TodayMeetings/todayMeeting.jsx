@@ -85,7 +85,7 @@ export default function TodayMeeting() {
               }
             })
             .map((m) => (
-              <MeetingCard key={m.id} m={m} showDelete={false} />
+              <MeetingCard m={m} key={m.id} showDelete={false} showJoin={true} />
             ))}
         </div>
       </div>

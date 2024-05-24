@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 
-export default function MeetingCard({ m, showDelete, showUpdate }) {
+export default function MeetingCard({ m, showDelete, showUpdate, showJoin }) {
   const [isDeleted, setIsDeleted] = useState(false);
   const navigate = useNavigate();
 
@@ -35,9 +35,26 @@ export default function MeetingCard({ m, showDelete, showUpdate }) {
     }
   };
 
-  function handleUpdate() {
+  const handleUpdate = () => {
     navigate("/updateMeeting/" + m.id);
-  }
+  };
+
+  const handleJoinMeeting = () => {
+    if (m.join_url) {
+      window.location.href = m.join_url;
+    } else {
+      toast.error("URL de entrada na reunião não disponível", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
+  };
 
   var location = null;
   var meetingType = "";
@@ -72,8 +89,7 @@ export default function MeetingCard({ m, showDelete, showUpdate }) {
           <div className="flex flex-col items-start">
             <h1 className="text-2xl">{m.topic}</h1>
             <p className="text-lg font-light">
-              <strong>Tipo de reunião:</strong>
-              {meetingType}
+              <strong>Tipo de reunião:</strong> {meetingType}
             </p>
           </div>
           <div className="flex flex-col items-start">
@@ -98,9 +114,14 @@ export default function MeetingCard({ m, showDelete, showUpdate }) {
           </div>
         </div>
         <div className="flex gap-8 items-center w-1/2">
-          <button className="bg-[#FED353] hover:bg-[#F6A700] p-2 rounded-md border border-slate-400">
-            <p>Entrar na Reunião</p>
-          </button>
+          {showJoin && (
+            <button
+              className="bg-[#FED353] hover:bg-[#F6A700] p-2 rounded-md border border-slate-400"
+              onClick={handleJoinMeeting}
+            >
+              <p>Entrar na Reunião</p>
+            </button>
+          )}
           {showUpdate && (
             <button
               className="bg-[#FED353] hover:bg-[#F6A700] p-2 rounded-md border border-slate-400"
