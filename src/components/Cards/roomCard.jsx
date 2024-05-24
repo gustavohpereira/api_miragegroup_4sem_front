@@ -47,7 +47,7 @@ export default function RoomCard({ sala, showDelete }) {
         <div className="standardFlex border border-black rounded-lg items-center p-2 px-6  w-4/6 justify-between gap-4" key={sala.nome}>
             <div className="flex gap-4">
                 <div className="">
-                    <h1 className="text-3xl">{sala.location}</h1>
+                    <h1 className="text-3xl">{sala.name}</h1>
                     <p className="text-2xl font-light">Capacidade máxima: {sala.occupancy}</p>
                 </div>
                 <div className="flex gap-8">

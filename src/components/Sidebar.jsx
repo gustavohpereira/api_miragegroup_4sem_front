@@ -41,6 +41,11 @@ export default function Sidebar() {
       link: "/users",
       subRoutes: ["/addUser"]
     },
+    {
+      name: "Calendar",
+      icon: "/calendário_bg.svg",
+      link: "/calendar",
+    },
   ];
 
   return (

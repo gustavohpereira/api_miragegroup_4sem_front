@@ -128,7 +128,7 @@ export default function NewMeeting() {
       meetingType: categoryNumber, // Substitua por como você está definindo o tipo de reunião
       physicalRoom: meetingData.physicalRoom,
       virtualRoom: meetingData.virtualRoom,
-      participants: meetingData.selectedUsers, // Obtendo os IDs dos participantes selecionados
+      participants: meetingData.selectedUsers, 
       meetingTheme: pautas,
     };
     // Enviar a requisição para o backend
@@ -177,7 +177,7 @@ export default function NewMeeting() {
       return;
     }
 
-    const selectedRoom = salas.find((sala) => sala.id == id);
+    const selectedRoom = salas.find((sala) => sala.id == id && sala.type == type);
     if (selectedRoom) {
       if (selectedRoom.type == "Fisica") {
         setMeetingData({
@@ -185,6 +185,7 @@ export default function NewMeeting() {
           physicalRoom: selectedRoom,
         });
       } else {
+        console.log(selectedRoom)
         setMeetingData({
           ...meetingData,
           virtualRoom: selectedRoom,
