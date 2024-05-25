@@ -52,7 +52,7 @@ export default function ListMeetings() {
       </div>
       <div className="standardFlex flex-col gap-4 my-8 items-start ">
         {filteredMeetings.map((m) => {
-          return <MeetingCard m={m} key={m.id} showDelete={true} showUpdate={true} />;
+          return <MeetingCard m={m} key={m.id} showDelete={true} showUpdate={true} showJoin={true} />;
         })}
       </div>
     </div>
