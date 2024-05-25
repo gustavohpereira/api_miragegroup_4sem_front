@@ -13,6 +13,7 @@ export default function ListMeetings() {
   useEffect(() => {
     async function fetchMeetings() {
       const meetingsResponse = await getAllMeetings();
+      console.log("response", meetingsResponse);
       setMeetings(meetingsResponse);
     }
     fetchMeetings();

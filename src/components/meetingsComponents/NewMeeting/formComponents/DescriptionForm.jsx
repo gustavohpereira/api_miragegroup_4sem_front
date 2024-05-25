@@ -7,6 +7,7 @@ export default function DescriptionForm({ description, handleChange }) {
       <textarea
         type="textArea"
         id="description"
+        value={description}
         className="w-full lg:w-full h-[150px] p-1 border focus:border-black rounded-md bg-[#EFEFEF]"
         onChange={(e) => handleChange("description", e.target.value)}
       />

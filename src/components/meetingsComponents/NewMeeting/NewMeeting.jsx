@@ -76,7 +76,7 @@ const handleSubmit = async (event, meetingData, setCreatingMeeting, toast) => {
     participants: meetingData.selectedUsers,
     meetingTheme: meetingData.pautas,
   };
-
+  console.log("requestData", requestData);
   try {
     const response = await axios.post("http://localhost:8080/meeting/create-meeting", requestData, { withCredentials: true });
     requestData.join_url = response.data.join_url;

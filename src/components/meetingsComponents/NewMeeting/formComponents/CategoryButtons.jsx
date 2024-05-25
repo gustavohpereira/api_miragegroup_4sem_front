@@ -2,11 +2,12 @@ export function CategoryButtons({ selectedCategory, handleChange }) {
   function handleCategoryChange(category) {
     switch (category) {
       case "Fisica":
-        handleChange("physicalRoom", null);
+        handleChange("virtualRoom", null);
+        console.log("limpou virtualRoom");
         handleChange("categoryNumber",1);
         break;
       case "Virtual":
-        handleChange("virtualRoom", null);
+        handleChange("physicalRoom", null);
         handleChange("categoryNumber",3);
         break;
       default:
