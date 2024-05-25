@@ -1,10 +1,12 @@
 import axios from "axios";
 import { format } from "date-fns";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 
-export default function MeetingCard({ m, showDelete }) {
+export default function MeetingCard({ m, showDelete, showUpdate, showJoin }) {
   const [isDeleted, setIsDeleted] = useState(false);
+  const navigate = useNavigate();
 
   const handleDelete = async (id) => {
     try {
@@ -12,7 +14,6 @@ export default function MeetingCard({ m, showDelete }) {
         "Tem certeza que deseja excluir esta reunião?"
       );
       if (confirm) {
-        console.log("id", id);
         const data = { id: id };
         await axios.delete(`http://localhost:8080/meeting/delete`, {
           data: data,
@@ -30,20 +31,48 @@ export default function MeetingCard({ m, showDelete }) {
         });
       }
     } catch (error) {
-      console.error("Erro ao deletar reunião:", error);
+      console.error("Erro ao deletar reunião:", error);
     }
   };
 
-  var location = "";
+  const handleUpdate = () => {
+    navigate("/updateMeeting/" + m.id);
+  };
 
+  const handleJoinMeeting = () => {
+    if (m.join_url) {
+      window.location.href = m.join_url;
+    } else {
+      toast.error("URL de entrada na reunião não disponível", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
+  };
+
+  var location = null;
   var meetingType = "";
 
   if (m.meetingType == 1) {
-    meetingType = "Fisica";
-    location = "local: " + m.physicalRoom.location;
+    meetingType = "Presencial";
+    location = (
+      <div>
+        <strong>Local:</strong> {m.physicalRoom.location}
+      </div>
+    );
   } else if (m.meetingType == 2) {
     meetingType = "Hibrida";
-    location = "local: " + m.physicalRoom.location;
+    location = (
+      <div>
+        <strong>Local:</strong> {m.physicalRoom.location}
+      </div>
+    );
   } else {
     meetingType = "Virtual";
   }
@@ -53,39 +82,57 @@ export default function MeetingCard({ m, showDelete }) {
   } else {
     return (
       <div
-        className="standardFlex border border-black rounded-lg items-center p-2 px-6 justify-between w-full"
+        className="standardFlex border border-black rounded-lg items-center p-4 px-4 justify-between gap-4"
         key={m.nome}
       >
-        
-        <div className="flex justify-start gap-4">
-          <div className=" min-w-96 max-w-96">
-            <h1 className="text-2xl ">{m.protocol}</h1>
-            <p className="text-lg font-light">Tipo de reunião: {meetingType}</p>
-          </div>
-          <div className="flex flex-col   min-w-96 max-w-min-w-96">
+        <div className="standardFlex flex-col justify-start items-start gap-2">
+          <div className="flex flex-col items-start">
+            <h1 className="text-2xl">{m.topic}</h1>
             <p className="text-lg font-light">
-              Capacidade máxima:{" "}
+              <strong>Tipo de reunião:</strong> {meetingType}
+            </p>
+          </div>
+          <div className="flex flex-col items-start">
+            <span className="text-lg font-light">
+              <strong>Capacidade máxima:</strong>{" "}
               {m.meetingType == 1 || m.meetingType == 2
                 ? m.physicalRoom.occupancy
                 : "livre"}
-            </p>
-            <p className="text-lg font-light">{location}</p>
+            </span>
+            <div className="text-lg font-light">{location}</div>
           </div>
-
-          <div className="flex gap-8">
+          <div className="flex flex-col items-start">
             <p className="text-lg font-light">
-              {format(new Date(m.datetime), "dd/MM/yyyy HH:mm")}
+              <strong>Data:</strong>{" "}
+              {format(new Date(m.beginning_time), "dd/MM/yyyy")}
+            </p>
+            <p className="text-lg font-light">
+              <strong>Hora:</strong>{" "}
+              {format(new Date(m.beginning_time), "HH:mm")} -{" "}
+              {format(new Date(m.end_time), "HH:mm")}
             </p>
           </div>
         </div>
-        <div className="flex gap-8">
-          {/* <button className="bg-[#FED353] hover:bg-[#F6A700] p-4 rounded-md border border-slate-400">
-            <p>Entrar na Reunião</p>
-          </button> */}
-
-          {showDelete == true && (
+        <div className="flex gap-8 items-center w-1/2">
+          {showJoin && (
             <button
-              className="bg-red-400 hover:bg-red-500 p-4 rounded-md border border-slate-400"
+              className="bg-[#FED353] hover:bg-[#F6A700] p-2 rounded-md border border-slate-400"
+              onClick={handleJoinMeeting}
+            >
+              <p>Entrar na Reunião</p>
+            </button>
+          )}
+          {showUpdate && (
+            <button
+              className="bg-[#FED353] hover:bg-[#F6A700] p-2 rounded-md border border-slate-400"
+              onClick={handleUpdate}
+            >
+              <p>Atualizar Reunião</p>
+            </button>
+          )}
+          {showDelete && (
+            <button
+              className="bg-red-400 hover:bg-red-500 p-2 rounded-md border border-slate-400"
               onClick={() => handleDelete(m.id)}
             >
               <p>Excluir Reunião</p>
