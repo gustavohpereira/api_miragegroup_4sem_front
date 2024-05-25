@@ -56,23 +56,19 @@ export default function MeetingCard({ m, showDelete, showUpdate, showJoin }) {
     }
   };
 
-  var location = null;
-  var meetingType = "";
+  let location = null;
+  let meetingType = "";
 
-  if (m.meetingType == 1) {
-    meetingType = "Presencial";
-    location = (
-      <div>
-        <strong>Local:</strong> {m.physicalRoom.location}
-      </div>
-    );
-  } else if (m.meetingType == 2) {
-    meetingType = "Hibrida";
-    location = (
-      <div>
-        <strong>Local:</strong> {m.physicalRoom.location}
-      </div>
-    );
+  console.log(m)
+  if (m.meetingType == 1 || m.meetingType == 2) {
+    meetingType = m.meetingType == 1 ? "Presencial" : "Hibrida";
+    if (m.physicalRoom) {
+      location = (
+        <div>
+          <strong>Local:</strong> {m.physicalRoom.location}
+        </div>
+      );
+    }
   } else {
     meetingType = "Virtual";
   }
@@ -95,7 +91,7 @@ export default function MeetingCard({ m, showDelete, showUpdate, showJoin }) {
           <div className="flex flex-col items-start">
             <span className="text-lg font-light">
               <strong>Capacidade máxima:</strong>{" "}
-              {m.meetingType == 1 || m.meetingType == 2
+              {(m.meetingType === 1 || m.meetingType === 2) && m.physicalRoom
                 ? m.physicalRoom.occupancy
                 : "livre"}
             </span>
