@@ -11,6 +11,38 @@ import RoomInput from "./formComponents/RoomInput";
 import DateTimeForm from "./formComponents/DateTimeForm";
 import DescriptionForm from "./formComponents/DescriptionForm";
 
+const formatRequestData = (meetingData) => {
+  const beginningTime = new Date(meetingData.datetime);
+  const [beginningHours, beginningMinutes] = meetingData.beginning_time.split(":");
+  beginningTime.setHours(parseInt(beginningHours, 10));
+  beginningTime.setMinutes(parseInt(beginningMinutes, 10));
+  beginningTime.setSeconds(0);
+
+  const endTime = new Date(meetingData.datetime);
+  const [endHours, endMinutes] = meetingData.end_time.split(":");
+  endTime.setHours(parseInt(endHours, 10));
+  endTime.setMinutes(parseInt(endMinutes, 10));
+  endTime.setSeconds(0);
+
+  if (endTime <= beginningTime) {
+    endTime.setDate(endTime.getDate() + 1);
+  }
+
+  return {
+    topic: meetingData.protocol,
+    description: meetingData.description,
+    beginning_time: formatISO(beginningTime),
+    end_time: formatISO(endTime),
+    startDate: formatISO(beginningTime),
+    accessToken: meetingData.accessToken,
+    meetingType: getCategoryNumber(meetingData.category),
+    physicalRoom: meetingData.physicalRoom,
+    virtualRoom: meetingData.virtualRoom,
+    participants: meetingData.selectedUsers,
+    meetingTheme: meetingData.pautas,
+  };
+};
+
 const fetchSalas = async (handleChange) => {
   try {
     const [responseSalasFisicas, responseSalasVirtuais] = await Promise.all([
@@ -47,35 +79,7 @@ const handleSubmit = async (event, meetingData, setCreatingMeeting, toast) => {
   event.preventDefault();
   setCreatingMeeting(true);
 
-  const beginningTime = new Date(meetingData.datetime);
-  const [beginningHours, beginningMinutes] = meetingData.beginning_time.split(":");
-  beginningTime.setHours(parseInt(beginningHours, 10));
-  beginningTime.setMinutes(parseInt(beginningMinutes, 10));
-  beginningTime.setSeconds(0);
-
-  const endTime = new Date(meetingData.datetime);
-  const [endHours, endMinutes] = meetingData.end_time.split(":");
-  endTime.setHours(parseInt(endHours, 10));
-  endTime.setMinutes(parseInt(endMinutes, 10));
-  endTime.setSeconds(0);
-
-  if (endTime <= beginningTime) {
-    endTime.setDate(endTime.getDate() + 1);
-  }
-
-  const requestData = {
-    topic: meetingData.protocol,
-    description: meetingData.description,
-    beginning_time: formatISO(beginningTime),
-    end_time: formatISO(endTime),
-    startDate: formatISO(beginningTime),
-    accessToken: meetingData.accessToken,
-    meetingType: getCategoryNumber(meetingData.category),
-    physicalRoom: meetingData.physicalRoom,
-    virtualRoom: meetingData.virtualRoom,
-    participants: meetingData.selectedUsers,
-    meetingTheme: meetingData.pautas,
-  };
+  const requestData = formatRequestData(meetingData)
   console.log("requestData", requestData);
   try {
     const response = await axios.post("http://localhost:8080/meeting/create-meeting", requestData, { withCredentials: true });
@@ -105,6 +109,7 @@ export default function NewMeeting() {
   });
   const [users, setUsers] = useState([]);
   const [creatingMeeting, setCreatingMeeting] = useState(false);
+  const [availableRooms, setAvailableRooms] = useState([]);
 
   useEffect(() => {
     fetchSalas(handleChange);
@@ -114,9 +119,34 @@ export default function NewMeeting() {
     fetchUsers(setUsers);
   }, []);
 
+  useEffect(() => {
+    if (meetingData.protocol && meetingData.datetime && meetingData.selectedUsers.length && meetingData.category) {
+      checkAvailableRooms(meetingData);
+    }
+  }, [meetingData]);
+
   const handleChange = (dictKey, value) => {
     setMeetingData((prevData) => ({ ...prevData, [dictKey]: value }));
   };
+
+  const isRoomInputDisabled = !(
+    meetingData.protocol &&
+    meetingData.datetime &&
+    meetingData.selectedUsers.length > 0 &&
+    meetingData.category
+  );
+
+  const checkAvailableRooms = async (meetingData) => {
+    const requestData = formatRequestData(meetingData)
+    try{
+      const response = await axios.post("http://localhost:8080/physicalRoom/checkAvailability", requestData)
+      const availableRooms = response.data
+      console.log("SALAS DISPONIVEIS: ", availableRooms)
+      setAvailableRooms(availableRooms)
+    }catch(error){
+      console.error("Erro ao verificar disponibilidade das salas :(", error)
+    }
+  }
 
   return (
     <div className="w-full h-full">
@@ -139,7 +169,7 @@ export default function NewMeeting() {
             </div>
             <CategoryButtons selectedCategory={meetingData.category} handleChange={handleChange} />
             <div className="grid grid-cols-1 items-center lg:items-start lg:grid-cols-2 w-4/6 ">
-              <RoomInput salas={meetingData.salas} selectedCategory={meetingData.category} handleChange={handleChange} />
+              <RoomInput salas={meetingData.salas} selectedCategory={meetingData.category} handleChange={handleChange} isDisabled={isRoomInputDisabled} availableRooms={availableRooms}/>
               <PautaInput handleChange={handleChange} pautas={meetingData.pautas} />
             </div>
             <div className="grid grid-cols-3">
