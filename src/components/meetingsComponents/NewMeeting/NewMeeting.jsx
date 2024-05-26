@@ -141,12 +141,15 @@ export default function NewMeeting() {
     try{
       let availableRooms
       if(requestData.meetingType == 1){
-        const response = await axios.post("http://localhost:8080/physicalRoom/checkAvailability", requestData)
+        const response = await axios.post("http://localhost:8080/physicalRoom/checkAvailability", requestData, {
+          headers: { Authorization: "Bearer " + localStorage.getItem("token") }
+        })
         availableRooms = response.data
       }
       if(requestData.meetingType == 3){
-        console.log('caiu na vila')
-        const response = await axios.post("http://localhost:8080/virtualRoom/checkAvailability", requestData)
+        const response = await axios.post("http://localhost:8080/virtualRoom/checkAvailability", requestData, {
+          headers: { Authorization: "Bearer " + localStorage.getItem("token") }
+        })
         availableRooms = response.data
       }
       console.log("SALAS DISPONIVEIS: ", availableRooms)
