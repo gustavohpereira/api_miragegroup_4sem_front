@@ -46,8 +46,6 @@ export default function RoomList() {
 
   const filteredSalas = tipoReuniao === "Todos" ? salas : salas.filter((sala) => sala.type === tipoReuniao);
 
-  console.log(filteredSalas)
-
   return (
     <div>
       <PageTitle>Salas</PageTitle>

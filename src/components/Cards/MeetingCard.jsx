@@ -59,7 +59,6 @@ export default function MeetingCard({ m, showDelete, showUpdate, showJoin }) {
   let location = null;
   let meetingType = "";
 
-  console.log(m)
   if (m.meetingType == 1 || m.meetingType == 2) {
     meetingType = m.meetingType == 1 ? "Presencial" : "Hibrida";
     if (m.physicalRoom) {

@@ -49,7 +49,7 @@ export default function RoomCard({ sala, showDelete }) {
             <div className="">
               <h1 className="text-3xl">{sala.name}</h1>
               {sala.type == "Física" && (
-                <><p className="text-2xl font-light">Capacidade máxima: {sala.occupancy}</p><p className="text-2xl font-light">Localização: {sala.description}</p></>
+                <><p className="text-2xl font-light">Capacidade Máxima: {sala.occupancy}</p><p className="text-2xl font-light">Localização: {sala.location}</p></>
               )}
               <p className="text-2xl font-light">Nível de Acesso: {sala.accessLevel}</p>
             </div>
