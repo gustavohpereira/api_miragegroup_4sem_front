@@ -120,10 +120,11 @@ export default function NewMeeting() {
   }, []);
 
   useEffect(() => {
+    // Verifica se todos os dados necessários estão presentes
     if (meetingData.protocol && meetingData.datetime && meetingData.selectedUsers.length && meetingData.category) {
       checkAvailableRooms(meetingData);
     }
-  }, [meetingData]);
+  }, [meetingData.protocol, meetingData.datetime, meetingData.selectedUsers.length, meetingData.category]);
 
   const handleChange = (dictKey, value) => {
     setMeetingData((prevData) => ({ ...prevData, [dictKey]: value }));
@@ -158,6 +159,8 @@ export default function NewMeeting() {
       console.error("Erro ao verificar disponibilidade das salas :(", error)
     }
   }
+
+
 
   useEffect(() => {
     if (availableRooms.length === 1) {

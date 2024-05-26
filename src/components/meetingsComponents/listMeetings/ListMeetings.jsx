@@ -53,7 +53,21 @@ export default function ListMeetings() {
       </div>
       <div className="standardFlex flex-col gap-4 my-8 items-start ">
         {filteredMeetings.map((m) => {
-          return <MeetingCard m={m} key={m.id} showDelete={true} showUpdate={true} showJoin={true} />;
+          // Determinar se a reunião tem uma ATA anexada
+          const showAta = m.ata_url ? false : true;
+          const showDownloadAta = m.ata_url ? true : false;
+
+          return (
+            <MeetingCard
+              m={m}
+              key={m.id}
+              showDelete={true}
+              showUpdate={true}
+              showJoin={true}
+              showAta={showAta}
+              showDownloadAta={showDownloadAta}
+            />
+          );
         })}
       </div>
     </div>
