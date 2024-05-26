@@ -139,8 +139,16 @@ export default function NewMeeting() {
   const checkAvailableRooms = async (meetingData) => {
     const requestData = formatRequestData(meetingData)
     try{
-      const response = await axios.post("http://localhost:8080/physicalRoom/checkAvailability", requestData)
-      const availableRooms = response.data
+      let availableRooms
+      if(requestData.meetingType == 1){
+        const response = await axios.post("http://localhost:8080/physicalRoom/checkAvailability", requestData)
+        availableRooms = response.data
+      }
+      if(requestData.meetingType == 3){
+        console.log('caiu na vila')
+        const response = await axios.post("http://localhost:8080/virtualRoom/checkAvailability", requestData)
+        availableRooms = response.data
+      }
       console.log("SALAS DISPONIVEIS: ", availableRooms)
       setAvailableRooms(availableRooms)
     }catch(error){

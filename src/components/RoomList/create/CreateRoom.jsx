@@ -31,6 +31,7 @@ export default function NewRoom() {
     
     let data = {
       name: roomData.name,
+      description: roomData.description,
       login:`admin`,
       password:`admin`,
       accessLevel: roomData.accessLevel
