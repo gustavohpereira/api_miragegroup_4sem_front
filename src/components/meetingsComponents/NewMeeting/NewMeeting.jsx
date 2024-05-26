@@ -82,9 +82,10 @@ const handleSubmit = async (event, meetingData, setCreatingMeeting, toast) => {
   const requestData = formatRequestData(meetingData)
   console.log("requestData", requestData);
   try {
-    const response = await axios.post("http://localhost:8080/meeting/create-meeting", requestData, { withCredentials: true });
-    requestData.join_url = response.data.join_url;
-
+    if(requestData.meetingType == 3){
+      const response = await axios.post("http://localhost:8080/meeting/create-meeting", requestData, { withCredentials: true });
+      requestData.join_url = response.data.join_url;
+    }
     await axios.post("http://localhost:8080/meeting/create", requestData, { withCredentials: true });
     toast.success("Reunião criada com sucesso", { position: "top-center", autoClose: 5000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "dark" });
   } catch (error) {

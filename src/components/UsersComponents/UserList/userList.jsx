@@ -14,9 +14,9 @@ export default function UserList() {
 
     const renderTable = () => {
         return data.map((user, index) => {
-            const color = index % 2 === 0 ? 'bg-slate-500 text-black' : 'bg-amber-200'
+            const color = index % 2 === 0 ? 'bg-slate-500 text-white' : 'bg-yellow-300 text-black'
             return (
-                <tr key={user.id} className={`${color} text-white`}>
+                <tr key={user.id} className={`${color}`}>
                     <td className='px-4 py-2'>{user.id}</td>
                     <td className='px-4 py-2'>{user.name}</td>
                     <td className='px-4 py-2'>{user.email}</td>
