@@ -15,9 +15,7 @@ export default function TodayMeeting() {
   };
 
   useEffect(() => {
-    console.log('usuario', user.user.id)
     async function fetchMeetings() {
-      console.log("TA INDO!!!!!")
       try {
         const response = await getMeetingsByUser(user.user.id);
         console.log("response", response);
@@ -46,9 +44,6 @@ export default function TodayMeeting() {
     console.log(meetings);
     return <div>Loading...</div>;
   }
-
-  
-
   return (
     <div className="standardFlex items-start justify-start">
       <div className="w-[40%] px-10">
