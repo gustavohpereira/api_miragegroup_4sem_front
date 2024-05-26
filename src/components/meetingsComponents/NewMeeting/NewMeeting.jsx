@@ -139,15 +139,15 @@ export default function NewMeeting() {
 
   const checkAvailableRooms = async (meetingData) => {
     const requestData = formatRequestData(meetingData)
-    try{
+    try {
       let availableRooms
-      if(requestData.meetingType == 1){
+      if (requestData.meetingType == 1) {
         const response = await axios.post("http://localhost:8080/physicalRoom/checkAvailability", requestData, {
           headers: { Authorization: "Bearer " + localStorage.getItem("token") }
         })
         availableRooms = response.data
       }
-      if(requestData.meetingType == 3){
+      if (requestData.meetingType == 3) {
         const response = await axios.post("http://localhost:8080/virtualRoom/checkAvailability", requestData, {
           headers: { Authorization: "Bearer " + localStorage.getItem("token") }
         })
@@ -155,10 +155,20 @@ export default function NewMeeting() {
       }
       console.log("SALAS DISPONIVEIS: ", availableRooms)
       setAvailableRooms(availableRooms)
-    }catch(error){
+    } catch (error) {
       console.error("Erro ao verificar disponibilidade das salas :(", error)
     }
   }
+
+  useEffect(() => {
+    if (availableRooms.length === 1) {
+      if (meetingData.category === "Fisica") {
+        handleChange("physicalRoom", availableRooms[0]);
+      } else if (meetingData.category === "Virtual") {
+        handleChange("virtualRoom", availableRooms[0]);
+      }
+    }
+  }, [availableRooms, meetingData.category]);
 
   return (
     <div className="w-full h-full">
@@ -181,7 +191,7 @@ export default function NewMeeting() {
             </div>
             <CategoryButtons selectedCategory={meetingData.category} handleChange={handleChange} />
             <div className="grid grid-cols-1 items-center lg:items-start lg:grid-cols-2 w-4/6 ">
-              <RoomInput salas={meetingData.salas} selectedCategory={meetingData.category} handleChange={handleChange} isDisabled={isRoomInputDisabled} availableRooms={availableRooms}/>
+              <RoomInput salas={meetingData.salas} selectedCategory={meetingData.category} handleChange={handleChange} isDisabled={isRoomInputDisabled} availableRooms={availableRooms} />
               <PautaInput handleChange={handleChange} pautas={meetingData.pautas} />
             </div>
             <div className="grid grid-cols-3">
