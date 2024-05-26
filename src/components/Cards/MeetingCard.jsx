@@ -109,7 +109,7 @@ export default function MeetingCard({ m, showDelete, showUpdate, showJoin }) {
           </div>
         </div>
         <div className="flex gap-8 items-center w-1/2">
-          {showJoin && (
+          {showJoin && m.join_url && (
             <button
               className="bg-[#FED353] hover:bg-[#F6A700] p-2 rounded-md border border-slate-400"
               onClick={handleJoinMeeting}
