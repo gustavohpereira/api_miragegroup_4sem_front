@@ -45,17 +45,16 @@ export default function RoomCard({ sala, showDelete }) {
 
   if (isDeleted) return null;
   return (
-    <div className="standardFlex border border-black rounded-lg items-center p-2 px-6  w-4/6 justify-between gap-4" key={sala.nome}>
-      <div className="flex gap-4">
-        <div className="">
-          <h1 className="text-3xl">{sala.name}</h1>
+    <div className="standardFlex border border-gray-300 shadow-lg bg-white  items-center p-5 px-6  w-4/6 justify-between gap-4" key={sala.nome}>
+      <div className="flex gap-12">
+        <div className="flex-col">
+          <h1 className="text-2xl font-semibold mb-2">{sala.name}</h1>
           {sala.type == "Física" && (
-            <><p className="text-2xl font-light">Capacidade Máxima: {sala.occupancy}</p><p className="text-2xl font-light">Localização: {sala.location}</p></>
+            <><p className="text-xl mb-2 font-light"><strong>Capacidade Máxima:</strong> {sala.occupancy}</p><p className="text-xl mb-2 font-light"><strong>Localização:</strong> {sala.location}</p></>
           )}
-          <p className="text-2xl font-light">Nível de Acesso: {sala.accessLevel}</p>
+          <p className="text-xl mb-2 font-light"><strong>Nível de Acesso:</strong> {sala.accessLevel}</p>
         </div>
-        <div className="flex gap-8">
-          <p>{sala.dataMarcada}</p>
+        <div className="flex gap-8 mb-2">
           <p>{sala.type}</p>
         </div>
       </div>
@@ -74,7 +73,7 @@ export default function RoomCard({ sala, showDelete }) {
             )} */}
         {showDelete == true && (
           <button
-            className="bg-red-400 hover:bg-red-500 p-4 rounded-md border border-slate-400"
+            className="bg-red-400 hover:bg-red-500 p-4 rounded-md "
             onClick={() => handleDelete(sala.id, sala.type)}
           >
             <p>Excluir Sala</p>

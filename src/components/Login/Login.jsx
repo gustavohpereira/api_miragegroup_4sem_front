@@ -34,8 +34,8 @@ const Login = () => {
         }
     }
     return (
-        <div className="loginPage flexAlignCenter">
-            <div className="container flexAlignCenter">
+        <div className="loginPage flexAlignCenter bg-[#F6F7F7] shadow-lg">
+            <div className="container flexAlignCenter shadow-lg" >
                 <div className="videoDiv">
                     <video src={video} autoPlay muted loop></video>
                     <div className="textDiv">
@@ -43,14 +43,14 @@ const Login = () => {
                         <p>Sistemas Integrados de Alto Teor Tecnológico</p>
                     </div>
                 </div>
-                <div className="formDiv flexAlignCenter">
+                <div className="formDiv flexAlignCenter ">
                     <div className="headerDiv">
-                        <img src="/orca_logo.svg" alt="" className="h-20 w-[112px]"></img>
-                        <h3>Bem-vindo novamente!</h3>
+                        <img src="/logo2.svg" alt="" className="h-20 w-[112px]"></img>
+                        <h3 className="text-white">Bem-vindo novamente!</h3>
                     </div>
 
-                    <form action="" className="form grid">
-                        <div className="inputDiv">
+                    <form action="" className="form grid " >
+                        <div className="inputDiv ">
                             <label htmlFor="username">Email</label>
                             <div className="input flexAlignCenter">
                                 <FaUserShield className='icon' />

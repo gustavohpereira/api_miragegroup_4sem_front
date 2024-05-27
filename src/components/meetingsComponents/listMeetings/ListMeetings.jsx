@@ -35,7 +35,7 @@ export default function ListMeetings() {
       <PageTitle>Reuniões</PageTitle>
       <div className="gap-4 flex my-8 justify-between items-center ">
         <select
-          className="bg-[#FED353] transition easy-in-out hover:bg-[#F6A700] p-3 rounded-md border border-slate-400 w-1/12"
+          className="bg-[#FED353] transition easy-in-out hover:bg-[#F6A700] p-3 rounded-md w-28"
           value={tipoReuniao}
           onChange={handleTipoReuniaoChange}
         >
@@ -45,7 +45,7 @@ export default function ListMeetings() {
           <option value={3}>Virtual</option>
         </select>
         <button
-          className="bg-[#FED353] transition easy-in-out hover:bg-[#F6A700] py-3 px-0.5 rounded-md border border-slate-400 w-2/12"
+          className="bg-[#FED353] transition easy-in-out hover:bg-[#F6A700] py-3 px-0.5 rounded-md w-2/12"
           onClick={createMeeting}
         >
           Criar nova Reunião

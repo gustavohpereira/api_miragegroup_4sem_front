@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-export default function MeetingCard({ m, showDelete, showUpdate, showJoin, showAta, showDownloadAta }) {
+export default function MeetingCardDash({ m, showDelete, showUpdate, showJoin, showAta, showDownloadAta }) {
   const [isDeleted, setIsDeleted] = useState(false);
   const navigate = useNavigate();
 
@@ -64,6 +64,7 @@ export default function MeetingCard({ m, showDelete, showUpdate, showJoin, showA
       });
     }
   }
+
   const uploadAtaToBackend = async (meetingId, file) => {
     try {
       const formData = new FormData();
@@ -120,7 +121,7 @@ export default function MeetingCard({ m, showDelete, showUpdate, showJoin, showA
   let meetingType = "";
 
   if (m.meetingType == 1 || m.meetingType == 2) {
-    meetingType = m.meetingType == 1 ? "Presencial" : "Hibrida";
+    meetingType = m.meetingType == 1 ? "Presencial" : "Híbrida";
     if (m.physicalRoom) {
       location = (
         <div>
@@ -137,76 +138,21 @@ export default function MeetingCard({ m, showDelete, showUpdate, showJoin, showA
   } else {
     return (
       <div
-        className="standardFlex border border-gray-300 shadow-lg bg-white items-center p-4 px-4 justify-between gap-4 w-[75%]"
+        className="border border-gray-300 p-6 shadow-lg bg-white"
         key={m.nome}
       >
-        <div className="standardFlex flex-col justify-start items-start gap-2">
-          <div className="flex flex-col items-start">
+        <div className="flex flex-col justify-between h-full min-h-[16rem]">
+          <div>
             <h1 className="text-2xl font-semibold mb-2">{m.topic}</h1>
-            <p className="text-lg font-light">
-              <strong>Tipo de reunião:</strong> {meetingType}
-            </p>
+            <p className="text-gray-600 mb-2 text-sm">{format(new Date(m.beginning_time), "dd/MM/yy - HH:mm")}</p>
+            <p className="text-gray-700 mb-4 text-sm">{m.description}</p>
           </div>
-          <div className="flex flex-col items-start">
-            <span className="text-lg font-light">
-              <strong>Capacidade máxima:</strong>{" "}
-              {(m.meetingType === 1 || m.meetingType === 2) && m.physicalRoom
-                ? m.physicalRoom.occupancy
-                : "livre"}
-            </span>
-            <div className="text-lg font-light">{location}</div>
-          </div>
-          <div className="flex flex-col items-start gap-2">
-            <p className="text-lg font-light">
-              <strong>Data:</strong>{" "}
-              {format(new Date(m.beginning_time), "dd/MM/yyyy")}
-            </p>
-            <p className="text-lg font-light">
-              <strong>Hora:</strong>{" "}
-              {format(new Date(m.beginning_time), "HH:mm")} -{" "}
-              {format(new Date(m.end_time), "HH:mm")}
-            </p>
-          </div>
-        </div>
-        <div className="flex gap-8 items-center w-1/2">
           {showJoin && m.join_url && (
             <button
-              className="bg-[#FED353] hover:bg-[#F6A700] transition px-4 py-2 rounded-md text-base mt-auto"
+              className="bg-[#FED353] hover:bg-[#F6A700] transition p-2 rounded-md text-base mt-auto"
               onClick={handleJoinMeeting}
             >
-              <p>Entrar na Reunião</p>
-            </button>
-          )}
-          {showUpdate && (
-            <button
-              className="bg-[#FED353] hover:bg-[#F6A700] transition px-4 py-2 rounded-md text-base mt-auto"
-              onClick={handleUpdate}
-            >
-              <p>Atualizar Reunião</p>
-            </button>
-          )}
-          {showAta && (
-            <button
-              className="bg-[#FED353] hover:bg-[#F6A700] transition px-4 py-2 rounded-md text-base mt-auto"
-              onClick={handleAta}
-            >
-              <p>Anexar ATA</p>
-            </button>
-          )}
-          {showDownloadAta && (
-            <button
-              className="bg-[#FED353] hover:bg-[#F6A700] transition px-4 py-2 rounded-md text-base mt-auto"
-              onClick={handleDownload}
-            >
-              <p>Baixar ATA</p>
-            </button>
-          )}
-          {showDelete && (
-            <button
-              className="bg-red-400 hover:bg-red-500 px-4 py-2 rounded-md"
-              onClick={() => handleDelete(m.id)}
-            >
-              <p>Excluir Reunião</p>
+              Ingressar no Zoom
             </button>
           )}
         </div>
