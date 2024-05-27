@@ -8,9 +8,9 @@ import CustomArrow from './CustomArrow';
 export default function MeetingCarousel({ meetings }) {
   const settings = {
     dots: true,
-    infinite: true,
+    infinite: meetings.length > 1,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: Math.min(meetings.length, 3),
     slidesToScroll: 1,
     nextArrow: <CustomArrow direction="next" />,
     prevArrow: <CustomArrow direction="prev" />,
@@ -18,18 +18,18 @@ export default function MeetingCarousel({ meetings }) {
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: Math.min(meetings.length, 3),
           slidesToScroll: 1,
-          infinite: true,
+          infinite: meetings.length > 1,
           dots: true,
         },
       },
       {
         breakpoint: 600,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: Math.min(meetings.length, 2),
           slidesToScroll: 1,
-          initialSlide: 2,
+          initialSlide: 0,
         },
       },
       {
@@ -43,7 +43,7 @@ export default function MeetingCarousel({ meetings }) {
   };
 
   return (
-    <div className="carousel-container ">
+    <div className="carousel-container">
       <Slider {...settings}>
         {meetings.map((meeting) => (
           <div key={meeting.id} className="carousel-item p-[6px]">

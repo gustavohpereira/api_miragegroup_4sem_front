@@ -137,7 +137,7 @@ export default function MeetingCard({ m, showDelete, showUpdate, showJoin, showA
   } else {
     return (
       <div
-        className="standardFlex border border-gray-300 shadow-lg bg-white items-center p-4 px-4 justify-between gap-4 w-[75%]"
+        className="standardFlex border border-gray-300 shadow-lg bg-white items-center p-4 px-4 justify-between gap-4 min-w-[75%]"
         key={m.nome}
       >
         <div className="standardFlex flex-col justify-start items-start gap-2">

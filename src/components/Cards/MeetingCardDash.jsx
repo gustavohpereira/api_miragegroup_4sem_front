@@ -138,7 +138,7 @@ export default function MeetingCardDash({ m, showDelete, showUpdate, showJoin, s
   } else {
     return (
       <div
-        className="border border-gray-300 p-6 shadow-lg bg-white"
+        className="border border-gray-300 p-6 shadow-lg bg-white max-w-[16rem]"
         key={m.nome}
       >
         <div className="flex flex-col justify-between h-full min-h-[16rem]">
