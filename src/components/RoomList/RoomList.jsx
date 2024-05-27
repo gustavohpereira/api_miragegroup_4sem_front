@@ -66,7 +66,7 @@ export default function RoomList() {
           Criar nova Sala
         </button>
       </div>
-      <div className=" standardFlex flex-col gap-8 my-8 items-start ">
+      <div className=" standardFlex flex-col gap-4 my-8 items-start ">
         {filteredSalas.map((sala) => {
           return (
             <RoomCard sala={sala} showDelete={true} key={sala.id}></RoomCard>

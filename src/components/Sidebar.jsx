@@ -59,9 +59,8 @@ export default function Sidebar() {
                 <Link
                   key={link.name}
                   to={link.link}
-                  className={`w-full flex justify-center lg:justify-start items-center lg:py-4 transition easy-in-out ${
-                    isActive ? 'bg-[#FED353] text-white pl-3' : 'hover:bg-[#575757] text-[#FED353] lg:text-[#FEFEFE] hover:text-white'
-                  } rounded-lg relative`}
+                  className={`w-full flex justify-center lg:justify-start items-center lg:py-4 transition easy-in-out ${isActive ? 'bg-[#FED353] text-white pl-3' : 'hover:bg-[#575757] text-[#FED353] lg:text-[#FEFEFE] hover:text-white'
+                    } rounded-lg relative`}
                 >
                   {isActive && <span className="absolute left-0 top-0 bottom-0 w-1 bg-[#FED353] rounded-r-lg ml-[-22px]"></span>}
                   <div className="lg:flex items-center gap-4 px-8 hidden">
@@ -79,9 +78,8 @@ export default function Sidebar() {
                 <Link
                   key={link.name}
                   to={link.link}
-                  className={`w-full flex justify-center lg:justify-start items-center lg:py-4 transition easy-in-out ${
-                    isActive ? 'bg-[#FED353] text-white pl-3' : 'hover:bg-[#575757] text-[#FED353] lg:text-[#FEFEFE] hover:text-white'
-                  } rounded-lg relative`}
+                  className={`w-full flex justify-center lg:justify-start items-center lg:py-4 transition easy-in-out ${isActive ? 'bg-[#FED353] text-white pl-3' : 'hover:bg-[#575757] text-[#FED353] lg:text-[#FEFEFE] hover:text-white'
+                    } rounded-lg relative`}
                 >
                   {isActive && <span className="absolute left-0 top-0 bottom-0 w-1 bg-[#FED353] rounded-r-lg ml-[-22px]"></span>}
                   <div className="lg:flex items-center gap-4 px-8 hidden">

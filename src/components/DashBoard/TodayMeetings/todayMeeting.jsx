@@ -68,7 +68,7 @@ export default function TodayMeeting() {
             <option value={3}>Virtual</option>
           </select>
         </div>
-        <div className="standardFlex flex-col gap-4 justify-start">
+        <div className="standardFlex flex-col justify-start">
           <MeetingCarousel meetings={filteredMeetings} />
         </div>
       </div>
