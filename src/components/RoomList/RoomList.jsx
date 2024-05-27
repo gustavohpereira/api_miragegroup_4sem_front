@@ -51,7 +51,7 @@ export default function RoomList() {
       <PageTitle>Salas</PageTitle>
       <div className="gap-4 flex my-8 justify-between	">
         <select
-          className="bg-[#FED353] hover:bg-[#F6A700] p-3 rounded-md border border-slate-400 w-1/12"
+          className="bg-[#FED353] hover:bg-[#F6A700] p-3 rounded-md w-28"
           value={tipoReuniao}
           onChange={handleTipoReuniaoChange}
         >
@@ -60,7 +60,7 @@ export default function RoomList() {
           <option value="Virtual">Virtual</option>
         </select>
         <button
-          className="bg-[#FED353] transition easy-in-out hover:bg-[#F6A700] py-3 px-0.5 rounded-md border border-slate-400 w-2/12"
+          className="bg-[#FED353] transition easy-in-out hover:bg-[#F6A700] py-3 px-0.5 rounded-md  w-2/12"
           onClick={createRoom}
         >
           Criar nova Sala

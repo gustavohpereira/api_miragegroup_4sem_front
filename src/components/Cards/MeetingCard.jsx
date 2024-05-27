@@ -137,12 +137,12 @@ export default function MeetingCard({ m, showDelete, showUpdate, showJoin, showA
   } else {
     return (
       <div
-        className="standardFlex border border-black rounded-lg items-center p-4 px-4 justify-between gap-4"
+        className="standardFlex border border-gray-300 shadow-lg bg-white items-center p-4 px-4 justify-between gap-4 w-[75%]"
         key={m.nome}
       >
         <div className="standardFlex flex-col justify-start items-start gap-2">
           <div className="flex flex-col items-start">
-            <h1 className="text-2xl">{m.topic}</h1>
+            <h1 className="text-2xl font-semibold mb-2">{m.topic}</h1>
             <p className="text-lg font-light">
               <strong>Tipo de reunião:</strong> {meetingType}
             </p>
@@ -156,7 +156,7 @@ export default function MeetingCard({ m, showDelete, showUpdate, showJoin, showA
             </span>
             <div className="text-lg font-light">{location}</div>
           </div>
-          <div className="flex flex-col items-start">
+          <div className="flex flex-col items-start gap-2">
             <p className="text-lg font-light">
               <strong>Data:</strong>{" "}
               {format(new Date(m.beginning_time), "dd/MM/yyyy")}
@@ -171,7 +171,7 @@ export default function MeetingCard({ m, showDelete, showUpdate, showJoin, showA
         <div className="flex gap-8 items-center w-1/2">
           {showJoin && m.join_url && (
             <button
-              className="bg-[#FED353] hover:bg-[#F6A700] p-2 rounded-md border border-slate-400"
+              className="bg-[#FED353] hover:bg-[#F6A700] transition px-4 py-2 rounded-md text-base mt-auto"
               onClick={handleJoinMeeting}
             >
               <p>Entrar na Reunião</p>
@@ -179,7 +179,7 @@ export default function MeetingCard({ m, showDelete, showUpdate, showJoin, showA
           )}
           {showUpdate && (
             <button
-              className="bg-[#FED353] hover:bg-[#F6A700] p-2 rounded-md border border-slate-400"
+              className="bg-[#FED353] hover:bg-[#F6A700] transition px-4 py-2 rounded-md text-base mt-auto"
               onClick={handleUpdate}
             >
               <p>Atualizar Reunião</p>
@@ -187,7 +187,7 @@ export default function MeetingCard({ m, showDelete, showUpdate, showJoin, showA
           )}
           {showAta && (
             <button
-              className="bg-[#FED353] hover:bg-[#F6A700] p-2 rounded-md border border-slate-400"
+              className="bg-[#FED353] hover:bg-[#F6A700] transition px-4 py-2 rounded-md text-base mt-auto"
               onClick={handleAta}
             >
               <p>Anexar ATA</p>
@@ -195,7 +195,7 @@ export default function MeetingCard({ m, showDelete, showUpdate, showJoin, showA
           )}
           {showDownloadAta && (
             <button
-              className="bg-[#FED353] hover:bg-[#F6A700] p-2 rounded-md border border-slate-400"
+              className="bg-[#FED353] hover:bg-[#F6A700] transition px-4 py-2 rounded-md text-base mt-auto"
               onClick={handleDownload}
             >
               <p>Baixar ATA</p>
@@ -203,7 +203,7 @@ export default function MeetingCard({ m, showDelete, showUpdate, showJoin, showA
           )}
           {showDelete && (
             <button
-              className="bg-red-400 hover:bg-red-500 p-2 rounded-md border border-slate-400"
+              className="bg-red-400 hover:bg-red-500 px-4 py-2 rounded-md"
               onClick={() => handleDelete(m.id)}
             >
               <p>Excluir Reunião</p>

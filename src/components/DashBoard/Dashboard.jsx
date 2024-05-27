@@ -2,8 +2,6 @@ import React from "react";
 import PageTitle from "../pageTitle/PageTitle";
 import TodayMeeting from "./TodayMeetings/todayMeeting";
 
-
-
 const Dashboard = () => {
     const urlParams = new URLSearchParams(window.location.search);
     const accessToken = urlParams.get('accessToken');
@@ -13,13 +11,11 @@ const Dashboard = () => {
     }
 
     return (
-        <div className="w-full text-xl standardFlex flex-col  gap-8 ">
-
-
+        <div className="text-lg standardFlex flex-col gap-5">
             <PageTitle>Dashboard</PageTitle>
             <TodayMeeting />
         </div>
-    )
+    );
 }
 
-export default Dashboard
+export default Dashboard;
