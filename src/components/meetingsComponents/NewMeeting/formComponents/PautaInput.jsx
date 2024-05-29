@@ -14,7 +14,7 @@ export default function PautaInput({ pautas,handleChange }) {
 
   return (
     <div className="standardFlex flex-col items-center lg:items-start lg:pl-10">
-      <label className="text-xl my-4">Adicionar Pautas a Reunião</label>
+      <label className="text-xl my-4">Adicionar Tags a Reunião</label>
       <div
         className="flex w-full lg:w-full h-10 gap-1 rounded-md bg-[#EFEFEF]
           file:mr-4 file:py-2 file:px-4

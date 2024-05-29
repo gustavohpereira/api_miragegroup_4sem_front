@@ -10,6 +10,7 @@ import { CategoryButtons } from "./formComponents/CategoryButtons";
 import RoomInput from "./formComponents/RoomInput";
 import DateTimeForm from "./formComponents/DateTimeForm";
 import DescriptionForm from "./formComponents/DescriptionForm";
+import ExternalInput from "./formComponents/ExternalInput";
 
 const formatRequestData = (meetingData) => {
   const beginningTime = new Date(meetingData.datetime);
@@ -40,6 +41,7 @@ const formatRequestData = (meetingData) => {
     virtualRoom: meetingData.virtualRoom,
     participants: meetingData.selectedUsers,
     meetingTheme: meetingData.pautas,
+    guests: meetingData.guests,
   };
 };
 
@@ -107,6 +109,7 @@ export default function NewMeeting() {
     salas: [],
     beginning_time: "",
     end_time: "",
+    guests:[],
   });
   const [users, setUsers] = useState([]);
   const [creatingMeeting, setCreatingMeeting] = useState(false);
@@ -196,6 +199,9 @@ export default function NewMeeting() {
             <div className="grid grid-cols-1 items-center lg:items-start lg:grid-cols-2 w-4/6 ">
               <RoomInput salas={meetingData.salas} selectedCategory={meetingData.category} handleChange={handleChange} isDisabled={isRoomInputDisabled} availableRooms={availableRooms} />
               <PautaInput handleChange={handleChange} pautas={meetingData.pautas} />
+            </div>
+            <div className="grid grid-cols-1 items-center lg:items-start lg:grid-cols-2 w-4/6 ">
+              <ExternalInput guests={meetingData.guests} handleChange={handleChange} />
             </div>
             <div className="grid grid-cols-3">
               <DescriptionForm description={meetingData.description} handleChange={handleChange} />
