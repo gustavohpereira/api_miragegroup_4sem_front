@@ -12,6 +12,7 @@ import RoomInput from "../NewMeeting/formComponents/RoomInput";
 import DateTimeForm from "../NewMeeting/formComponents/DateTimeFormUpdate";
 import DescriptionForm from "../NewMeeting/formComponents/DescriptionForm";
 import DateTimeFormUpdate from "../NewMeeting/formComponents/DateTimeFormUpdate";
+import ExternalInput from "../NewMeeting/formComponents/ExternalInput";
 
 export default function UpdateMeeting() {
   const { meetingId } = useParams();
@@ -29,6 +30,7 @@ export default function UpdateMeeting() {
     category: "default",
     description: "",
     datetime: "",
+    guests: [],
   });
   const [users, setUsers] = useState([]);
   const [updatingMeeting, setUpdatingMeeting] = useState(false);
@@ -84,12 +86,10 @@ export default function UpdateMeeting() {
     const beginningTime = new Date(meetingData.datetime);
     beginningTime.setDate(beginningTime.getDate() + 1);
     const [beginningHours, beginningMinutes] =
-    meetingData.beginning_time.split(":");
+      meetingData.beginning_time.split(":");
     beginningTime.setHours(parseInt(beginningHours, 10));
     beginningTime.setMinutes(parseInt(beginningMinutes, 10));
     beginningTime.setSeconds(0);
-
-
 
     const endTime = new Date(meetingData.datetime);
     endTime.setDate(endTime.getDate() + 1);
@@ -112,6 +112,7 @@ export default function UpdateMeeting() {
       virtualRoom: meetingData.virtualRoom,
       participants: meetingData.selectedUsers,
       meetingTheme: meetingData.pautas,
+      guests: meetingData.guests,
     };
     console.log("requestData: ", requestData);
     try {
@@ -162,11 +163,15 @@ export default function UpdateMeeting() {
           meetingTheme,
           beginning_time,
           end_time,
+          guests
         } = response.data;
 
-        
         // Formatar a data e hora
-        const formattedDate = new Date(beginning_time).toISOString().slice(0, 10);
+        const formattedDate = new Date(beginning_time)
+          .toISOString()
+          .slice(0, 10);
+
+          console.log("formattedDate: ", response.data);
 
         setMeetingData((prevData) => ({
           ...prevData,
@@ -179,6 +184,7 @@ export default function UpdateMeeting() {
           end_time: end_time,
           datetime: formattedDate,
           meetingType: meetingType,
+          guests: guests,
           category:
             meetingType == 1
               ? "Fisica"
@@ -255,6 +261,9 @@ export default function UpdateMeeting() {
                 handleChange={handleChange}
                 pautas={meetingData.pautas}
               />
+            </div>
+            <div className="grid grid-cols-1 items-center lg:items-start lg:grid-cols-2 w-4/6 ">
+              <ExternalInput guests={meetingData.guests} handleChange={handleChange} />
             </div>
             <div className="grid grid-cols-3">
               <DescriptionForm
