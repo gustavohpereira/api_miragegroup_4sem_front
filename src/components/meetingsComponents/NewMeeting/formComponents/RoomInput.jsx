@@ -4,6 +4,7 @@ export default function RoomInput({ salas, selectedCategory, handleChange, isDis
     const selectedRoom = salas.filter((sala) => sala.type == selectedCategory).find((sala) => sala.id == id);
     if (selectedRoom) {
       if (selectedRoom.type == "Fisica") {
+        console.log("mudando sala")
         handleChange("physicalRoom", selectedRoom);
       } else if (selectedRoom.type == "Virtual"){
         handleChange("virtualRoom", selectedRoom);
@@ -23,6 +24,7 @@ export default function RoomInput({ salas, selectedCategory, handleChange, isDis
           type="select"
           onChange={(e) => handleRoomSelection(e.target.value)}
           className="w-full lg:w-full h-10 p-1 border focus:border-black rounded-md bg-[#EFEFEF]"
+          defaultValue={''}
         >
           <option value="" disabled>
             {selectedCategory == null ? "Selecione uma categoria" : "Selecione uma sala"}
