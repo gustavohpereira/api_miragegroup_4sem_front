@@ -1,6 +1,6 @@
 export default function TitleInput({title,handleChange}) {
   return (
-    <div className="standardFlex flex-col w-4/6 items-center lg:items-start">
+    <div className="w-full standardFlex flex-col lg:w-4/6 items-center lg:items-start">
       <label htmlFor="meetingName" className="text-xl my-4">
         Título da Reunião
       </label>

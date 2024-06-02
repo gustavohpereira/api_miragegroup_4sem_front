@@ -1,6 +1,6 @@
 export default function DescriptionForm({ description, handleChange }) {
   return (
-    <div className="col-span-2 standardFlex flex-col items-center lg:items-start ">
+    <div className="col-span-3   lg:col-span-2 standardFlex flex-col items-center lg:items-start ">
       <label htmlFor="description" className="text-xl my-4">
         Pauta
       </label>
