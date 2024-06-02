@@ -134,9 +134,10 @@ export default function MeetingCard({ m, showDelete, showUpdate, showJoin, showA
   if (isDeleted) {
     return null;
   } else {
+    console.log(m)
     return (
-      <div className="flex flex-col md:flex-row border border-gray-300 shadow-lg bg-white items-start md:items-center p-4 px-4 justify-between gap-4 w-full">
-        <div className="flex flex-col md:flex-row justify-start items-start md:items-center gap-2 w-full md:w-1/2">
+      <div className="flex flex-col lg:flex-row border border-gray-300 shadow-lg bg-white items-start lg:items-center p-4 px-4 justify-between gap-4 w-full lg:w-[75%]">
+        <div className="flex flex-col justify-start items-start lg:justify-center gap-2 w-full lg:w-1/2">
           <div className="flex flex-col items-start">
             <h1 className="text-2xl font-semibold mb-2">{m.topic}</h1>
             <p className="text-lg font-light">
