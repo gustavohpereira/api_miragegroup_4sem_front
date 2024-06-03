@@ -36,7 +36,7 @@ export default function Calendar({ meetingData }) {
   }
 
   return (
-    <div className="w-[120%]">
+    <div className="w-[100%]">
       <FullCalendar
         plugins={[dayGridPlugin, interactionPlugin, dayGridWeek, timeGridPlugin]}
         initialView="dayGridMonth"
