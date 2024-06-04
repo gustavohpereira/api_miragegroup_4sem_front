@@ -18,12 +18,15 @@ const Dashboard = () => {
     return (
         <div className="text-lg lg:standardFlex flex-col gap-5">
             <PageTitle>Dashboard</PageTitle>
-            <button
-                onClick={() => setOpenModal(true)}
-                className=" bg-[#FED353] text-[#FEFEFE] transition easy-in-out hover:bg-[#F6A700] p-2 rounded-md shadow-lg w-[124px]"
-              >
-                Criar reunião individual
-              </button>
+            <div className="w-full flex justify-center lg:justify-start">
+
+                <button
+                    onClick={() => setOpenModal(true)}
+                    className=" bg-[#FED353] text-[#FEFEFE] transition easy-in-out hover:bg-[#F6A700] p-2 m-4 rounded-md shadow-lg w-[124px]"
+                >
+                    Criar reunião individual
+                </button>
+            </div>
             <TodayMeeting />
             <ModalWrapper onClose={() => setOpenModal(false)} isOpen={openModal}><IndividualMeetingForm></IndividualMeetingForm></ModalWrapper>
         </div>
