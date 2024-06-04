@@ -60,7 +60,7 @@ export default function ExternalInput({ guests, handleChange }) {
         </button>
       </div>
       {error && <p className="text-red-500">{error}</p>}
-      <div className="flex gap-x-4 gap-y-3 w-[105%] flex-wrap mt-4 text-sm">
+      <div className="flex gap-x-4 gap-y-3 w-[100%] flex-wrap mt-4 text-sm">
         {guests.length > 0
           ? guests.map((guest, index) => (
               <div
