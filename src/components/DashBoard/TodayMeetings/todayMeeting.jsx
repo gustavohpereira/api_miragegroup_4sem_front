@@ -53,10 +53,10 @@ export default function TodayMeeting() {
   });
 
   return (
-    <div className="standardFlex  h-full w-full">
-      <div className="w-2/5 px-4 ">
+    <div className="standardFlex lg:flex-row flex-col justify-center h-full w-full lg:gap-0 lg:p-8 gap-14">
+      <div className="lg:w-2/5 w-full px-4 flex flex-col items-center">
         <h1 className="text-4xl font-light mb-10">Suas Reuniões</h1>
-        <div className="gap-4 flex my-">
+        <div className="gap-4 flex justify-center ">
           <select
             className="bg-[#FED353] transition easy-in-out hover:bg-[#F6A700] mb-5 p-3 rounded-md text-base"
             value={tipoReuniao}
@@ -68,11 +68,11 @@ export default function TodayMeeting() {
             <option value={3}>Virtual</option>
           </select>
         </div>
-        <div className="standardFlex flex-col w-[50rem]">
+        <div className="standardFlex flex-col  w-[90%]">
           <MeetingCarousel meetings={filteredMeetings} />
         </div>
       </div>
-      <div className="w-3/5 h-full ml-[13rem]">
+      <div className="lg:w-3/5 w-[100%] h-full lg:ml-[10rem]">
         <Calendar meetingData={meetings} />
       </div>
     </div >

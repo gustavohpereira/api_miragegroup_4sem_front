@@ -28,14 +28,14 @@ export default function MeetingCarousel({ meetings }) {
         breakpoint: 600,
         settings: {
           slidesToShow: Math.min(meetings.length, 2),
-          slidesToScroll: 1,
+          slidesToScroll: 2,
           initialSlide: 0,
         },
       },
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 2,
           slidesToScroll: 1,
         },
       },

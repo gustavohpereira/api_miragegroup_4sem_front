@@ -17,7 +17,7 @@ export function CategoryButtons({ selectedCategory, handleChange }) {
     handleChange("category", category);
   }
   return (
-    <div className="standardFlex flex-col items-center lg:items-start w-4/6">
+    <div className="standardFlex flex-col items-center w-full lg:w-4/6 lg:items-start ">
       <label className="text-xl my-4">Categoria</label>
       <div className="grid grid-cols-3 lg:w-3/5 ">
         <button

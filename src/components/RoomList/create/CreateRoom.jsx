@@ -75,9 +75,9 @@ export default function NewRoom() {
       <PageTitle>Cadastro de Sala</PageTitle>
 
       {/* Formulário de Cadastro de Sala */}
-      <div className="w-full flex justify-center relative">
+      <div className="w-full flex justify-center lg:relative">
         <form
-          className="p-4 mt-4 standardFlex w-5/6 flex-col gap-8 relative"
+          className="p-4 mt-4 standardFlex w-full items-center lg:w-5/6 flex-col gap-8 lg:relative"
           onSubmit={handleSubmit}
         >
           {/* Linha 1: Categoria da Sala */}
@@ -104,9 +104,9 @@ export default function NewRoom() {
           {roomType && (
             <>
               {/* Linha 2: Nome da Sala e Descrição ou Nível de Acesso */}
-              <div className="w-full flex justify-between items-center gap-32">
+              <div className="w-full flex lg:flex-row flex-col justify-between items-center lg:gap-32 gap-8">
                 {/* Nome da Sala */}
-                <div className="standardFlex flex-col items-center lg:items-start w-1/2">
+                <div className="standardFlex flex-col items-center lg:items-start w-full lg:w-1/2">
                   <label htmlFor="roomName" className="text-2xl my-4">
                     Nome da Sala
                   </label>
@@ -121,7 +121,7 @@ export default function NewRoom() {
 
                 {/* Descrição da Sala (apenas para sala física) */}
                 {roomType === "Fisica" && (
-                  <div className="standardFlex flex-col items-center lg:items-start w-1/2">
+                  <div className="standardFlex flex-col items-center lg:items-start w-full lg:w-1/2 ">
                     <label htmlFor="description" className="text-2xl my-4">
                       Localização da Sala
                     </label>
@@ -137,7 +137,7 @@ export default function NewRoom() {
 
                 {/* Nível de Acesso (apenas para sala virtual) */}
                 {roomType === "Virtual" && (
-                  <div className="standardFlex flex-col items-center lg:items-start w-1/2">
+                  <div className="standardFlex flex-col items-center lg:items-start w-full lg:w-1/2">
                     <label htmlFor="accessLevel" className="text-2xl my-4">
                       Nível de Acesso
                     </label>
@@ -158,9 +158,9 @@ export default function NewRoom() {
 
               {/* Linha 3: Capacidade Máxima e Nível de Acesso (apenas para sala física) */}
               {roomType === "Fisica" && (
-                <div className="w-full flex justify-between items-center gap-32">
+                <div className="w-full flex  lg:flex-row flex-col justify-between items-center lg:gap-32 gap-8">
                   {/* Capacidade Máxima */}
-                  <div className="standardFlex flex-col items-center lg:items-start w-1/2">
+                  <div className="standardFlex flex-col items-center lg:items-start w-full lg:w-1/2">
                     <label htmlFor="capacity" className="text-2xl my-4">
                       Capacidade Máxima
                     </label>
@@ -175,7 +175,7 @@ export default function NewRoom() {
                   </div>
 
                   {/* Nível de Acesso */}
-                  <div className="standardFlex flex-col items-center lg:items-start w-1/2">
+                  <div className="standardFlex flex-col items-center lg:items-start w-full lg:w-1/2">
                     <label htmlFor="accessLevel" className="text-2xl my-4">
                       Nível de Acesso
                     </label>
@@ -196,7 +196,7 @@ export default function NewRoom() {
           {/* Botão de Criar Sala Fixo */}
           <button
             type="submit"
-            className="bg-[#FED353] transition easy-in-out hover:bg-[#F6A700] p-3 rounded-md border border-slate- w-1/12 fixed bottom-80 right-48"
+            className="bg-[#FED353] transition easy-in-out hover:bg-[#F6A700] mt-10 p-3 rounded-md border border-slate-400 w-[70%] lg:w-1/12 lg:fixed bottom-80 right-48"
           >
             Criar Sala
           </button>

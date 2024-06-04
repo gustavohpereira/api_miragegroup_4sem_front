@@ -16,7 +16,7 @@ const Dashboard = () => {
     }
 
     return (
-        <div className="text-lg standardFlex flex-col gap-5">
+        <div className="text-lg lg:standardFlex flex-col gap-5">
             <PageTitle>Dashboard</PageTitle>
             <button
                 onClick={() => setOpenModal(true)}

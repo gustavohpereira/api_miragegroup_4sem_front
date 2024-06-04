@@ -1,6 +1,6 @@
 export default function DateTimeForm({datetime,beginning_time,end_time,handleChange}) {
     return (
-      <div className="grid grid-cols-1 items-center lg:items-start lg:grid-cols-2 w-4/6 ">
+      <div className="grid grid-cols-1 items-center lg:items-start lg:grid-cols-2 w-full lg:w-4/6 ">
         <div className="standardFlex flex-col items-center lg:items-start lg:w-3/4">
           <label htmlFor="Data" className="text-xl my-4">
             Data
