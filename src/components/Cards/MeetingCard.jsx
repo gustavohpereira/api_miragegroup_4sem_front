@@ -3,10 +3,14 @@ import { format } from "date-fns";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { ModalWrapper } from "../wrappers/modalWrapper";
+import InfoMeetingModal from "../meetingsComponents/infoMeetingModal/infoMeetingModal";
 
-export default function MeetingCard({ m, showDelete, showUpdate, showJoin, showAta, showDownloadAta }) {
+export default function MeetingCard({ m, showInformation, showDelete, showUpdate, showJoin, showAnexo, showDownloadAnexo }) {
   const [isDeleted, setIsDeleted] = useState(false);
   const navigate = useNavigate();
+
+  const[openModal, setOpenModal] = useState(false);
 
   const handleDelete = async (id) => {
     try {
@@ -166,6 +170,17 @@ export default function MeetingCard({ m, showDelete, showUpdate, showJoin, showA
           </div>
         </div>
         <div className="flex flex-col md:flex-row gap-2 md:gap-8 items-start md:items-center w-full md:w-1/2">
+        {showInformation && (
+            <div>
+              <button
+                className="bg-[#FED353] hover:bg-[#F6A700] transition px-4 py-2 rounded-md text-base mt-auto"
+                onClick={() => setOpenModal(true)}
+              >
+                <p>ATA</p>
+              </button>
+              <ModalWrapper onClose={() => setOpenModal(false)} isOpen={openModal}><InfoMeetingModal id={m.id} title={m.topic} description={m.description} ataUrl={m.ata_url} date={format(new Date(m.beginning_time), "dd/MM/yyyy")} participants={m.participants}/></ModalWrapper>
+            </div>
+          )}
           {showJoin && m.join_url && (
             <button
               className="bg-[#FED353] hover:bg-[#F6A700] transition px-4 py-2 rounded-md text-base mt-auto"
@@ -182,20 +197,20 @@ export default function MeetingCard({ m, showDelete, showUpdate, showJoin, showA
               <p>Atualizar Reunião</p>
             </button>
           )}
-          {showAta && (
+          {showAnexo && (
             <button
               className="bg-[#FED353] hover:bg-[#F6A700] transition px-4 py-2 rounded-md text-base mt-auto"
               onClick={handleAta}
             >
-              <p>Anexar ATA</p>
+              <p>Anexar Documento</p>
             </button>
           )}
-          {showDownloadAta && (
+          {showDownloadAnexo && (
             <button
               className="bg-[#FED353] hover:bg-[#F6A700] transition px-4 py-2 rounded-md text-base mt-auto"
               onClick={handleDownload}
             >
-              <p>Baixar ATA</p>
+              <p>Baixar Anexo</p>
             </button>
           )}
           {showDelete && (
