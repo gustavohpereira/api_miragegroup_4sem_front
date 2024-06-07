@@ -52,8 +52,6 @@ export default function ListMeetings() {
           </div>
           <div className="flex flex-col gap-4 my-8">
             {filteredMeetings.map((m) => {
-              const showAnexo = m.ata_url ? false : true;
-              const showDownloadAnexo = m.ata_url ? true : false;
     
               return (
                 <MeetingCard
@@ -63,8 +61,6 @@ export default function ListMeetings() {
                   showDelete={true}
                   showUpdate={true}
                   showJoin={true}
-                  showAnexo={showAnexo}
-                  showDownloadAnexo={showDownloadAnexo}
                 />
               );
             })}
