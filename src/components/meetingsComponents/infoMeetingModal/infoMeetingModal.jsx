@@ -95,37 +95,39 @@ const InfoMeetingModal = React.forwardRef(({ id, ataUrl, title, description, dat
     };
 
     return (
-        <div>
+        <div className="">
             <div ref={ref}>
                 <PageTitle>Ata de Reunião</PageTitle>
                 <div className="flex flex-col p-10 gap-4">
                     <div>
-                        <h1 className="text-2xl font-semibold mb-2">Assunto:</h1>
+                        <h1 className="text-xl font-semibold mb-2">Assunto:</h1>
                         <p>{title}</p>
                     </div>
                     <div>
-                        <h1 className="text-2xl font-semibold mb-2">Descrição:</h1>
+                        <h1 className="text-xl font-semibold mb-2">Descrição:</h1>
                         <p>{description}</p>
                     </div>
                     <div>
-                        <h1 className="text-2xl font-semibold mb-2">Data:</h1>
+                        <h1 className="text-xl font-semibold mb-2">Data:</h1>
                         <p>{date}</p>
                     </div>
                     <div>
-                        <h1 className="text-2xl font-semibold mb-2">Participantes:</h1>
+                        <h1 className="text-xl font-semibold mb-2">Participantes:</h1>
                         <ul>
                             {participants.map((p, index) => <li key={index}>{p.name}</li>)}
                         </ul>
                     </div>
                     <div>
-                        <h1 className="text-2xl font-semibold mb-2">Considerações:</h1>
-                        <textarea className="w-full h-[150px] p-1 border focus:border-black rounded-md" value={considerations}
+                        <h1 className="text-xl font-semibold mb-2">Considerações:</h1>
+                        <textarea className="w-full h-[150px] resize-none p-1 border focus:border-black rounded-md" value={considerations}
                         onChange={(e) => setConsiderations(e.target.value)}></textarea>
                     </div>
 
-                    <div className="flex gap-4">
-                        <h1 className="text-2xl font-semibold mb-2">Anexo:</h1>
-                        <button onClick={handleAta} className="h-[35px] w-[35px] px-3 focus:border-black rounded-md bg-[#EFEFEF] shadow-lg">+</button>
+                    <div className="flex gap-3">
+                        <h1 className="text-xl font-semibold content-center">Anexo:</h1>
+                        <button onClick={handleAta} className="p-1 focus:border-black rounded-md hover:bg-[#EFEFEF]">
+                            <img src="/anexo.svg" alt="icone-anexo" />
+                        </button>
                     </div>
                     {!uploadedFile && (
                         <p className="text-sm text-gray-500 mt-3">Nenhum arquivo anexado</p>
@@ -139,8 +141,8 @@ const InfoMeetingModal = React.forwardRef(({ id, ataUrl, title, description, dat
                     </div>
                 </div>
             </div>
-            <div className="flex justify-end mt-4">
-                <button onClick={handleSave} className="bg-[#FED353] hover:bg-[#F6A700] transition px-4 py-2 rounded-md mb-6">
+            <div className="flex justify-end">
+                <button onClick={handleSave} className="bg-[#FED353] hover:bg-[#F6A700] transition px-4 py-2 rounded-md">
                     Salvar Alterações
                 </button>
             </div>
@@ -156,9 +158,11 @@ export default function InfoMeetingContainer({ id, ataUrl, title, description, d
     });
 
     return (
-        <div className="flex flex-col">
-            <InfoMeetingModal ref={contentDocument} id={id} ataUrl={ataUrl} title={title} description={description} date={date} participants={participants} />
-            <button className="bg-[#FED353] hover:bg-[#F6A700] transition px-4 py-2 rounded-md text-base mt-auto self-end" onClick={handlePrint}>Imprimir</button>
+        <div className="flex gap-4">
+            <div className="flex-auto">
+                <InfoMeetingModal ref={contentDocument} id={id} ataUrl={ataUrl} title={title} description={description} date={date} participants={participants} />
+            </div>
+            <button className=" w-[100px] bg-[#FED353] hover:bg-[#F6A700] transition px-4 py-2 rounded-md text-base self-end" onClick={handlePrint}>Imprimir</button>
         </div>
     );
 }
