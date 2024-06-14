@@ -43,14 +43,13 @@ export default function Sidebar() {
     },
   ];
 
-  return (
-    <div className="h-16 w-full lg:h-screen lg:min-w-[15rem] lg:max-w-[15rem] sticky top-0 bg-sidebar-bg lg:w-sidebar-width border-r border-sidebar-border bg-[#262932] flex lg:flex-col justify-between items-center lg:py-6">
-      <div className="w-full">
-        <div className="w-full lg:flex justify-center items-center py-6 hidden">
-          <img src="/orca_logo.svg" alt="" className="h-20 w-[112px]"></img>
+ return (
+    <div className="h-16 w-full lg:h-screen lg:min-w-[15rem] lg:max-w-[15rem] sticky top-0 bg-[#262932] lg:w-sidebar-width border-r border-sidebar-border flex lg:flex-col justify-between items-center lg:py-6">
+      <div className="lg:w-full w-[80%] flex lg:flex-col justify-between items-center lg:items-start lg:py-6">
+        <div className="hidden lg:flex justify-center items-center py-6 w-full">
+          <img src="/orca_logo.svg" alt="" className="h-20 w-[112px]" />
         </div>
-
-        <div className="flex lg:flex-col justify-start items-center px-2 my-16 w-full lg:px-6 lg:gap-8">
+        <div className="flex lg:flex-col justify-center lg:justify-start items-center px-2 lg:px-6 lg:gap-8 w-full">
           {links.map((link) => {
             const isActive = location.pathname === link.link || (link.subRoutes && link.subRoutes.includes(location.pathname));
 
@@ -59,16 +58,13 @@ export default function Sidebar() {
                 <Link
                   key={link.name}
                   to={link.link}
-                  className={`w-full flex justify-center lg:justify-start items-center lg:py-4 transition easy-in-out ${
-                    isActive ? 'bg-[#FED353] text-white pl-3' : 'hover:bg-[#575757] text-[#FED353] lg:text-[#FEFEFE] hover:text-white'
-                  } rounded-lg relative`}
+                  className={`w-full flex justify-center lg:justify-start items-center lg:py-4 transition easy-in-out ${isActive ? 'lg:bg-[#FED353] text-white' : 'hover:bg-[#575757] text-[#FED353] lg:text-[#FEFEFE] hover:text-white'
+                    } rounded-lg relative`}
                 >
-                  {isActive && <span className="absolute left-0 top-0 bottom-0 w-1 bg-[#FED353] rounded-r-lg ml-[-22px]"></span>}
-                  <div className="lg:flex items-center gap-4 px-8 hidden">
-                    <div>
-                      <img src={link.icon} alt="" className="h-6"></img>
-                    </div>
-                    <p className="text-xs lg:text-base">{link.name}</p>
+                  {isActive && <span className="hidden lg:block lg:absolute lg:left-0 lg:top-0 bottom-0 lg:w-1 bg-[#FED353] rounded-r-lg lg:ml-[-22px]"></span>}
+                  <div className="flex items-center gap-4 px-4 lg:px-8">
+                    <img src={link.icon} alt="" className="h-6 hidden lg:block" />
+                    <p className="text-sm lg:text-base">{link.name}</p>
                   </div>
                 </Link>
               );
@@ -79,16 +75,13 @@ export default function Sidebar() {
                 <Link
                   key={link.name}
                   to={link.link}
-                  className={`w-full flex justify-center lg:justify-start items-center lg:py-4 transition easy-in-out ${
-                    isActive ? 'bg-[#FED353] text-white pl-3' : 'hover:bg-[#575757] text-[#FED353] lg:text-[#FEFEFE] hover:text-white'
-                  } rounded-lg relative`}
+                  className={`w-full flex justify-center lg:justify-start items-center lg:py-4 transition easy-in-out ${isActive ? 'lg:bg-[#FED353] text-white' : 'hover:bg-[#575757] text-[#FED353] lg:text-[#FEFEFE] hover:text-white'
+                    } rounded-lg relative`}
                 >
-                  {isActive && <span className="absolute left-0 top-0 bottom-0 w-1 bg-[#FED353] rounded-r-lg ml-[-22px]"></span>}
-                  <div className="lg:flex items-center gap-4 px-8 hidden">
-                    <div>
-                      <img src={link.icon} alt="" className="h-6"></img>
-                    </div>
-                    <p className="text-xs lg:text-base">{link.name}</p>
+                  {isActive && <span className="hidden lg:block lg:absolute lg:left-0 lg:top-0 bottom-0 lg:w-1 bg-[#FED353] rounded-r-lg lg:ml-[-22px]"></span>}
+                  <div className="flex items-center gap-4 px-4 lg:px-8">
+                    <img src={link.icon} alt="" className="h-6 hidden lg:block" />
+                    <p className="text-sm lg:text-base">{link.name}</p>
                   </div>
                 </Link>
               );
@@ -99,12 +92,12 @@ export default function Sidebar() {
         </div>
       </div>
 
-      <div className="">
-        <button type="button" className="flex text-[#FEFEFE] lg:w-42 p-2 w-full gap-4 hover:bg-[#575757] rounded-lg" onClick={handleLogoutSidebar}>
-          <div className="w-1/6">
+      <div className="lg:w-full w-[20%] flex justify-center lg:justify-start">
+        <button type="button" className="flex lg:flex-col text-[#FEFEFE] lg:w-42 p-2 w-full gap-4 hover:bg-[#575757] rounded-lg justify-center lg:justify-center lg:items-center" onClick={handleLogoutSidebar}>
+          <div className="lg:w-1/6 w-[35%]  flex justify-center lg:justify-start">
             <img src="/logout.svg" alt="Logout" />
           </div>
-          <label className="cursor-pointer">Sair da conta</label>
+          <label className="cursor-pointer hidden lg:block">Sair da conta</label>
         </button>
       </div>
     </div>
