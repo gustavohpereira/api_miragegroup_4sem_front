@@ -7,13 +7,14 @@ import { toast } from "react-toastify";
 export default function MeetingCard({ m, showDelete, showUpdate, showJoin, showAta, showDownloadAta }) {
   const [isDeleted, setIsDeleted] = useState(false);
   const navigate = useNavigate();
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
   const handleDelete = async (id) => {
     try {
       const confirm = window.confirm("Tem certeza que deseja excluir esta reunião?");
       if (confirm) {
         const data = { id: id };
-        await axios.delete(`http://localhost:8080/meeting/delete`, {
+        await axios.delete(`${backendUrl}/meeting/delete`, {
           data: data,
         });
         setIsDeleted(true);
@@ -68,7 +69,7 @@ export default function MeetingCard({ m, showDelete, showUpdate, showJoin, showA
       const formData = new FormData();
       formData.append("file", file);
 
-      const response = await axios.post(`http://localhost:8080/meeting/${meetingId}/uploadata`, formData, {
+      const response = await axios.post(`${backendUrl}/meeting/${meetingId}/uploadata`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
